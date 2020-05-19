@@ -1,6 +1,6 @@
 ```js script
 import { html } from '@open-wc/demoing-storybook';
-import '../dist/portal-navigation.js';
+import '../portal-navigation.js';
 
 export default {
   title: 'PortalNavigation',
