@@ -5,7 +5,7 @@ import '../portal-navigation.js';
 export default {
   title: 'PortalNavigation',
   component: 'portal-navigation',
-  options: { selectedPanel: "storybookjs/knobs/panel" },
+  options: { selectedPanel: 'storybookjs/knobs/panel' },
 };
 ```
 
@@ -32,9 +32,7 @@ import 'portal-navigation/portal-navigation.js';
 ```
 
 ```js preview-story
-export const Simple = () => html`
-  <portal-navigation></portal-navigation>
-`;
+export const Simple = () => html` <portal-navigation></portal-navigation> `;
 ```
 
 ## Variations
@@ -42,7 +40,5 @@ export const Simple = () => html`
 ###### Custom Title
 
 ```js preview-story
-export const CustomTitle = () => html`
-  <portal-navigation title="Hello World"></portal-navigation>
-`;
+export const CustomTitle = () => html` <portal-navigation title="Hello World"></portal-navigation> `;
 ```

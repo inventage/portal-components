@@ -18,9 +18,7 @@ describe('PortalNavigation', () => {
   });
 
   it('can override the title via attribute', async () => {
-    const el = await fixture(html`
-      <portal-navigation title="attribute title"></portal-navigation>
-    `);
+    const el = await fixture(html` <portal-navigation title="attribute title"></portal-navigation> `);
 
     expect(el.title).to.equal('attribute title');
   });

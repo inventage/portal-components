@@ -12,7 +12,7 @@ module.exports = config => {
         // npm run test -- --grep test/foo/bar.test.js
         // npm run test -- --grep test/bar/*
         {
-          pattern: config.grep ? config.grep : 'test/**/*.test.js',
+          pattern: config.grep ? config.grep : 'components/**/test/**/*.test.js',
           type: 'module',
         },
       ],
@@ -21,7 +21,7 @@ module.exports = config => {
         nodeResolve: true,
       },
       // you can overwrite/extend the config further
-    })
+    }),
   );
   return config;
 };

@@ -1,9 +1,4 @@
-import {
-  addDecorator,
-  addParameters,
-  setCustomElements,
-  withA11y,
-} from '@open-wc/demoing-storybook';
+import { addDecorator, addParameters, setCustomElements, withA11y } from '@open-wc/demoing-storybook';
 
 addParameters({
   docs: {
@@ -12,11 +7,10 @@ addParameters({
 });
 
 async function run() {
-  const customElements = await (
-    await fetch(new URL('../custom-elements.json', import.meta.url))
-  ).json();
-
-  setCustomElements(customElements);
+  // const customElements = await (
+  //   await fetch(new URL('../custom-elements.json', import.meta.url))
+  // ).json();
+  setCustomElements({});
 
   addDecorator(withA11y);
 }
