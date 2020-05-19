@@ -1,13 +1,21 @@
 {
-  "name": "portal-navigation",
+  "name": "@inventage/portal-components",
   "version": "0.0.0",
-  "description": "Webcomponent portal-navigation following open-wc recommendations",
-  "author": "portal-navigation",
+  "description": "A collection of webcomponents for enterprise portals.",
+  "author": "Inventage AG <info@inventage.com>",
   "license": "MIT",
   "main": "index.js",
   "module": "index.js",
+  "keywords": [
+    "web-components",
+    "lit-element",
+    "lit-html",
+    "portal"
+  ],
   "scripts": {
-    "start": "es-dev-server --app-index demo/index.html --node-resolve --open --watch",
+    "start": "npm run storybook",
+    "start:build": "npm run build && npm run storybook:build:start",
+    "build": "npm run storybook:build",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.{js,md}\" --check --ignore-path .gitignore",
@@ -17,7 +25,8 @@
     "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "storybook": "start-storybook",
-    "storybook:build": "build-storybook"
+    "storybook:build": "build-storybook",
+    "storybook:build:start": "es-dev-server --root-dir storybook-static --open"
   },
   "dependencies": {
     "lit-html": "^1.2.1",
