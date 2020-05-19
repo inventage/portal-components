@@ -1,11 +1,14 @@
-# \<portal-navigation>
+# Portal Components
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+A collection of webcomponents for enterprise portals.
+
+[![made with open-wc](https://img.shields.io/badge/made%20with-open--wc-%23217ff9)](https://open-wc.org)
+[![Node.js CI](https://github.com/inventage/portal-components/workflows/Node.js%20CI/badge.svg)](https://github.com/inventage/portal-components/actions?query=workflow%3A%22Node.js+CI%22)
 
 ## Installation
 
 ```bash
-npm i portal-navigation
+npm i @inventage/portal-components
 ```
 
 ## Usage
@@ -26,30 +29,10 @@ To scan the project for linting errors, run
 npm run lint
 ```
 
-You can lint with ESLint and Prettier individually as well
-
-```bash
-npm run lint:eslint
-```
-
-```bash
-npm run lint:prettier
-```
-
 To automatically fix many linting errors, run
 
 ```bash
 npm run format
-```
-
-You can format using ESLint and Prettier individually as well
-
-```bash
-npm run format:eslint
-```
-
-```bash
-npm run format:prettier
 ```
 
 ## Testing with Karma
@@ -85,11 +68,3 @@ npm run storybook:build
 For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
 
 If you customize the configuration a lot, you can consider moving them to individual files.
-
-## Local Demo with `es-dev-server`
-
-```bash
-npm start
-```
-
-To run a local development server that serves the basic demo located in `demo/index.html`
