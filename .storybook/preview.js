@@ -1,4 +1,9 @@
-import { addParameters, setCustomElements } from '@open-wc/demoing-storybook';
+import {
+  addDecorator,
+  addParameters,
+  setCustomElements,
+  withA11y,
+} from '@open-wc/demoing-storybook';
 
 addParameters({
   docs: {
@@ -12,6 +17,8 @@ async function run() {
   ).json();
 
   setCustomElements(customElements);
+
+  addDecorator(withA11y);
 }
 
 run();
