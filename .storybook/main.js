@@ -6,7 +6,6 @@ module.exports = {
     'storybook-prebuilt/addon-viewport/register.js',
     'storybook-prebuilt/addon-a11y/register.js',
   ],
-  outputDir: '../docs',
   esDevServer: {
     // custom es-dev-server options
     nodeResolve: true,

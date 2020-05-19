@@ -27,7 +27,7 @@
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
-    "storybook:build:start": "es-dev-server --root-dir docs --open"
+    "storybook:build:start": "es-dev-server --root-dir storybook-static --open"
   },
   "dependencies": {
     "lit-html": "^1.2.1",

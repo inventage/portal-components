@@ -14,7 +14,7 @@
 
 ## temp folders
 /.tmp/
-/docs/
+/storybook-static/
 
 # build
 /_site/
