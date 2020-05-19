@@ -15,7 +15,7 @@ npm i @inventage/portal-components
 
 ```html
 <script type="module">
-  import 'portal-navigation/portal-navigation.js';
+  import '@inventage/portal-components/components/portal-navigation/portal-navigation.js';
 </script>
 
 <portal-navigation></portal-navigation>
