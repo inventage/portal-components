@@ -3,7 +3,7 @@ import { html } from '@open-wc/demoing-storybook';
 import '../portal-navigation.js';
 
 export default {
-  title: 'PortalNavigation',
+  title: 'Components/PortalNavigation',
   component: 'portal-navigation',
   options: { selectedPanel: 'storybookjs/knobs/panel' },
 };

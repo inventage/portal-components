@@ -3,7 +3,7 @@ import { html } from '@open-wc/demoing-storybook';
 import '../portal-language-switcher.js';
 
 export default {
-  title: 'PortalLanguageSwitcher',
+  title: 'Components/PortalLanguageSwitcher',
   component: 'portal-language-switcher',
   options: { selectedPanel: 'storybookjs/knobs/panel' },
 };
