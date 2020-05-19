@@ -3,7 +3,7 @@
 A collection of webcomponents for enterprise portals.
 
 [![made with open-wc](https://img.shields.io/badge/made%20with-open--wc-%23217ff9)](https://open-wc.org)
-[![Node.js CI](https://github.com/inventage/portal-components/workflows/Node.js%20CI/badge.svg)](https://github.com/inventage/portal-components/actions?query=workflow%3A%22Node.js+CI%22)
+[![Main Workflow](https://github.com/inventage/portal-components/workflows/Main%20Workflow/badge.svg)](https://github.com/inventage/portal-components/actions?query=workflow%3A"Main+Workflow")
 
 ## Installation
 
