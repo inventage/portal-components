@@ -1,10 +1,5 @@
 import { addDecorator, addParameters, setCustomElements, withA11y } from '@open-wc/demoing-storybook';
-
-addParameters({
-  docs: {
-    iframeHeight: '200px',
-  },
-});
+import { sortEachDepth } from '@lion/helpers';
 
 async function run() {
   // const customElements = await (
@@ -13,6 +8,32 @@ async function run() {
   setCustomElements({});
 
   addDecorator(withA11y);
+
+  addParameters({
+    // storybook-addon-a11y
+    // @see https://github.com/storybookjs/storybook/tree/master/addons/a11y#parameters
+    a11y: {
+      config: {},
+      options: {
+        restoreScroll: true,
+      },
+    },
+    // Storybook Docs
+    // @see https://github.com/storybookjs/storybook/tree/master/addons/docs
+    docs: {
+      iframeHeight: '200px',
+    },
+    // Global Storybook options
+    // @see https://storybook.js.org/docs/configurations/options-parameter/
+    options: {
+      showRoots: true,
+      storySort: sortEachDepth([
+        ['Intro', 'Forms', 'Buttons', 'Overlays', 'Navigation', 'Localize', 'Icons', '...'],
+        ['Intro', 'Features Overview', '...', 'Validation', 'System'],
+        ['Overview', '...', '_internals'],
+      ]),
+    },
+  });
 }
 
 run();

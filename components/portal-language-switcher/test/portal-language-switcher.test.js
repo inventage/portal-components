@@ -27,6 +27,12 @@ describe('PortalLanguageSwitcher', () => {
     expect(el.title).to.equal('attribute title');
   });
 
+  it('can override the language via attribute', async () => {
+    const el = await fixture(html` <portal-language-switcher language="fr"></portal-language-switcher> `);
+
+    expect(el.language).to.equal('fr');
+  });
+
   it('passes the a11y audit', async () => {
     const el = await fixture(html` <portal-language-switcher></portal-language-switcher> `);
 
