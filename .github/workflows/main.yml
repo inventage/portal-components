@@ -6,6 +6,7 @@ name: Main Workflow
 on: [push, pull_request]
 
 jobs:
+  # Run tests and lint files
   run:
     name: Lint & Test
 
@@ -42,6 +43,7 @@ jobs:
       - name: Tests
         run: npm test
 
+  # Build and deploy to Github Pages
   deploy:
     name: Build & Deploy
 
@@ -74,7 +76,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy
+      # https://github.com/marketplace/actions/github-pages-action
+      - name: Deploys
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
