@@ -37,8 +37,14 @@ export const Simple = () => html` <portal-language-switcher></portal-language-sw
 
 ## Variations
 
-###### Custom Title
+### Custom Title
 
 ```js preview-story
 export const CustomTitle = () => html` <portal-language-switcher title="Hello World"></portal-language-switcher> `;
+```
+
+### Custom Language
+
+```js preview-story
+export const CustomLanguage = () => html` <portal-language-switcher language="fr"></portal-language-switcher> `;
 ```
