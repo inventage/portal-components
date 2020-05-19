@@ -7,7 +7,7 @@ on: [push, pull_request]
 
 jobs:
   run:
-    name: Run
+    name: Lint & Test
 
     runs-on: ubuntu-latest
 
@@ -43,7 +43,7 @@ jobs:
         run: npm test
 
   deploy:
-    name: Deploy
+    name: Build & Deploy
 
     runs-on: ubuntu-latest
 
@@ -73,4 +73,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook-static
 
