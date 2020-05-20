@@ -3,15 +3,15 @@ import { html } from '@open-wc/demoing-storybook';
 import '../portal-card.js';
 
 export default {
-  title: 'Components/PortalNavigation',
+  title: 'Components/Card',
   component: 'portal-navigation',
   options: { selectedPanel: 'storybookjs/knobs/panel' },
 };
 ```
 
-# PortalNavigation
+# Card
 
-A component for...
+A test component to display what a component can consist of, how it is documented and how to properly test it.
 
 ## Features:
 
@@ -19,20 +19,12 @@ A component for...
 - b
 - ...
 
-## How to use
-
-### Installation
-
-```bash
-yarn add portal-navigation
-```
-
 ```js
-import 'portal-navigation/portal-navigation.js';
+import 'portal-card/portal-card.js';
 ```
 
 ```js preview-story
-export const Simple = () => html` <portal-navigation></portal-navigation> `;
+export const Simple = () => html` <portal-card></portal-card> `;
 ```
 
 ## Variations
@@ -40,5 +32,5 @@ export const Simple = () => html` <portal-navigation></portal-navigation> `;
 ###### Custom Title
 
 ```js preview-story
-export const CustomTitle = () => html` <portal-navigation title="Hello World"></portal-navigation> `;
+export const CustomTitle = () => html` <portal-card title="Hello World"></portal-card> `;
 ```
