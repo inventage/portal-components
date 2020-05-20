@@ -80,6 +80,11 @@
           "type": "Length"
         },
         {
+          "name": "--portal-card-height",
+          "description": "Height",
+          "type": "Length"
+        },
+        {
           "name": "--portal-card-text-color",
           "description": "Text Color",
           "type": "Color"
@@ -90,13 +95,18 @@
           "type": "Length"
         },
         {
-          "name": "--portal-card-border-color",
-          "description": "Border Color",
-          "type": "Color"
+          "name": "--portal-card-border",
+          "description": "Border",
+          "type": "String"
         },
         {
-          "name": "--portal-card-border-width",
-          "description": "Border Width",
+          "name": "--portal-card-border-radius",
+          "description": "Border Radius",
+          "type": "String"
+        },
+        {
+          "name": "--portal-card-margin",
+          "description": "Margin",
           "type": "Length"
         }
       ]
