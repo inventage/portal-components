@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Stories" pattern="file[portal-components]:components/*/stories//*.md" />
+</component>
