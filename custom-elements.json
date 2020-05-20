@@ -4,16 +4,12 @@
     {
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
+      "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.",
       "attributes": [
         {
           "name": "title",
           "type": "string",
-          "default": "\"Hey there\""
-        },
-        {
-          "name": "counter",
-          "type": "number",
-          "default": "5"
+          "default": "\"I am a glorious title\""
         }
       ],
       "properties": [
@@ -21,13 +17,34 @@
           "name": "title",
           "attribute": "title",
           "type": "string",
-          "default": "\"Hey there\""
+          "default": "\"I am a glorious title\""
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--portal-card-width",
+          "description": "Width",
+          "type": "Length"
         },
         {
-          "name": "counter",
-          "attribute": "counter",
-          "type": "number",
-          "default": "5"
+          "name": "--portal-card-text-color",
+          "description": "Text Color",
+          "type": "Color"
+        },
+        {
+          "name": "--portal-card-padding",
+          "description": "Padding",
+          "type": "Length"
+        },
+        {
+          "name": "--portal-card-border-color",
+          "description": "Border Color",
+          "type": "Color"
+        },
+        {
+          "name": "--portal-card-border-width",
+          "description": "Border Width\n\nUseful links:",
+          "type": "Length"
         }
       ]
     },
