@@ -17,10 +17,11 @@
     "url": "https://github.com/inventage/portal-components.git"
   },
   "scripts": {
-    "start": "concurrently -n wca,storybook 'npm run watch:custom-elements' 'npm run storybook'",
+    "start": "concurrently -n wca,storybook 'npm run watch:analyze:custom-elements' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
     "build": "run-s build:*",
-    "build:custom-elements": "wca analyze 'components/**/*.js' --outFile custom-elements.json",
+    "build:analyze:custom-elements": "wca analyze 'components/**/*.js' --outFile custom-elements.json",
+    "build:analyze:readme": "wca analyze 'components/**/*.js' --silent",
     "build:storybook": "npm run storybook:build",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier '**/*.{js,md}' --write --ignore-path .gitignore",
@@ -35,7 +36,7 @@
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
     "storybook:build:start": "es-dev-server --root-dir storybook-static --open",
-    "watch:custom-elements": "onchange -i 'components/**/*.js' -- npm run build:custom-elements"
+    "watch:analyze:custom-elements": "onchange -i 'components/**/*.js' -- npm run build:analyze:custom-elements"
   },
   "dependencies": {
     "lit-html": "^1.2.1",
