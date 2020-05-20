@@ -1,0 +1,65 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "portal-language-switcher",
+      "path": "./components/portal-language-switcher/portal-language-switcher.js",
+      "attributes": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"Hai there\""
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "default": "\"de\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "\"Hai there\""
+        },
+        {
+          "name": "language",
+          "attribute": "language",
+          "type": "string",
+          "default": "\"de\""
+        }
+      ]
+    },
+    {
+      "name": "portal-navigation",
+      "path": "./components/portal-navigation/portal-navigation.js",
+      "attributes": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"Hey there\""
+        },
+        {
+          "name": "counter",
+          "type": "number",
+          "default": "5"
+        }
+      ],
+      "properties": [
+        {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "\"Hey there\""
+        },
+        {
+          "name": "counter",
+          "attribute": "counter",
+          "type": "number",
+          "default": "5"
+        }
+      ]
+    }
+  ]
+}
