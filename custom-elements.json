@@ -2,53 +2,6 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "portal-card",
-      "path": "./components/portal-card/portal-card.js",
-      "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.",
-      "attributes": [
-        {
-          "name": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "title",
-          "attribute": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        }
-      ],
-      "cssProperties": [
-        {
-          "name": "--portal-card-width",
-          "description": "Width",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-text-color",
-          "description": "Text Color",
-          "type": "Color"
-        },
-        {
-          "name": "--portal-card-padding",
-          "description": "Padding",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-border-color",
-          "description": "Border Color",
-          "type": "Color"
-        },
-        {
-          "name": "--portal-card-border-width",
-          "description": "Border Width\n\nUseful links:",
-          "type": "Length"
-        }
-      ]
-    },
-    {
       "name": "portal-language-switcher",
       "path": "./components/portal-language-switcher/portal-language-switcher.js",
       "attributes": [
@@ -75,6 +28,76 @@
           "attribute": "language",
           "type": "string",
           "default": "\"de\""
+        }
+      ]
+    },
+    {
+      "name": "portal-card",
+      "path": "./components/portal-card/portal-card.js",
+      "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
+      "attributes": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"I am a glorious title\""
+        },
+        {
+          "name": "back-side",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "properties": [
+        {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "\"I am a glorious title\""
+        },
+        {
+          "name": "backSide",
+          "attribute": "back-side",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "side-changed",
+          "description": "Event fired when the card changes sides."
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "This is an unnamed slot (the default slot)"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--portal-card-width",
+          "description": "Width",
+          "type": "Length"
+        },
+        {
+          "name": "--portal-card-text-color",
+          "description": "Text Color",
+          "type": "Color"
+        },
+        {
+          "name": "--portal-card-padding",
+          "description": "Padding",
+          "type": "Length"
+        },
+        {
+          "name": "--portal-card-border-color",
+          "description": "Border Color",
+          "type": "Color"
+        },
+        {
+          "name": "--portal-card-border-width",
+          "description": "Border Width",
+          "type": "Length"
         }
       ]
     },
