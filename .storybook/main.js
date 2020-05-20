@@ -4,7 +4,7 @@ module.exports = {
   // @see https://storybook.js.org/addons/
   addons: [
     'storybook-prebuilt/addon-docs/register.js',
-    'storybook-prebuilt/addon-actions/register.js',
+    // 'storybook-prebuilt/addon-actions/register.js',
     'storybook-prebuilt/addon-knobs/register.js',
     'storybook-prebuilt/addon-a11y/register.js',
     'storybook-prebuilt/addon-viewport/register.js',
