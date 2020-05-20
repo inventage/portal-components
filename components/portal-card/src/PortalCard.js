@@ -11,10 +11,12 @@ import { css, html, LitElement } from 'lit-element';
  * @see https://github.com/open-wc/open-wc/tree/master/packages/demoing-storybook/demo
  *
  * @cssprop {Length} --portal-card-width - Width
+ * @cssprop {Length} --portal-card-height - Height
  * @cssprop {Color} --portal-card-text-color - Text Color
  * @cssprop {Length} --portal-card-padding - Padding
- * @cssprop {Color} --portal-card-border-color - Border Color
- * @cssprop {Length} --portal-card-border-width - Border Width
+ * @cssprop {String} --portal-card-border - Border
+ * @cssprop {String} --portal-card-border-radius - Border Radius
+ * @cssprop {Length} --portal-card-margin - Margin
  *
  * @slot - This is an unnamed slot (the default slot)
  *
@@ -25,18 +27,25 @@ export class PortalCard extends LitElement {
     return css`
       :host {
         --portal-card-width: 200px;
+        --portal-card-height: 200px;
         --portal-card-text-color: #000;
         --portal-card-padding: 1rem;
-        --portal-card-border-color: #000;
-        --portal-card-border-width: 1px;
+        --portal-card-border: 1px solid rgba(0, 0, 0, 0.1);
+        --portal-card-border-radius: 0.5rem;
+        --portal-card-margin: 1rem;
 
         display: block;
+        margin: var(--portal-card-margin);
         width: var(--portal-card-width);
+        min-height: var(--portal-card-height);
         padding: var(--portal-card-padding);
         color: var(--portal-card-text-color);
-        border: var(--portal-card-border-width) solid var(--portal-card-border-color);
+        border: var(--portal-card-border);
+        border-radius: var(--portal-card-border-radius);
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.15);
         transform-style: preserve-3d;
-        transition: all 0.8s ease;
+        transition: all 0.5s ease-in-out;
+        font-family: sans-serif;
       }
 
       :host[hidden] {
@@ -47,24 +56,49 @@ export class PortalCard extends LitElement {
         transform: rotateY(180deg);
       }
 
-      :host > .front,
-      :host > .back {
+      .front,
+      .back {
         position: absolute;
         top: 0;
         left: 0;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
+        bottom: 0;
+        right: 0;
         display: flex;
         flex-flow: column;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
         overflow: hidden;
-        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+        border-radius: var(--portal-card-border-radius);
       }
 
-      :host > .back {
-        text-align: center;
+      .back {
+        text-align: right;
         transform: rotateY(180deg);
+      }
+
+      .footer {
+        display: flex;
+        padding: 10px;
+      }
+
+      .footer.-reverse {
+        text-align: left;
+      }
+
+      .side {
+        font-weight: bold;
+        flex-grow: 1;
+      }
+
+      .content {
+        padding: 10px;
+        flex-grow: 1;
+      }
+
+      .title {
+        padding: 10px;
+        background: #004996;
+        color: white;
       }
     `;
   }
@@ -101,9 +135,18 @@ export class PortalCard extends LitElement {
         <span class="content">
           <slot></slot>
         </span>
+        <div class="footer">
+          <div class="side">A</div>
+          <button @click=${this.toggle}>→</button>
+        </div>
       </div>
       <div class="back">
         <span class="title">${this.title}</span>
+        <span class="content"></span>
+        <div class="footer -reverse">
+          <div class="side">B</div>
+          <button @click=${this.toggle}>→</button>
+        </div>
       </div>
     `;
   }
