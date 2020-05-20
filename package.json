@@ -27,7 +27,7 @@
     "lint": "run-p lint:*",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier '**/*.{js,md}' --check --ignore-path .gitignore",
-    "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
+    "lint:markdownlint": "markdownlint '*.md' --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
     "lint:analyze": "lit-analyzer 'components/**/*.js' --strict",
     "format": "npm run format:eslint && npm run format:prettier",
     "test": "karma start --coverage",
@@ -89,7 +89,7 @@
     ],
     "*.md": [
       "prettier --write",
-      "markdownlint"
+      "markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'"
     ]
   }
 }
