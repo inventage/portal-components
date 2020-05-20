@@ -2,6 +2,36 @@
   "version": "experimental",
   "tags": [
     {
+      "name": "portal-card",
+      "path": "./components/portal-card/portal-card.js",
+      "attributes": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"Hey there\""
+        },
+        {
+          "name": "counter",
+          "type": "number",
+          "default": "5"
+        }
+      ],
+      "properties": [
+        {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "\"Hey there\""
+        },
+        {
+          "name": "counter",
+          "attribute": "counter",
+          "type": "number",
+          "default": "5"
+        }
+      ]
+    },
+    {
       "name": "portal-language-switcher",
       "path": "./components/portal-language-switcher/portal-language-switcher.js",
       "attributes": [
