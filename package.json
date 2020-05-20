@@ -12,6 +12,10 @@
     "lit-html",
     "portal"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inventage/portal-components.git"
+  },
   "scripts": {
     "start": "concurrently -n wca,storybook 'npm run watch:custom-elements' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
