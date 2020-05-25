@@ -4,7 +4,9 @@ import '../portal-card.js';
 
 <!-- @see https://github.com/open-wc/open-wc/edit/master/packages/demoing-storybook/demo/stories/withWebComponentsKnobs.stories.mdx -->
 
-# Card
+# Card Variations
+
+This story uses [mdx] to document different variations of the card component. Also, the knobs are [automatically generated](https://open-wc.org/demoing-storybook/?path=/docs/decorators-withwebcomponentknobs--example-output) based on `custom-elements.json`.
 
 <Meta
   title="Components/Card/Variations"
@@ -14,7 +16,9 @@ import '../portal-card.js';
 
 ## Custom Title
 
-<Story name="Custom Title">{html` <portal-card title="Harry Potter"></portal-card> `}</Story>
+<Preview>
+  <Story name="Custom Title">{html`<portal-card title="Harry Potter"></portal-card>`}</Story>
+</Preview>
 
 ## Own light dom
 
@@ -27,3 +31,5 @@ import '../portal-card.js';
     `}
   </Story>
 </Preview>
+
+[mdx]: https://github.com/mdx-js/mdx
