@@ -11,8 +11,9 @@ module.exports = {
   ],
   esDevServer: {
     // custom es-dev-server options
+    // @see https://open-wc.org/developing/es-dev-server.html#configuration-files
     nodeResolve: true,
     watch: true,
-    open: true,
+    open: false,
   },
 };
