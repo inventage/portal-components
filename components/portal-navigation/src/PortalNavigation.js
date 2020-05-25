@@ -1,37 +1,13 @@
-import { html, css, LitElement } from 'lit-element';
+import { LitElement } from 'lit-element';
+import { nothing } from 'lit-html';
+import { baseStyles } from '../../helpers/baseStyles.js';
 
 export class PortalNavigation extends LitElement {
   static get styles() {
-    return css`
-      :host {
-        display: block;
-        padding: 25px;
-        color: var(--portal-navigation-text-color, #000);
-      }
-    `;
-  }
-
-  static get properties() {
-    return {
-      title: { type: String },
-      counter: { type: Number },
-    };
-  }
-
-  constructor() {
-    super();
-    this.title = 'Hey there';
-    this.counter = 5;
-  }
-
-  __increment() {
-    this.counter += 1;
+    return baseStyles;
   }
 
   render() {
-    return html`
-      <h2>${this.title} Nr. ${this.counter}!</h2>
-      <button @click=${this.__increment}>increment</button>
-    `;
+    return nothing;
   }
 }

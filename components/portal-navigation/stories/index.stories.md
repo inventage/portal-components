@@ -11,7 +11,7 @@ export default {
 
 # PortalNavigation
 
-A component for...
+A component implementing an opinionated (but generic and hence configurable) navigation pattern.
 
 ## Features:
 
@@ -21,24 +21,14 @@ A component for...
 
 ## How to use
 
-### Installation
+```html
+<script type="module">
+  import '@inventage/portal-components/components/portal-card/portal-card.js';
+</script>
 
-```bash
-yarn add portal-navigation
-```
-
-```js
-import 'portal-navigation/portal-navigation.js';
+<portal-navigation></portal-navigation>
 ```
 
 ```js preview-story
-export const Simple = () => html` <portal-navigation></portal-navigation> `;
-```
-
-## Variations
-
-###### Custom Title
-
-```js preview-story
-export const CustomTitle = () => html` <portal-navigation title="Hello World"></portal-navigation> `;
+export const Simple = () => html`<portal-navigation></portal-navigation>`;
 ```
