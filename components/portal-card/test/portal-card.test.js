@@ -49,6 +49,11 @@ describe('PortalCard', () => {
     expect(counter).to.equal(2);
   });
 
+  it('is displayed by default', async () => {
+    const el = await fixture(html`<portal-card></portal-card>`);
+    expect(el).to.be.displayed;
+  });
+
   it('is hidden when attribute hidden is true', async () => {
     const el = await fixture(html`<portal-card hidden></portal-card>`);
     expect(el).not.to.be.displayed;

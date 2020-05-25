@@ -83,33 +83,7 @@
     },
     {
       "name": "portal-navigation",
-      "path": "./components/portal-navigation/portal-navigation.js",
-      "attributes": [
-        {
-          "name": "title",
-          "type": "string",
-          "default": "\"Hey there\""
-        },
-        {
-          "name": "counter",
-          "type": "number",
-          "default": "5"
-        }
-      ],
-      "properties": [
-        {
-          "name": "title",
-          "attribute": "title",
-          "type": "string",
-          "default": "\"Hey there\""
-        },
-        {
-          "name": "counter",
-          "attribute": "counter",
-          "type": "number",
-          "default": "5"
-        }
-      ]
+      "path": "./components/portal-navigation/portal-navigation.js"
     }
   ]
 }

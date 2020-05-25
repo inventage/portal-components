@@ -1,4 +1,5 @@
 import { css, html, LitElement } from 'lit-element';
+import { baseStyles } from '../../helpers/baseStyles.js';
 
 /**
  * A test component to display what a component can consist of, how it is documented and how to properly test it.
@@ -24,83 +25,81 @@ import { css, html, LitElement } from 'lit-element';
  */
 export class PortalCard extends LitElement {
   static get styles() {
-    return css`
-      :host {
-        --portal-card-width: 200px;
-        --portal-card-height: 200px;
-        --portal-card-text-color: #000;
-        --portal-card-padding: 1rem;
-        --portal-card-border: 1px solid rgba(0, 0, 0, 0.1);
-        --portal-card-border-radius: 0.5rem;
-        --portal-card-margin: 1rem;
+    return [
+      baseStyles,
+      css`
+        :host {
+          --portal-card-width: 200px;
+          --portal-card-height: 200px;
+          --portal-card-text-color: #000;
+          --portal-card-padding: 1rem;
+          --portal-card-border: 1px solid rgba(0, 0, 0, 0.1);
+          --portal-card-border-radius: 0.5rem;
+          --portal-card-margin: 1rem;
 
-        display: block;
-        margin: var(--portal-card-margin);
-        width: var(--portal-card-width);
-        min-height: var(--portal-card-height);
-        padding: var(--portal-card-padding);
-        color: var(--portal-card-text-color);
-        border: var(--portal-card-border);
-        border-radius: var(--portal-card-border-radius);
-        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.15);
-        transform-style: preserve-3d;
-        transition: all 0.5s ease-in-out;
-        font-family: sans-serif;
-      }
+          margin: var(--portal-card-margin);
+          width: var(--portal-card-width);
+          min-height: var(--portal-card-height);
+          padding: var(--portal-card-padding);
+          color: var(--portal-card-text-color);
+          border: var(--portal-card-border);
+          border-radius: var(--portal-card-border-radius);
+          box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.15);
+          transform-style: preserve-3d;
+          transition: all 0.5s ease-in-out;
+          font-family: sans-serif;
+        }
 
-      :host([hidden]) {
-        display: none;
-      }
+        :host([back-side]) {
+          transform: rotateY(180deg);
+        }
 
-      :host([back-side]) {
-        transform: rotateY(180deg);
-      }
+        .front,
+        .back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          display: flex;
+          flex-flow: column;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          overflow: hidden;
+          border-radius: var(--portal-card-border-radius);
+        }
 
-      .front,
-      .back {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        display: flex;
-        flex-flow: column;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        overflow: hidden;
-        border-radius: var(--portal-card-border-radius);
-      }
+        .back {
+          text-align: right;
+          transform: rotateY(180deg);
+        }
 
-      .back {
-        text-align: right;
-        transform: rotateY(180deg);
-      }
+        .footer {
+          display: flex;
+          padding: 10px;
+        }
 
-      .footer {
-        display: flex;
-        padding: 10px;
-      }
+        .footer.-reverse {
+          text-align: left;
+        }
 
-      .footer.-reverse {
-        text-align: left;
-      }
+        .side {
+          font-weight: bold;
+          flex-grow: 1;
+        }
 
-      .side {
-        font-weight: bold;
-        flex-grow: 1;
-      }
+        .content {
+          padding: 10px;
+          flex-grow: 1;
+        }
 
-      .content {
-        padding: 10px;
-        flex-grow: 1;
-      }
-
-      .title {
-        padding: 10px;
-        background: #004996;
-        color: white;
-      }
-    `;
+        .title {
+          padding: 10px;
+          background: #004996;
+          color: white;
+        }
+      `,
+    ];
   }
 
   static get properties() {
