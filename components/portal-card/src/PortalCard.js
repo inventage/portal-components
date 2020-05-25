@@ -48,7 +48,7 @@ export class PortalCard extends LitElement {
         font-family: sans-serif;
       }
 
-      :host[hidden] {
+      :host([hidden]) {
         display: none;
       }
 
