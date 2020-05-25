@@ -13,24 +13,18 @@ export default {
 
 A test component to display what a component can consist of, how it is documented and how to properly test it.
 
-## Features:
+This component heavily borrows from the Open Web Components [demo card](https://open-wc.org/demoing-storybook/?path=/docs/demo-card-docs--simple) implementation and storybook documentation.
 
-- a
-- b
-- ...
+```html
+<script type="module">
+  import '@inventage/portal-components/components/portal-card/portal-card.js';
+</script>
 
-```js
-import 'portal-card/portal-card.js';
+<portal-card></portal-card>
 ```
 
-```js preview-story
-export const Simple = () => html` <portal-card></portal-card> `;
-```
-
-## Variations
-
-###### Custom Title
+## Example
 
 ```js preview-story
-export const CustomTitle = () => html` <portal-card title="Hello World"></portal-card> `;
+export const Basic = () => html`<portal-card></portal-card>`;
 ```

@@ -1,0 +1,29 @@
+import { withKnobs, withWebComponentsKnobs, html, Story, Meta, text, Preview } from '@open-wc/demoing-storybook';
+
+import '../portal-card.js';
+
+<!-- @see https://github.com/open-wc/open-wc/edit/master/packages/demoing-storybook/demo/stories/withWebComponentsKnobs.stories.mdx -->
+
+# Card
+
+<Meta
+  title="Components/Card/Variations"
+  decorators={[withKnobs, withWebComponentsKnobs]}
+  parameters={{ component: 'portal-card', options: { selectedPanel: 'storybookjs/knobs/panel' } }}
+/>
+
+## Custom Title
+
+<Story name="Custom Title">{html` <portal-card title="Harry Potter"></portal-card> `}</Story>
+
+## Own light dom
+
+<Preview withToolbar height="500px">
+  <Story name="Content Slot">
+    {html`
+      <portal-card>
+        <p>${text('content', 'Some text', 'Properties')}</p>
+      </portal-card>
+    `}
+  </Story>
+</Preview>
