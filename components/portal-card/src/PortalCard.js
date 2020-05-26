@@ -115,12 +115,22 @@ export class PortalCard extends LitElement {
     this.backSide = false;
   }
 
-  requestUpdate(name, oldValue) {
+  /**
+   * Workaround for listening on property changes…
+   *
+   * @see https://github.com/Polymer/lit-element/issues/643
+   *
+   * @param name
+   * @param oldValue
+   * @private
+   */
+  _requestUpdate(name, oldValue) {
+    // @ts-ignore
+    super._requestUpdate(name, oldValue);
+
     if (name === 'backSide') {
       this.dispatchEvent(new Event('side-changed'));
     }
-
-    return super.requestUpdate(name, oldValue);
   }
 
   toggle() {
