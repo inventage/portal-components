@@ -19,16 +19,6 @@ A component implementing an opinionated (but generic and hence configurable) nav
 - b
 - ...
 
-## How to use
-
-```html
-<script type="module">
-  import '@inventage/portal-components/components/portal-navigation/portal-navigation.js';
-</script>
-
-<portal-navigation></portal-navigation>
-```
-
 ```js preview-story
 export const Basic = () => html`<portal-navigation></portal-navigation>`;
 ```
