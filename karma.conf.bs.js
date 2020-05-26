@@ -8,9 +8,12 @@ module.exports = config => {
     merge.strategy({
       browsers: 'replace',
     })(bsSettings(config), createBaseConfig(config), {
+      // @see https://github.com/karma-runner/karma-browserstack-launcher
       browserStack: {
+        build: 'Portal Components Tests',
         project: 'portal-components',
       },
+      // @see node_modules/@open-wc/testing-karma-bs/bs-settings.js
       browsers: [
         'bs_win10_chrome_latest',
         // Only chrome for now
