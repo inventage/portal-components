@@ -23,6 +23,7 @@ import { baseStyles } from '../../helpers/baseStyles.js';
  *
  * @fires side-changed - Event fired when the card changes sides.
  */
+// @ts-ignore
 export class PortalCard extends LitElement {
   static get styles() {
     return [
