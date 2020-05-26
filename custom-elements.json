@@ -2,6 +2,10 @@
   "version": "experimental",
   "tags": [
     {
+      "name": "portal-navigation",
+      "path": "./components/portal-navigation/portal-navigation.js"
+    },
+    {
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
@@ -80,10 +84,6 @@
           "type": "Length"
         }
       ]
-    },
-    {
-      "name": "portal-navigation",
-      "path": "./components/portal-navigation/portal-navigation.js"
     }
   ]
 }

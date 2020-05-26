@@ -15,14 +15,6 @@ A test component to display what a component can consist of, how it is documente
 
 This component heavily borrows from the Open Web Components [demo card](https://open-wc.org/demoing-storybook/?path=/docs/demo-card-docs--simple) implementation and storybook documentation.
 
-```html
-<script type="module">
-  import '@inventage/portal-components/components/portal-card/portal-card.js';
-</script>
-
-<portal-card></portal-card>
-```
-
 ## Example
 
 ```js preview-story
