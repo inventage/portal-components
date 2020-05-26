@@ -19,6 +19,9 @@ local.log
 ## browserstack
 browserstack.err
 
+## types
+/types/
+
 # build
 /_site/
 /dist/

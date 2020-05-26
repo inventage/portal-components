@@ -19,7 +19,8 @@
     "LICENSE",
     "README.md",
     "components",
-    "docs"
+    "docs",
+    "types"
   ],
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "start": "concurrently -n wca,storybook 'npm run watch:analyze:custom-elements' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
     "build": "run-s build:*",
+    "build:types": "rimraf ./types && tsc -p tsconfig.json",
     "build:analyze:custom-elements": "wca analyze 'components/**/*.js' --outFile custom-elements.json",
     "build:analyze:readme": "wca analyze 'components/**/*.js' --silent",
     "build:storybook": "npm run storybook:build",
@@ -52,7 +54,8 @@
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
     "storybook:build:start": "es-dev-server --root-dir storybook-static --open",
-    "watch:analyze:custom-elements": "onchange -i 'components/**/*.js' -- npm run build:analyze:custom-elements"
+    "watch:analyze:custom-elements": "onchange -i 'components/**/*.js' -- npm run build:analyze:custom-elements",
+    "prepublishOnly": "npm run lint && npm run build:types"
   },
   "dependencies": {
     "lit-html": "^1.2.1",
@@ -80,6 +83,7 @@
     "onchange": "^7.0.2",
     "prettier": "^2.0.5",
     "sinon": "^9.0.2",
+    "typescript": "^3.9.3",
     "web-component-analyzer": "^1.0.3",
     "webpack-merge": "^4.2.2"
   },

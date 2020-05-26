@@ -115,12 +115,12 @@ export class PortalCard extends LitElement {
     this.backSide = false;
   }
 
-  _requestUpdate(name, oldValue) {
-    super._requestUpdate(name, oldValue);
-
+  requestUpdate(name, oldValue) {
     if (name === 'backSide') {
       this.dispatchEvent(new Event('side-changed'));
     }
+
+    return super.requestUpdate(name, oldValue);
   }
 
   toggle() {
