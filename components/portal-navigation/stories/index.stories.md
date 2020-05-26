@@ -9,7 +9,7 @@ export default {
 };
 ```
 
-# PortalNavigation
+# Navigation
 
 A component implementing an opinionated (but generic and hence configurable) navigation pattern.
 
@@ -23,12 +23,12 @@ A component implementing an opinionated (but generic and hence configurable) nav
 
 ```html
 <script type="module">
-  import '@inventage/portal-components/components/portal-card/portal-card.js';
+  import '@inventage/portal-components/components/portal-navigation/portal-navigation.js';
 </script>
 
 <portal-navigation></portal-navigation>
 ```
 
 ```js preview-story
-export const Simple = () => html`<portal-navigation></portal-navigation>`;
+export const Basic = () => html`<portal-navigation></portal-navigation>`;
 ```
