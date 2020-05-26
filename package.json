@@ -2,19 +2,32 @@
   "name": "@inventage/portal-components",
   "version": "0.0.0",
   "description": "A collection of webcomponents for enterprise portals.",
+  "homepage": "https://inventage.github.io/portal-components",
   "author": "Inventage AG <info@inventage.com>",
   "license": "MIT",
   "main": "index.js",
   "module": "index.js",
+  "type": "module",
   "keywords": [
     "web-components",
     "lit-element",
     "lit-html",
     "portal"
   ],
+  "files": [
+    "index.js",
+    "custom-elements.json",
+    "LICENSE",
+    "README.md",
+    "components",
+    "docs"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/inventage/portal-components.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "start": "concurrently -n wca,storybook 'npm run watch:analyze:custom-elements' 'npm run storybook'",
@@ -97,5 +110,8 @@
       "prettier --write",
       "markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'"
     ]
+  },
+  "np": {
+    "yarn": false
   }
 }
