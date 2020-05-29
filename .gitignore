@@ -35,3 +35,6 @@ browserstack.err
 /.idea/**/usage.statistics.xml
 /.idea/**/dictionaries
 /.idea/**/shelf
+
+# Ignore project name, everybody can set this for themselves…
+.idea/.name
