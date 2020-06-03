@@ -63,7 +63,7 @@
     "lit-element": "^2.3.1"
   },
   "devDependencies": {
-    "@lion/helpers": "^0.4.0",
+    "@lion/helpers": "^0.5.0",
     "@open-wc/demoing-storybook": "^2.3.5",
     "@open-wc/eslint-config": "^2.0.6",
     "@open-wc/testing": "^2.5.17",
