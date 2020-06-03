@@ -1,7 +1,7 @@
 # Status Quo
 
 Die heutige Navigation im geschützten Bereich des [VP Bank](https://www.vpbank.com/login) Portals
-![VPB Portal Navigation](VPB_nav-menu.png)
+![VPB Portal Navigation](img/VPB_nav-menu.png)
 
 ## Struktur
 
@@ -32,7 +32,7 @@ Ein Menü kann sich in einer der folgenden Gruppen befinden:
 - profile
 - logout
 
-![Groups](nav-menu_groups.png)
+![Groups](img/nav-menu_groups.png)
 
 Die beiden Bereiche (roten) «strings» und «languages» sind Spezialfälle. Der erste enthält einen Button für den Rücksprung (z. B. in den öffentlichen Teil) und «languages» enthält den Sprachwechsler. Sie könnten neu via Slot realisiert werden.
 
@@ -58,7 +58,7 @@ Der Benutzer wird aktuell über die folgende URL bezogen: `/portal/api/currentus
 
 Die Sichtbarkeit eines Menüs/Menüitems wird durch folgende Logik ermittelt:
 
-![Visibility](nav-menu_visibility.png)
+![Visibility](img/nav-menu_visibility.png)
 
 ## Verhalten
 
@@ -92,4 +92,4 @@ Die Sichtbarkeit eines Menüs/Menüitems wird durch folgende Logik ermittelt:
 
 Mit diesen Anpassungen könnte dann eine solche Navigation realisiert werden:
 
-![RM](nav-menu_slots-icons-badges.png)
+![RM](img/nav-menu_slots-icons-badges.png)
