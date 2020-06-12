@@ -84,6 +84,7 @@ Die Sichtbarkeit eines Menüs/Menüitems wird durch folgende Logik ermittelt:
 ## Vorgesehene Änderungen für Refactoring
 
 - Zwei Slots: "left" und "right"
+- Gruppen können auch leer sein (hier im Beispiel ist "Profile" und "Logout" leeer)
 - Badges für alle Menü/Menüitems
 - Icons für alle Menü/Menüitems (mit und ohne Label)
 - Darstellung bei (zu-)vielen Level 1/2 Menüs
