@@ -23,7 +23,7 @@ Die Navigation kennt zwei Menüstufen. Diese werden für die erste Stufe (Level 
 | destination                 | `String`                  | o   | -                    | x    | x        |
 | internalRoutingApplications | `Array<String>`           | o   | -                    | x    | x        |
 | items                       | `Array<Menüitem>`         | o   | -                    | x    | -        |
-| icon                        | o                         | o   | -                    | x    | x        |
+| icon                        | `String<URL>`             | o   | -                    | x    | x        |
 
 Ein Menü kann sich in einer der folgenden Gruppen befinden:
 
@@ -83,14 +83,15 @@ Die Sichtbarkeit eines Menüs/Menüitems wird durch folgende Logik ermittelt:
 
 ## Vorgesehene Änderungen für Refactoring
 
-- Zwei Slots: "left" und "right"
+- Reihenfolge für remote/lokales data.json: 1. via URL für currentnavigation, 2. via URLs für currentmenu + currentuser, 3. via lokalem data.json + URL für currentuser
+- Drei Slots: "logo", "left" und "right"
 - Gruppen können auch leer sein (hier im Beispiel ist "Profile" und "Logout" leeer)
 - Badges für alle Menü/Menüitems
-- Icons für alle Menü/Menüitems (mit und ohne Label)
+- Icons für alle Menü/Menüitems (mit und ohne Label) 
 - Darstellung bei (zu-)vielen Level 1/2 Menüs
 - Support ES Modules
 - Auslagerung des Sprachwechslers
 
-Mit diesen Anpassungen könnte dann eine solche Navigation realisiert werden:
+Weil eine Menügruppe auch leer sein kann, könnte eine solche Navigation realisiert werden:
 
 ![RM](img/nav-menu_slots-icons-badges.png)
