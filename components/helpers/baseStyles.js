@@ -1,12 +1,9 @@
-/**
- * @typedef { import("lit-element").CSSResult } CSSResult
- */
 import { css } from 'lit-element/lit-element.js';
 
 /**
  * Shared component styles
  *
- * @type {CSSResult}
+ * @type {import("lit-element").CSSResult}
  *
  * @link https://lit-element.polymer-project.org/guide/styles#style-the-component-itself
  */
