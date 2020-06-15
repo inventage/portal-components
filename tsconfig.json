@@ -9,7 +9,6 @@
     "noEmit": false,
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "./types",
     "strict": false,
     "noImplicitThis": true,
     "alwaysStrict": true,

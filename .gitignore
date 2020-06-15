@@ -19,8 +19,9 @@ local.log
 ## browserstack
 browserstack.err
 
-## types
-/types/
+## Generated types
+index.d.ts
+components/**/*.d.ts
 
 # build
 /_site/
