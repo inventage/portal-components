@@ -20,8 +20,7 @@
     "LICENSE",
     "README.md",
     "components",
-    "docs",
-    "types"
+    "docs"
   ],
   "repository": {
     "type": "git",
@@ -33,8 +32,9 @@
   "scripts": {
     "start": "concurrently -n wca,storybook 'npm run watch:analyze:custom-elements' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
+    "clean:types": "rimraf '*.d.ts' 'components/**/*.d.ts'",
     "build": "run-s build:*",
-    "build:types": "rimraf ./types && tsc -p tsconfig.json",
+    "build:types": "npm run clean:types && tsc -p tsconfig.json",
     "build:analyze:custom-elements": "wca analyze 'components/**/*.js' --outFile custom-elements.json",
     "build:analyze:readme": "wca analyze 'components/**/*.js' --silent",
     "build:storybook": "npm run storybook:build",
