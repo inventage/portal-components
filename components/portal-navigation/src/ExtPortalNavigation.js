@@ -16,11 +16,6 @@ export class ExtPortalNavigation extends PortalNavigation {
 
     super.detectCurrentLanguage();
   }
-
-  render() {
-    return html``;
-  }
-
 }
 
 customElements.define('ext-portal-navigation', ExtPortalNavigation);

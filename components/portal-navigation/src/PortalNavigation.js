@@ -155,7 +155,7 @@ export class PortalNavigation extends LitElement {
     <div class="nav-menu-container">
         <header class="nav-menu-header">
             <div class="nav-menu-content">
-                <slot name="logo"></slot>
+                logo-slot:<slot name="logo"></slot>
 
                 <button class="nav-menu-header-toggle hamburger" type="button" aria-label="Toggle navigation">
                 <span class="hamburger-box">
@@ -166,16 +166,16 @@ export class PortalNavigation extends LitElement {
         </header>
 
         <main class="nav-menu-groups">
-            <section class="nav-slot-left"><slot name="left"></slot></section>
-            <section class="nav-menu-meta-group"></section>
-            <section class="nav-menu-profile-group"></section>
-            <section class="nav-menu-logout"></section>
-            <section class="nav-slot-right"><slot name="right"></slot></section>
+            <section class="nav-slot-left">left-slot:<slot name="left"></slot></section>
+            <section class="nav-menu-meta-group">meta</section>
+            <section class="nav-menu-profile-group">profile</section>
+            <section class="nav-menu-logout">logout</section>
+            <section class="nav-slot-right">right-slot:<slot name="right"></slot></section>
             <section class="nav-menu-main-group">
-                <div class="nav-menu-content"></div>
+                <div class="nav-menu-content">lvl1-content</div>
             </section>
             <section class="nav-menu-current">
-                <div class="nav-menu-content"></div>
+                <div class="nav-menu-content">lvl2-content</div>
             </section>
         </main>
     </div>`;
