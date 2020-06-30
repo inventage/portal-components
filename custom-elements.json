@@ -2,10 +2,6 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "portal-navigation",
-      "path": "./components/portal-navigation/portal-navigation.js"
-    },
-    {
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
@@ -82,6 +78,67 @@
           "name": "--portal-card-margin",
           "description": "Margin",
           "type": "Length"
+        }
+      ]
+    },
+    {
+      "name": "portal-navigation",
+      "path": "./components/portal-navigation/portal-navigation.js",
+      "attributes": [
+        {
+          "name": "src",
+          "type": "string"
+        },
+        {
+          "name": "lang",
+          "type": "string"
+        }
+      ],
+      "properties": [
+        {
+          "name": "src",
+          "attribute": "src",
+          "type": "string"
+        },
+        {
+          "name": "lang",
+          "attribute": "lang",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "ext-portal-navigation",
+      "path": "./components/portal-navigation/src/ExtPortalNavigation.js",
+      "attributes": [
+        {
+          "name": "src",
+          "type": "string"
+        },
+        {
+          "name": "lang",
+          "type": "string"
+        }
+      ],
+      "properties": [
+        {
+          "name": "src",
+          "attribute": "src",
+          "type": "string"
+        },
+        {
+          "name": "lang",
+          "attribute": "lang",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "comp-portal-navigation",
+      "path": "./components/portal-navigation/src/CompPortalNavigation.js",
+      "properties": [
+        {
+          "name": "currentEnvironment"
         }
       ]
     }

@@ -1,0 +1,677 @@
+{
+  "user": {
+    "userName": "331045/inv1",
+    "environment": "d"
+  },
+  "languages": [
+    {
+      "id": "de",
+      "label": "Deutsch"
+    },
+    {
+      "id": "en",
+      "label": "English"
+    }
+  ],
+  "strings": {
+    "de": {
+      "anonymous": "Anonym",
+      "website": "Zur Webseite"
+    },
+    "en": {
+      "anonymous": "Anonymous",
+      "website": "To Website"
+    }
+  },
+  "groups": {
+    "main": [
+      {
+        "id": "0",
+        "labels": {
+          "de": "Home",
+          "en": "Home"
+        },
+        "link": "/ebanking/show-dashboard",
+        "teaserLink": "/node/802",
+        "application": "ebanking"
+      },
+      {
+        "id": "1",
+        "defaultItem": "1.1",
+        "labels": {
+          "de": "Vermögen",
+          "en": "Assets"
+        },
+        "items": [
+          {
+            "id": "1.1",
+            "labels": {
+              "de": "Vermögensübersicht",
+              "en": "Asset Overview"
+            },
+            "link": "/ebanking/show-assets",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "1.2",
+            "labels": {
+              "de": "Kontoauszug",
+              "en": "Account Statement"
+            },
+            "link": "/ebanking/show-asset-statement",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "1.3",
+            "labels": {
+              "de": "Depotanalyse",
+              "en": "Portfolio Analysis"
+            },
+            "link": "/ebanking/show-asset-portfolio-analysis",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "1.4",
+            "labels": {
+              "de": "Fälligkeiten",
+              "en": "Maturities"
+            },
+            "link": "/ebanking/show-asset-maturities",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "1.5",
+            "labels": {
+              "de": "Listen",
+              "en": "Lists"
+            },
+            "link": "/ebanking/show-asset-lists",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "defaultItem": "2.1",
+        "labels": {
+          "de": "Zahlungen",
+          "en": "Payments"
+        },
+        "items": [
+          {
+            "id": "2.1",
+            "labels": {
+              "de": "Auftragsübersicht",
+              "en": "Order Overview"
+            },
+            "link": "/ebanking/show-payments",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "2.2",
+            "labels": {
+              "de": "Auftrag erfassen",
+              "en": "Create Order"
+            },
+            "link": "/ebanking/create-payment",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "2.3",
+            "labels": {
+              "de": "Daueraufträge",
+              "en": "Standing Order Overview"
+            },
+            "link": "/ebanking/show-payment-standing-orders",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "2.4",
+            "labels": {
+              "de": "ISO",
+              "en": "ISO"
+            },
+            "link": "/ebanking/show-payment-data-transfer",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "2.5",
+            "labels": {
+              "de": "BESR",
+              "en": "BESR"
+            },
+            "link": "/ebanking/show-payment-besr",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "2.6",
+            "labels": {
+              "de": "QRR",
+              "en": "QRR"
+            },
+            "link": "/ebanking/show-payment-camt",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "2.7",
+            "labels": {
+              "de": "LSV",
+              "en": "LSV"
+            },
+            "link": "/ebanking/show-lsv-contracts",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "defaultItem": "3.1",
+        "labels": {
+          "de": "Handel",
+          "en": "Trade"
+        },
+        "items": [
+          {
+            "id": "3.1",
+            "labels": {
+              "de": "Börsenaufträge",
+              "en": "Stock Market Orders"
+            },
+            "link": "/ebanking/show-stex-orders",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "3.2",
+            "labels": {
+              "de": "Kauf",
+              "en": "Buy"
+            },
+            "link": "/ebanking/create-stex-buy-order",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          },
+          {
+            "id": "3.3",
+            "labels": {
+              "de": "Verkauf",
+              "en": "Sell"
+            },
+            "link": "/ebanking/create-stex-sell-order",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["USER"],
+            "application": "ebanking"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "defaultItem": "4.1",
+        "labels": {
+          "de": "Märkte",
+          "en": "Markets"
+        },
+        "items": [
+          {
+            "id": "4.1",
+            "labels": {
+              "de": "Marktübersicht",
+              "en": "Market Overview"
+            },
+            "link": "/marketdata/overview",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          },
+          {
+            "id": "4.2",
+            "labels": {
+              "de": "Aktien",
+              "en": "Stocks"
+            },
+            "link": "/marketdata/stocks",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          },
+          {
+            "id": "4.3",
+            "labels": {
+              "de": "Zinsen / Anleihen",
+              "en": "Bonds"
+            },
+            "link": "/marketdata/bonds",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          },
+          {
+            "id": "4.4",
+            "labels": {
+              "de": "Fonds",
+              "en": "Funds"
+            },
+            "link": "/marketdata/fonds",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          },
+          {
+            "id": "4.5",
+            "labels": {
+              "de": "Devisen",
+              "en": "Currencies"
+            },
+            "link": "/marketdata/currencies",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          },
+          {
+            "id": "4.6",
+            "labels": {
+              "de": "Rohstoffe",
+              "en": "Commodities"
+            },
+            "link": "/marketdata/commodities",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          },
+          {
+            "id": "4.7",
+            "labels": {
+              "de": "Watchliste",
+              "en": "Watchlist"
+            },
+            "link": "/marketdata/watchlist",
+            "teaserLink": "/node/806",
+            "application": "marketdata",
+            "internalRouting": false
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "defaultItem": "5.1",
+        "labels": {
+          "de": "Dokumente",
+          "en": "Documents"
+        },
+        "items": [
+          {
+            "id": "5.1",
+            "labels": {
+              "de": "e-Post",
+              "en": "e-Post"
+            },
+            "link": "/ebanking/show-documents",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["EPOST"],
+            "application": "ebanking"
+          },
+          {
+            "id": "5.4",
+            "labels": {
+              "de": "Archivierung",
+              "en": "Archiving"
+            },
+            "link": "/ebanking/show-delivery",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["EPOST"],
+            "application": "ebanking"
+          },
+          {
+            "id": "5.2",
+            "labels": {
+              "de": "Auszug generieren",
+              "en": "Generate statements"
+            },
+            "link": "/ebanking/create-document-order",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["ORDS"],
+            "application": "ebanking"
+          },
+          {
+            "id": "5.3",
+            "labels": {
+              "de": "Auszug abholen",
+              "en": "Download statements"
+            },
+            "link": "/ebanking/show-document-orders",
+            "teaserLink": "/node/802",
+            "mandatoryRoles": ["ORDS"],
+            "application": "ebanking"
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "defaultItem": "6.1",
+        "labels": {
+          "de": "Produkte",
+          "en": "Products"
+        },
+        "items": [
+          {
+            "id": "6.1",
+            "labels": {
+              "de": "Platzhalter",
+              "en": "Placeholder"
+            },
+            "link": "/placeholder/1",
+            "teaserLink": "/node/101",
+            "application": "products",
+            "hideOnDenial": true,
+            "internalRouting": false
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "defaultItem": "7.1",
+        "labels": {
+          "de": "Prolink",
+          "en": "Prolink"
+        },
+        "items": [
+          {
+            "id": "7.1",
+            "labels": {
+              "de": "Märkte & Ideen",
+              "en": "Market Overview"
+            },
+            "link": "/prolink/node/95",
+            "teaserLink": "/node/100",
+            "application": "prolink",
+            "hideOnDenial": true,
+            "internalRouting": false
+          },
+          {
+            "id": "7.2",
+            "labels": {
+              "de": "Regulierung & Knowhow",
+              "en": "Regulations & Knowhow"
+            },
+            "link": "/prolink/node/89",
+            "teaserLink": "/node/100",
+            "application": "prolink",
+            "hideOnDenial": true,
+            "internalRouting": false
+          },
+          {
+            "id": "7.3",
+            "labels": {
+              "de": "Formulare",
+              "en": "Forms"
+            },
+            "link": "/prolink/node/248",
+            "teaserLink": "/node/100",
+            "application": "prolink",
+            "hideOnDenial": true,
+            "internalRouting": false
+          },
+          {
+            "id": "7.4",
+            "labels": {
+              "de": "Kontakte",
+              "en": "Contacts"
+            },
+            "link": "/prolink/node/394",
+            "teaserLink": "/node/100",
+            "application": "prolink",
+            "hideOnDenial": true,
+            "internalRouting": false
+          }
+        ]
+      },
+      {
+        "id": "8",
+        "defaultItem": "8.1",
+        "labels": {
+          "de": "Superuser",
+          "en": "Superuser"
+        },
+        "items": [
+          {
+            "id": "8.1",
+            "labels": {
+              "de": "Benutzerübersicht",
+              "en": "User Overview"
+            },
+            "link": "/ebanking/show-users",
+            "application": "ebanking",
+            "mandatoryRoles": ["SUPU"],
+            "hideOnDenial": true
+          },
+          {
+            "id": "8.2",
+            "labels": {
+              "de": "Benutzer erfassen",
+              "en": "Create User"
+            },
+            "link": "/ebanking/create-user",
+            "application": "ebanking",
+            "mandatoryRoles": ["SUPU"],
+            "hideOnDenial": true
+          },
+          {
+            "id": "8.3",
+            "labels": {
+              "de": "Kundenübersicht",
+              "en": "Customer Overview"
+            },
+            "link": "/ebanking/show-customers",
+            "application": "ebanking",
+            "mandatoryRoles": ["SUPU"],
+            "hideOnDenial": true
+          }
+        ]
+      }
+    ],
+    "meta": [
+      {
+        "id": "11",
+        "defaultItem": "11.1",
+        "labels": {
+          "de": "Nachrichten",
+          "en": "Messages"
+        },
+        "badge": "unreadMessageCount",
+        "items": [
+          {
+            "id": "11.1",
+            "labels": {
+              "de": "Posteingang",
+              "en": "Inbox"
+            },
+            "link": "/ebanking/show-messages-inbox",
+            "application": "ebanking"
+          },
+          {
+            "id": "11.2",
+            "labels": {
+              "de": "Postausgang",
+              "en": "Outbox"
+            },
+            "link": "/ebanking/show-messages-outbox",
+            "application": "ebanking"
+          },
+          {
+            "id": "11.3",
+            "labels": {
+              "de": "Nachricht erfassen",
+              "en": "Create message"
+            },
+            "link": "/ebanking/create-message",
+            "application": "ebanking"
+          }
+        ]
+      }
+    ],
+    "profile": [
+      {
+        "id": "1",
+        "defaultItem": "1.1",
+        "labels": {
+          "de": "Einstellungen",
+          "en": "Preferences"
+        },
+        "items": [
+          {
+            "id": "1.1",
+            "labels": {
+              "de": "Benutzereinstellungen",
+              "en": "User Settings"
+            },
+            "link": "/ebanking/update-user-preferences",
+            "application": "ebanking",
+            "mandatoryRoles": ["USER"]
+          },
+          {
+            "id": "1.2",
+            "labels": {
+              "de": "Sicherheit",
+              "en": "Security"
+            },
+            "link": "/ebanking/update-security-preferences",
+            "application": "ebanking"
+          },
+          {
+            "id": "1.3",
+            "labels": {
+              "de": "Darstellung",
+              "en": "Presentation"
+            },
+            "link": "/ebanking/update-presentation-preferences",
+            "application": "ebanking",
+            "mandatoryRoles": ["USER"]
+          },
+          {
+            "id": "1.4",
+            "labels": {
+              "de": "Benachrichtigungen",
+              "en": "Notifications"
+            },
+            "link": "/ebanking/update-notification-preferences",
+            "application": "ebanking",
+            "mandatoryRoles": ["USER"]
+          },
+          {
+            "id": "1.5",
+            "labels": {
+              "de": "Mobiles Banking",
+              "en": "Mobile Banking"
+            },
+            "link": "/ebanking/update-mobile-preferences",
+            "application": "ebanking"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "defaultItem": "2.1",
+        "labels": {
+          "de": "Kundengruppen verwalten",
+          "en": "Manage customer groups"
+        },
+        "items": [
+          {
+            "id": "2.1",
+            "labels": {
+              "de": "Kundengruppen",
+              "en": "Customer groups"
+            },
+            "link": "/ebanking/show-customer-groups",
+            "application": "ebanking",
+            "mandatoryRoles": ["CUGM"],
+            "hideOnDenial": true
+          },
+          {
+            "id": "2.2",
+            "labels": {
+              "de": "Kundengruppe erstellen",
+              "en": "Create customer group"
+            },
+            "link": "/ebanking/create-customer-group",
+            "application": "ebanking",
+            "mandatoryRoles": ["CUGM"],
+            "hideOnDenial": true
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "labels": {
+          "de": "Alias verwalten",
+          "en": "Manage alias"
+        },
+        "link": "/ebanking/show-alias",
+        "application": "ebanking"
+      },
+      {
+        "id": "4",
+        "labels": {
+          "de": "Zugriffe Dritter",
+          "en": "Third party access"
+        },
+        "link": "/ebanking/tpp-access",
+        "application": "ebanking",
+        "mandatoryRoles": ["USER"],
+        "enabledForMembers": ["LU"]
+      },
+      {
+        "id": "5",
+        "labels": {
+          "de": "Kontakt & Support",
+          "en": "Contact & support"
+        },
+        "link": "/node/226",
+        "teaserLink": "",
+        "application": "portal",
+        "internalRouting": false,
+        "destination": "extern"
+      }
+    ],
+    "logout": [
+      {
+        "id": "1",
+        "labels": {
+          "de": "Logout",
+          "en": "Logout"
+        },
+        "link": "/portal/api/logout",
+        "internalRouting": true,
+        "internalRoutingApplications": [
+          "ebanking"
+        ]
+      }
+    ]
+  }
+}
