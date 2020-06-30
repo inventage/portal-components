@@ -22,8 +22,7 @@ A component implementing an opinionated (but generic and hence configurable) nav
 - ...
 
 ```js preview-story
-export const Basic = () => html`<portal-navigation src="http://localhost:8001/data.json"></portal-navigation>`;
-export const Extended = () => html`<ext-portal-navigation src="http://localhost:8001/data.json"></ext-portal-navigation>`;
+export const Basic = () => html`<portal-navigation src="/data/data.json"></portal-navigation>`;
+export const Extended = () => html`<ext-portal-navigation src="/data/data.json"></ext-portal-navigation>`;
 export const Composite = () => html`<comp-portal-navigation></comp-portal-navigation>`;
-
 ```
