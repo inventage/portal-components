@@ -76,6 +76,7 @@
     "es-dev-server": "^1.56.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-lit": "^1.2.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "lit-analyzer": "^1.1.11",
@@ -91,8 +92,10 @@
   "eslintConfig": {
     "extends": [
       "@open-wc/eslint-config",
+      "plugin:lit/recommended",
       "eslint-config-prettier"
-    ]
+    ],
+    "plugins": ["lit"]
   },
   "prettier": {
     "singleQuote": true,
