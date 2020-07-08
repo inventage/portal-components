@@ -86,7 +86,7 @@
     "sinon": "^9.0.2",
     "typescript": "^3.9.6",
     "web-component-analyzer": "^1.0.3",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^5.0.8"
   },
   "eslintConfig": {
     "extends": [
