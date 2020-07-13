@@ -7,4 +7,5 @@ updates:
     time:
   allow:
     - dependency-type: "direct"
+    - dependency-type: "production"
   open-pull-requests-limit: 10
