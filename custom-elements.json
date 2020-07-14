@@ -87,23 +87,42 @@
       "attributes": [
         {
           "name": "src",
-          "type": "string"
+          "type": "string",
+          "default": "\"undefined\""
         },
         {
           "name": "lang",
-          "type": "string"
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activeUrl",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ],
       "properties": [
         {
           "name": "src",
           "attribute": "src",
-          "type": "string"
+          "type": "string",
+          "default": "\"undefined\""
         },
         {
           "name": "lang",
           "attribute": "lang",
-          "type": "string"
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activePath",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "activeUrl",
+          "attribute": "activeUrl",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ]
     },
@@ -113,23 +132,42 @@
       "attributes": [
         {
           "name": "src",
-          "type": "string"
+          "type": "string",
+          "default": "\"undefined\""
         },
         {
           "name": "lang",
-          "type": "string"
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activeUrl",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ],
       "properties": [
         {
           "name": "src",
           "attribute": "src",
-          "type": "string"
+          "type": "string",
+          "default": "\"undefined\""
         },
         {
           "name": "lang",
           "attribute": "lang",
-          "type": "string"
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activePath",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "activeUrl",
+          "attribute": "activeUrl",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ]
     },
@@ -139,6 +177,10 @@
       "properties": [
         {
           "name": "currentEnvironment"
+        },
+        {
+          "name": "languages",
+          "default": "[]"
         }
       ]
     }

@@ -1,5 +1,5 @@
 ```js script
-import { html } from '@open-wc/demoing-storybook';
+import { html, withKnobs, withWebComponentsKnobs } from '@open-wc/demoing-storybook';
 import '../portal-navigation.js';
 import '../src/ExtPortalNavigation.js';
 import '../src/CompPortalNavigation.js';
@@ -7,6 +7,7 @@ import '../src/CompPortalNavigation.js';
 export default {
   title: 'Components/PortalNavigation',
   component: 'portal-navigation',
+  decorators: [withKnobs, withWebComponentsKnobs],
   options: { selectedPanel: 'storybookjs/knobs/panel' },
 };
 ```
