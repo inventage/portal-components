@@ -99,6 +99,16 @@
           "name": "activeUrl",
           "type": "string",
           "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "internalRouting",
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "properties": [
@@ -123,6 +133,18 @@
           "attribute": "activeUrl",
           "type": "string",
           "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "attribute": "currentApplication",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "internalRouting",
+          "attribute": "internalRouting",
+          "type": "boolean",
+          "default": "false"
         }
       ]
     },
@@ -144,6 +166,16 @@
           "name": "activeUrl",
           "type": "string",
           "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "internalRouting",
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "properties": [
@@ -168,6 +200,18 @@
           "attribute": "activeUrl",
           "type": "string",
           "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "attribute": "currentApplication",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "internalRouting",
+          "attribute": "internalRouting",
+          "type": "boolean",
+          "default": "false"
         }
       ]
     },

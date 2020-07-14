@@ -58,6 +58,8 @@ export class PortalNavigation extends LitElement {
       lang: { type: String }, // 'de' or 'en' - current language
       activePath: { attribute: false }, // {group,menuId,itemId} - identifying the active item
       activeUrl: { type: String },
+      currentApplication: { type: String },
+      internalRouting: { type: Boolean },
     };
   }
 
@@ -67,6 +69,8 @@ export class PortalNavigation extends LitElement {
     this.lang = PortalNavigation.defaults.language;
     this.activePath = undefined;
     this.activeUrl = undefined;
+    this.currentApplication = undefined;
+    this.internalRouting = false;
   }
 
   connectedCallback() {
@@ -244,8 +248,6 @@ export class PortalNavigation extends LitElement {
     // TODO: add badge feature
     const { link, labels, items } = menu;
 
-    // TODO: ${destination && destination === 'extern' ? 'target="_blank"' : ''}
-
     const menuClasses = ['link'];
     if (menu.id && this.activePath && menu.id === this.activePath.menuId) {
       menuClasses.push(PortalNavigation.classes.selected);
@@ -261,19 +263,22 @@ export class PortalNavigation extends LitElement {
             @click="${e => this.__createRevealSecondLevelClickHandler(e, group, menu)}"
             >${this._getLabel(labels)}</a
           >`
-        : html`<a href="${link}" class="${menuClasses.join(' ')}">${this._getLabel(labels)}</a>`}
+        : html`<a
+            href="${link}"
+            class="${menuClasses.join(' ')}"
+            target="${menu.destination === 'extern' ? '_blank' : '_self'}"
+            >${this._getLabel(labels)}</a
+          >`}
     </div>`;
   }
 
   __createMenuItemTemplate(group, menu, item) {
-    // TODO: ${item.destination && item.destination === 'extern' ? 'target="_blank"' : ''}
-
     const itemClasses = ['link'];
     if (item.id && this.activePath && item.id === this.activePath.itemId) {
       itemClasses.push(PortalNavigation.classes.selected);
     }
 
-    if (item.internalRouting) {
+    if (this.__isInternalRouting(item)) {
       return html`<a
         href="${item.link}"
         class="${itemClasses.join(' ')}"
@@ -281,7 +286,12 @@ export class PortalNavigation extends LitElement {
         >${this._getLabel(item.labels)}</a
       >`;
     }
-    return html`<a href="${item.link}" class="${itemClasses.join(' ')}">${this._getLabel(item.labels)}</a>`;
+    return html`<a
+      href="${item.link}"
+      class="${itemClasses.join(' ')}"
+      target="${item.destination === 'extern' ? '_blank' : '_self'}"
+      >${this._getLabel(item.labels)}</a
+    >`;
   }
 
   __createRevealSecondLevelClickHandler(e, group, menu) {
@@ -289,7 +299,9 @@ export class PortalNavigation extends LitElement {
 
     console.log(`Set second level to items of: ${this._getLabel(menu.labels)}`);
 
-    this.activePath = { group, menuId: menu.id, undefined };
+    const item = this.__getDefaultItemOf(menu);
+
+    this.activePath = { group, menuId: menu.id, itemId: item ? item.id : undefined };
   }
 
   __createInternalLinkClickHandler(e, group, menu, item) {
@@ -298,6 +310,44 @@ export class PortalNavigation extends LitElement {
     console.log(`Internal link selected: ${this._getLabel(item.labels)}`);
 
     this.activePath = { group, menuId: menu.id, itemId: item.id };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  __getDefaultItemOf(menu) {
+    const { defaultItem, items } = menu;
+
+    if (Array.isArray(items) === false || items.length < 1 || typeof defaultItem !== 'string') {
+      return null;
+    }
+
+    // If default item wasn't found, take the first one
+    return items.find(item => item.id === defaultItem) || items[0];
+  }
+
+  __isInternalRouting(item) {
+    // Allow global `_internalRouting` to override the item specific `internalRouting` property
+    const itemInternalRouting = 'internalRouting' in item ? item.internalRouting : this.internalRouting;
+
+    // Bail if we're not routing internally…
+    if (!itemInternalRouting) {
+      return false;
+    }
+
+    // The current application does not matter, we route internally…
+    if (!this.currentApplication) {
+      return true;
+    }
+
+    // Current application was set, but item is not application specific…
+    if (!('application' in item)) {
+      // We check whether the current application is in the list of `internalRoutingApplications`
+      return (
+        'internalRoutingApplications' in item &&
+        Array.prototype.includes.call(item.internalRoutingApplications, this.currentApplication)
+      );
+    }
+
+    return item.application === this.currentApplication;
   }
 
   _getData(key, data = this.__remoteData, fallback) {
