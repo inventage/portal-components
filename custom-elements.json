@@ -145,6 +145,10 @@
           "attribute": "internalRouting",
           "type": "boolean",
           "default": "false"
+        },
+        {
+          "name": "temporaryBadgeValues",
+          "type": "Map<any, any>"
         }
       ]
     },
@@ -212,6 +216,10 @@
           "attribute": "internalRouting",
           "type": "boolean",
           "default": "false"
+        },
+        {
+          "name": "temporaryBadgeValues",
+          "type": "Map<any, any>"
         }
       ]
     },

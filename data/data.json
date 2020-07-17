@@ -38,6 +38,7 @@
       {
         "id": "1",
         "defaultItem": "1.1",
+        "badge": "assetCount",
         "labels": {
           "de": "Vermögen",
           "en": "Assets"
@@ -82,6 +83,7 @@
               "de": "Fälligkeiten",
               "en": "Maturities"
             },
+            "badge": "maturitiesCount",
             "link": "/ebanking/show-asset-maturities",
             "teaserLink": "/node/802",
             "mandatoryRoles": ["USER"],
@@ -504,6 +506,7 @@
           "en": "Messages"
         },
         "badge": "unreadMessageCount",
+        "icon": "data/email-24px.svg",
         "items": [
           {
             "id": "11.1",

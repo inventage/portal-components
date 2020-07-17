@@ -5,6 +5,7 @@
 import { html, LitElement } from 'lit-element';
 import { baseStyles } from '../../helpers/baseStyles.js';
 import { portalNavigationStyle } from './PortalNavigationStyle.js';
+import { Configuration } from './Configuration.js';
 
 // @ts-ignore
 export class PortalNavigation extends LitElement {
@@ -37,7 +38,7 @@ export class PortalNavigation extends LitElement {
     return {
       // routeTo: `${ns}.routeTo`,
       setLanguage: `${ns}.setLanguage`,
-      // setUnreadMessageCount: `${ns}.setUnreadMessageCount`,
+      setBadgeValue: `${ns}.setBadgeValue`,
       // setCurrentUser: `${ns}.setCurrentUser`,
       // setActiveItem: `${ns}.setActiveItem`,
     };
@@ -46,6 +47,7 @@ export class PortalNavigation extends LitElement {
   static get classes() {
     return {
       selected: '-selected',
+      decorator: '-decorator',
       // showDropdown: '-show',
       // open: '-open',
       // empty: '-empty',
@@ -71,6 +73,8 @@ export class PortalNavigation extends LitElement {
     this.activeUrl = undefined;
     this.currentApplication = undefined;
     this.internalRouting = false;
+    this.temporaryBadgeValues = new Map();
+    this.__configuration = new Configuration();
   }
 
   connectedCallback() {
@@ -87,10 +91,42 @@ export class PortalNavigation extends LitElement {
     if (this.src) {
       this._fetchRemoteData();
     }
+
+    this.addEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
+
+    this.dispatchEvent(
+      new CustomEvent(PortalNavigation.events.setBadgeValue, {
+        detail: {
+          id: '7.1',
+          value: { en: 'NEW', de: 'NEU' },
+        },
+      }),
+    );
+
+    this.dispatchEvent(
+      new CustomEvent(PortalNavigation.events.setBadgeValue, {
+        detail: {
+          id: '11',
+          value: '9',
+        },
+      }),
+    );
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
+
+    this.__connected = false;
+
+    if (super.disconnectedCallback) {
+      super.disconnectedCallback();
+    }
+
+    console.log('Disconnected');
   }
 
   _fetchRemoteData() {
-    this.__remoteData = {};
+    this.__configuration.setConfigData({});
 
     console.log(`Fetching data from ${this.src}`);
     fetch(this.src)
@@ -100,7 +136,7 @@ export class PortalNavigation extends LitElement {
       .then(data => {
         console.log('Data received:', data);
         try {
-          this.__remoteData = data; // JSON.parse(data);
+          this.__configuration.setConfigData(data);
           this.__updateActivePathFromUrl();
           this.requestUpdate();
         } catch (e) {
@@ -134,50 +170,41 @@ export class PortalNavigation extends LitElement {
 
   __updateActivePathFromUrl() {
     console.log(`Updating activePath from activeUrl: ${this.activeUrl}`);
-    const newPath = this.__getActivePathFromUrl(this.activeUrl);
+    const newPath = this.__configuration.getActivePathFromUrl(this.activeUrl, PortalNavigation.groups.all);
     if (newPath) {
       console.log(`activePath set to: ${JSON.stringify(newPath)}`);
       this.activePath = newPath;
     }
   }
 
-  __getActivePathFromUrl(url) {
-    if (!this.__remoteData) {
-      return undefined;
+  __setBadgeValueEventListener(e) {
+    const { detail } = e;
+    if (detail) {
+      this.setBadgeValue(detail.id, detail.value);
     }
+  }
 
-    if (url) {
-      for (let g = 0; g < PortalNavigation.groups.all.length; g += 1) {
-        const group = PortalNavigation.groups.all[g];
-        const menus = this._getData(`groups.${group}`, this.__remoteData, []);
-        if (menus && menus.length > 0) {
-          for (let m = 0; m < menus.length; m += 1) {
-            const menu = menus[m];
-            if (menu && menu.link === url) {
-              return { group, menuId: menu.id, itemId: undefined };
-            }
-            const { items } = menu;
-            if (items && items.length > 0) {
-              for (let i = 0; i < menus.length; i += 1) {
-                const item = items[i];
-                if (item && item.link === url) {
-                  return { group, menuId: menu.id, itemId: item.id };
-                }
-              }
-            }
-          }
-        }
-      }
-    } else {
-      this.activePath = undefined;
+  setBadgeValue(menuOrItemId, value) {
+    console.log(`Setting badge of "${menuOrItemId}" to "${value}"`);
+
+    // TODO: write to Store instead of temporary map
+    this.temporaryBadgeValues.set(menuOrItemId, value);
+    this._requestUpdate();
+  }
+
+  getBadgeValue(menuOrItemId) {
+    // TODO: read from Store instead of temporary map
+    const value = this.temporaryBadgeValues.get(menuOrItemId);
+    if (value && typeof value === 'object' && value.constructor === Object) {
+      return this._getLabel(value);
     }
-    return undefined;
+    return value;
   }
 
   render() {
     console.debug(`Rendering with language set to “${this.lang}”.`);
 
-    return html` <div class="nav-menu-container">
+    return html`<div class="nav-menu-container">
       <header class="nav-menu-header">
         <div class="nav-menu-logo"><slot name="nav-menu-slot-logo"></slot></div>
         <div class="nav-menu-slot-left"><slot name="left"></slot></div>
@@ -206,7 +233,7 @@ export class PortalNavigation extends LitElement {
     }
 
     const { group, menuId } = this.activePath;
-    const activeMenu = this._getData(`groups.${group}:${menuId}`, this.__remoteData, []);
+    const activeMenu = this.__configuration.getData(`groups.${group}:${menuId}`, []);
 
     if (activeMenu && activeMenu.items && activeMenu.items.length > 0) {
       return html`<div class="nav-menu-current">
@@ -219,7 +246,7 @@ export class PortalNavigation extends LitElement {
   }
 
   __createGroupTemplate(group) {
-    const menus = this._getData(`groups.${group}`, this.__remoteData, []);
+    const menus = this.__configuration.getData(`groups.${group}`, []);
 
     // console.log(`${group} -->`, menus);
 
@@ -245,8 +272,8 @@ export class PortalNavigation extends LitElement {
 
   __createMenuTemplate(group, menu) {
     // console.log(menu);
-    // TODO: add badge feature
-    const { link, labels, items } = menu;
+    const { link, icon, labels, items } = menu;
+    const badge = this.getBadgeValue(menu.id);
 
     const menuClasses = ['link'];
     if (menu.id && this.activePath && menu.id === this.activePath.menuId) {
@@ -255,19 +282,21 @@ export class PortalNavigation extends LitElement {
 
     // TODO: handle case of internalRouting===true (no items) (e.g. logout)
 
+    const label = this._getLabel(labels);
+
     return html`<div class="first-level">
       ${items && items.length > 0
         ? html`<a
             href="${link}"
             class="${menuClasses.join(' ')}"
             @click="${e => this.__createRevealSecondLevelClickHandler(e, group, menu)}"
-            >${this._getLabel(labels)}</a
+            >${this.__createLinkTemplate(label, icon, badge)}</a
           >`
         : html`<a
             href="${link}"
             class="${menuClasses.join(' ')}"
             target="${menu.destination === 'extern' ? '_blank' : '_self'}"
-            >${this._getLabel(labels)}</a
+            >${this.__createLinkTemplate(label, icon, badge)}</a
           >`}
     </div>`;
   }
@@ -278,20 +307,42 @@ export class PortalNavigation extends LitElement {
       itemClasses.push(PortalNavigation.classes.selected);
     }
 
+    const { icon, labels } = item;
+    const badge = this.getBadgeValue(item.id);
+    const label = this._getLabel(labels);
+
     if (this.__isInternalRouting(item)) {
       return html`<a
         href="${item.link}"
         class="${itemClasses.join(' ')}"
         @click="${e => this.__createInternalLinkClickHandler(e, group, menu, item)}"
-        >${this._getLabel(item.labels)}</a
+        >${this.__createLinkTemplate(label, icon, badge)}</a
       >`;
     }
     return html`<a
       href="${item.link}"
       class="${itemClasses.join(' ')}"
       target="${item.destination === 'extern' ? '_blank' : '_self'}"
-      >${this._getLabel(item.labels)}</a
+      >${this.__createLinkTemplate(label, icon, badge)}</a
     >`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  __createLinkTemplate(label, icon, badge) {
+    const result = [];
+    if (icon) {
+      result.push(html`<img src="${icon}" alt="" class="nav-menu-icon" />`);
+      if (badge) {
+        result.push(html`<span class="badge ${PortalNavigation.classes.decorator}">${badge}</span>`);
+      }
+    }
+    if (label) {
+      result.push(html`${label}`);
+      if (!icon && badge) {
+        result.push(html`<span class="badge">${badge}</span>`);
+      }
+    }
+    return result;
   }
 
   __createRevealSecondLevelClickHandler(e, group, menu) {
@@ -325,7 +376,7 @@ export class PortalNavigation extends LitElement {
   }
 
   __isInternalRouting(item) {
-    // Allow global `_internalRouting` to override the item specific `internalRouting` property
+    // Allow global `internalRouting` to be overridden by the item specific `internalRouting` property
     const itemInternalRouting = 'internalRouting' in item ? item.internalRouting : this.internalRouting;
 
     // Bail if we're not routing internally…
@@ -348,40 +399,6 @@ export class PortalNavigation extends LitElement {
     }
 
     return item.application === this.currentApplication;
-  }
-
-  _getData(key, data = this.__remoteData, fallback) {
-    if (!data) {
-      return fallback;
-    }
-
-    const parts = key.split('.');
-    const prop = parts[0];
-
-    const propParts = prop.split(':');
-
-    // console.log(`prop: ${propParts[0]}, index: ${propParts.length > 1 ? propParts[1] : '<none>'}`);
-
-    let obj;
-    if (propParts[0] in data) {
-      obj = data[propParts[0]];
-    } else {
-      return fallback;
-    }
-
-    if (parts.length === 1) {
-      if (propParts.length === 1) {
-        return obj;
-      }
-      const filtered = obj.filter(item => item.id === propParts[1]);
-      if (filtered.length > 0) {
-        return filtered[0];
-      }
-      return undefined;
-    }
-
-    const subKey = parts.slice(1, parts.length).join('.');
-    return this._getData(subKey, obj, fallback);
   }
 
   _getLabel(labels) {
