@@ -2,10 +2,6 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "portal-navigation",
-      "path": "./components/portal-navigation/portal-navigation.js"
-    },
-    {
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
@@ -84,6 +80,90 @@
           "type": "Length"
         }
       ]
+    },
+    {
+      "name": "portal-hamburger-menu",
+      "path": "./components/portal-hamburger-menu/portal-hamburger-menu.js",
+      "description": "A simple hamburger menu component.",
+      "attributes": [
+        {
+          "name": "toggled",
+          "description": "Reflects the toggled state.",
+          "type": "Boolean",
+          "default": "false"
+        }
+      ],
+      "properties": [
+        {
+          "name": "toggled",
+          "attribute": "toggled",
+          "description": "Reflects the toggled state.",
+          "type": "Boolean",
+          "default": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "state-changed",
+          "description": "Event fired when the hamburger menu state changes."
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--hamburger-padding-x",
+          "type": "Length",
+          "default": "\"3px\""
+        },
+        {
+          "name": "--hamburger-padding-y",
+          "type": "Length",
+          "default": "\"10px\""
+        },
+        {
+          "name": "--hamburger-layer-width",
+          "type": "Length",
+          "default": "\"26px\""
+        },
+        {
+          "name": "--hamburger-layer-height",
+          "type": "Length",
+          "default": "\"2px\""
+        },
+        {
+          "name": "--hamburger-layer-spacing",
+          "type": "Length",
+          "default": "\"4px\""
+        },
+        {
+          "name": "--hamburger-layer-color",
+          "type": "Color",
+          "default": "\"black\""
+        },
+        {
+          "name": "--hamburger-layer-border-radius",
+          "type": "Length",
+          "default": "0"
+        },
+        {
+          "name": "--hamburger-hover-opacity",
+          "type": "Length",
+          "default": "1"
+        },
+        {
+          "name": "--hamburger-hover-transition-duration",
+          "type": "Length",
+          "default": "\"0.15s\""
+        },
+        {
+          "name": "--hamburger-hover-transition-timing-function",
+          "type": "Length",
+          "default": "\"linear\""
+        }
+      ]
+    },
+    {
+      "name": "portal-navigation",
+      "path": "./components/portal-navigation/portal-navigation.js"
     }
   ]
 }
