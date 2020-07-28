@@ -20,7 +20,7 @@ describe('<portal-hamburger-menu>', () => {
     });
 
     it('can override the "toggled" state via attribute', async () => {
-      const el = await fixture(html`<portal-hamburger-menu toggled="1"></portal-hamburger-menu>`);
+      const el = await fixture(html`<portal-hamburger-menu toggled></portal-hamburger-menu>`);
 
       expect(el.toggled).to.equal(true);
     });
