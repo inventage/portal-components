@@ -5,30 +5,10 @@
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
-      "attributes": [
-        {
-          "name": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
-          "name": "back-side",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
       "properties": [
         {
-          "name": "title",
-          "attribute": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
           "name": "backSide",
-          "attribute": "back-side",
-          "type": "boolean",
-          "default": "false"
+          "type": "boolean"
         }
       ],
       "events": [
@@ -82,164 +62,81 @@
       ]
     },
     {
-      "name": "portal-navigation",
-      "path": "./components/portal-navigation/portal-navigation.js",
-      "attributes": [
-        {
-          "name": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "type": "string",
-          "default": "\"language\""
-        },
-        {
-          "name": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "internalRouting",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
+      "name": "portal-hamburger-menu",
+      "path": "./components/portal-hamburger-menu/portal-hamburger-menu.js",
+      "description": "A simple hamburger menu component.",
       "properties": [
         {
-          "name": "src",
-          "attribute": "src",
-          "type": "string",
-          "default": "\"undefined\""
+          "name": "toggled",
+          "description": "Reflects the toggled state.",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "state-changed",
+          "description": "Event fired when the hamburger menu state changes."
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--hamburger-padding-x",
+          "type": "Length",
+          "default": "\"3px\""
         },
         {
-          "name": "lang",
-          "attribute": "lang",
-          "type": "string",
-          "default": "\"language\""
+          "name": "--hamburger-padding-y",
+          "type": "Length",
+          "default": "\"10px\""
         },
         {
-          "name": "activePath",
-          "default": "\"undefined\""
+          "name": "--hamburger-layer-width",
+          "type": "Length",
+          "default": "\"26px\""
         },
         {
-          "name": "activeUrl",
-          "attribute": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
+          "name": "--hamburger-layer-height",
+          "type": "Length",
+          "default": "\"2px\""
         },
         {
-          "name": "currentApplication",
-          "attribute": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
+          "name": "--hamburger-layer-spacing",
+          "type": "Length",
+          "default": "\"4px\""
         },
         {
-          "name": "internalRouting",
-          "attribute": "internalRouting",
-          "type": "boolean",
-          "default": "false"
+          "name": "--hamburger-layer-color",
+          "type": "Color",
+          "default": "\"black\""
         },
         {
-          "name": "temporaryBadgeValues",
-          "type": "Map<any, any>"
+          "name": "--hamburger-layer-border-radius",
+          "type": "Length",
+          "default": "\"0\""
         },
         {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean",
-          "default": "false"
+          "name": "--hamburger-hover-opacity",
+          "type": "Length",
+          "default": "\"1\""
         },
         {
-          "name": "activeDropdown",
-          "type": "string",
-          "default": "\"undefined\""
+          "name": "--hamburger-hover-transition-duration",
+          "type": "Length",
+          "default": "\"0.15s\""
+        },
+        {
+          "name": "--hamburger-hover-transition-timing-function",
+          "type": "Length",
+          "default": "\"linear\""
         }
       ]
     },
     {
-      "name": "ext-portal-navigation",
-      "path": "./components/portal-navigation/src/ExtPortalNavigation.js",
-      "attributes": [
-        {
-          "name": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "type": "string",
-          "default": "\"language\""
-        },
-        {
-          "name": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "internalRouting",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
+      "name": "portal-navigation",
+      "path": "./components/portal-navigation/portal-navigation.js",
       "properties": [
         {
-          "name": "src",
-          "attribute": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "attribute": "lang",
-          "type": "string",
-          "default": "\"language\""
-        },
-        {
-          "name": "activePath",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "activeUrl",
-          "attribute": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "currentApplication",
-          "attribute": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "internalRouting",
-          "attribute": "internalRouting",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "temporaryBadgeValues",
-          "type": "Map<any, any>"
-        },
-        {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "activeDropdown",
-          "type": "string",
-          "default": "\"undefined\""
+          "name": "src"
         }
       ]
     },
@@ -253,6 +150,15 @@
         {
           "name": "languages",
           "default": "[]"
+        }
+      ]
+    },
+    {
+      "name": "ext-portal-navigation",
+      "path": "./components/portal-navigation/src/ExtPortalNavigation.js",
+      "properties": [
+        {
+          "name": "src"
         }
       ]
     }

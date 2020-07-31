@@ -41,7 +41,7 @@
     "copy:data": "cp -Rpf data storybook-static/",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier '**/*.{js,md}' --write --ignore-path .gitignore",
-    "lint": "run-p lint:*",
+    "lint": "npm run clean:types && run-p lint:*",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier '**/*.{js,md}' --check --ignore-path .gitignore",
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
@@ -64,35 +64,40 @@
     "lit-element": "^2.3.1"
   },
   "devDependencies": {
-    "@lion/helpers": "^0.5.2",
-    "@open-wc/demoing-storybook": "^2.3.10",
+    "@lion/helpers": "^0.5.3",
+    "@open-wc/demoing-storybook": "^2.3.13",
     "@open-wc/eslint-config": "^2.0.6",
-    "@open-wc/testing": "^2.5.18",
-    "@open-wc/testing-karma": "^3.4.5",
-    "@open-wc/testing-karma-bs": "^1.3.81",
+    "@open-wc/testing": "^2.5.19",
+    "@open-wc/testing-karma": "^4.0.0",
+    "@open-wc/testing-karma-bs": "^1.3.85",
     "@storybook/addon-a11y": "^5.3.19",
     "@storybook/addon-actions": "^5.3.19",
     "concurrently": "^5.2.0",
     "deepmerge": "^4.2.2",
-    "es-dev-server": "^1.55.1",
+    "es-dev-server": "^1.57.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-lit": "^1.2.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "lit-analyzer": "^1.1.11",
-    "markdownlint-cli": "^0.23.1",
+    "lit-analyzer": "^1.2.1",
+    "markdownlint-cli": "^0.23.2",
     "npm-run-all": "^4.1.5",
     "onchange": "^7.0.2",
     "prettier": "^2.0.5",
     "sinon": "^9.0.2",
-    "typescript": "^3.9.5",
-    "web-component-analyzer": "^1.0.3",
-    "webpack-merge": "^4.2.2"
+    "typescript": "^3.9.7",
+    "web-component-analyzer": "^1.1.6",
+    "webpack-merge": "^5.0.9"
   },
   "eslintConfig": {
     "extends": [
       "@open-wc/eslint-config",
+      "plugin:lit/recommended",
       "eslint-config-prettier"
+    ],
+    "plugins": [
+      "lit"
     ]
   },
   "prettier": {
