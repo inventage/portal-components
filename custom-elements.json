@@ -137,6 +137,31 @@
       "properties": [
         {
           "name": "src"
+        },
+        {
+          "name": "activePath",
+          "type": "{ group: any; menuId: any; itemId: any; }"
+        },
+        {
+          "name": "activeUrl"
+        },
+        {
+          "name": "currentApplication"
+        },
+        {
+          "name": "internalRouting",
+          "type": "boolean"
+        },
+        {
+          "name": "temporaryBadgeValues",
+          "type": "Map<any, any>"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "type": "boolean"
+        },
+        {
+          "name": "activeDropdown"
         }
       ]
     },
@@ -159,6 +184,31 @@
       "properties": [
         {
           "name": "src"
+        },
+        {
+          "name": "activePath",
+          "type": "{ group: any; menuId: any; itemId: any; }"
+        },
+        {
+          "name": "activeUrl"
+        },
+        {
+          "name": "currentApplication"
+        },
+        {
+          "name": "internalRouting",
+          "type": "boolean"
+        },
+        {
+          "name": "temporaryBadgeValues",
+          "type": "Map<any, any>"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "type": "boolean"
+        },
+        {
+          "name": "activeDropdown"
         }
       ]
     }
