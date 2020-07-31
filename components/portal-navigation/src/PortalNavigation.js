@@ -7,6 +7,7 @@ import { classMap } from 'lit-html/directives/class-map';
 import { baseStyles } from '../../helpers/baseStyles.js';
 import { portalNavigationStyle } from './PortalNavigationStyle.js';
 import { Configuration } from './Configuration.js';
+import '../../portal-hamburger-menu/portal-hamburger-menu.js';
 
 // @ts-ignore
 export class PortalNavigation extends LitElement {
@@ -183,6 +184,9 @@ export class PortalNavigation extends LitElement {
         }),
       );
     }
+    if (name === 'hamburgerMenuExpanded') {
+      console.log(this.hamburgerMenuExpanded);
+    }
   }
 
   __updateActivePathFromUrl() {
@@ -234,15 +238,13 @@ export class PortalNavigation extends LitElement {
         <div class="nav-menu-logout nav-menu-group">${this.__createGroupTemplate(Configuration.groups.logout)}</div>
         <div class="nav-menu-slot-right"><slot name="right"></slot></div>
         <!-- Hamburger Menu Tree Elements -->
-        <button
+        <portal-hamburger-menu
           class="nav-menu-header-toggle"
-          type="button"
-          @click="${() => {
-            this.hamburgerMenuExpanded = !this.hamburgerMenuExpanded;
+          .toggled="${this.hamburgerMenuExpanded}"
+          @state-changed="${e => {
+            this.hamburgerMenuExpanded = e.detail;
           }}"
-        >
-          Menu
-        </button>
+        ></portal-hamburger-menu>
       </header>
 
       <main class="nav-menu-main-group">
