@@ -58,7 +58,11 @@ export class PortalHamburgerMenu extends LitElement {
     super._requestUpdate(name, oldValue);
 
     if (name === 'toggled') {
-      this.dispatchEvent(new Event('state-changed'));
+      this.dispatchEvent(
+        new CustomEvent('state-changed', {
+          detail: this.toggled,
+        }),
+      );
     }
   }
 
