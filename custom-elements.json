@@ -149,6 +149,16 @@
         {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "activeDropdown",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ]
     },
@@ -220,6 +230,16 @@
         {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "activeDropdown",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ]
     },

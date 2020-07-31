@@ -41,13 +41,41 @@ describe('Configuration', () => {
     expect(result[1].id).to.equal('menu2');
   });
 
-  it('getActiveItemFromUrl returns first item matching url', () => {
+  it('getPathFromUrl returns first item matching url', () => {
     // given
     const configuration = new Configuration();
     configuration.setConfigData(data);
 
     // when
-    const result = configuration.getActivePathFromUrl('/some/path/item2.2', ['group1']);
+    const result = configuration.getPathFromUrl('/some/path/item2.2', ['group1']);
+
+    // then
+    expect(result.group).to.equal('group1');
+    expect(result.menuId).to.equal('menu2');
+    expect(result.itemId).to.equal('item2.2');
+  });
+
+  it('findFirstPath returns first menu matching id', () => {
+    // given
+    const configuration = new Configuration();
+    configuration.setConfigData(data);
+
+    // when
+    const result = configuration.findFirstPath(element => element.id === 'menu2', ['group1']);
+
+    // then
+    expect(result.group).to.equal('group1');
+    expect(result.menuId).to.equal('menu2');
+    expect(result.itemId).to.equal(undefined);
+  });
+
+  it('findFirstPathTo returns first item matching id', () => {
+    // given
+    const configuration = new Configuration();
+    configuration.setConfigData(data);
+
+    // when
+    const result = configuration.findFirstPath(element => element.id === 'item2.2', ['group1']);
 
     // then
     expect(result.group).to.equal('group1');
