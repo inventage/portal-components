@@ -10,6 +10,7 @@ export class ExtPortalNavigation extends PortalNavigation {
     const cookieLang = /* Cookie.get(this.constructor.cookieId); */ undefined;
     if (cookieLang) {
       this.lang = cookieLang;
+      // eslint-disable-next-line no-console
       console.log(`Using cookie language: ${this.lang}`);
       return;
     }
@@ -18,6 +19,7 @@ export class ExtPortalNavigation extends PortalNavigation {
     const documentLang = (document.documentElement.lang || '').slice(0, 2);
     if (documentLang) {
       this.lang = documentLang;
+      // eslint-disable-next-line no-console
       console.log(`Using document language: ${this.lang}`);
       return;
     }
@@ -26,12 +28,14 @@ export class ExtPortalNavigation extends PortalNavigation {
     const browserLang = (navigator.language || '').slice(0, 2);
     if (browserLang) {
       this.lang = browserLang;
+      // eslint-disable-next-line no-console
       console.log(`Using browser language: ${this.lang}`);
       return;
     }
 
     // Fallback language
     this.lang = PortalNavigation.defaults.language;
+    // eslint-disable-next-line no-console
     console.log(`Using default language: ${this.lang}`);
   }
 

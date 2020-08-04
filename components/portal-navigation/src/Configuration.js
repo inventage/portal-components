@@ -1,20 +1,11 @@
 export class Configuration {
-  static get groups() {
-    return {
-      main: 'main',
-      meta: 'meta',
-      profile: 'profile',
-      logout: 'logout',
-      all: ['main', 'meta', 'profile', 'logout'],
-    };
-  }
-
-  constructor() {
-    this.__data = {};
+  constructor(groupIds) {
+    this.__data = undefined;
+    this.groupIds = groupIds;
   }
 
   setConfigData(data) {
-    this.__data = data || {};
+    this.__data = data || undefined;
     this.__generateUniqueIds();
   }
 
@@ -24,32 +15,37 @@ export class Configuration {
     }
 
     let id = 0;
-    Configuration.groups.all.forEach(group => {
-      this.getMenus(group).forEach(menu => {
-        if (!menu.id) {
-          // eslint-disable-next-line no-param-reassign
-          menu.id = `(${id})`;
-          id += 1;
-        }
-        if (menu.items && menu.items.length > 0) {
-          menu.items.forEach(item => {
-            if (!item.id) {
-              // eslint-disable-next-line no-param-reassign
-              item.id = `(${id})`;
-              id += 1;
-            }
-          });
-        }
-      });
+    this.groupIds.forEach(groupId => {
+      const group = this.getGroup(groupId);
+      group.id = groupId;
+
+      if (group.menus && group.menus.length > 0) {
+        group.menus.forEach(menu => {
+          if (!menu.id) {
+            // eslint-disable-next-line no-param-reassign
+            menu.id = `(${id})`;
+            id += 1;
+          }
+          if (menu.items && menu.items.length > 0) {
+            menu.items.forEach(item => {
+              if (!item.id) {
+                // eslint-disable-next-line no-param-reassign
+                item.id = `(${id})`;
+                id += 1;
+              }
+            });
+          }
+        });
+      }
     });
   }
 
-  getMenus(group) {
-    return this.getData(`groups.${group}`, []);
+  getGroup(groupId) {
+    return this.getData(`groups.${groupId}`);
   }
 
-  getItem(path /* { group, menuId, itemId } */) {
-    if (!path || !path.group || !path.menuId || !path.itemId) {
+  getItem(path /* { groupId, menuId, itemId } */) {
+    if (!path || !path.groupId || !path.menuId || !path.itemId) {
       return undefined;
     }
 
@@ -63,54 +59,62 @@ export class Configuration {
     return undefined;
   }
 
-  getData(key, fallback, data = this.__data) {
-    if (!data) {
-      return fallback;
-    }
-
-    const parts = key.split('.');
-    const prop = parts[0];
-
-    const propParts = prop.split(':');
-
-    let obj;
-    if (propParts[0] in data) {
-      obj = data[propParts[0]];
-    } else {
-      return fallback;
-    }
-
-    if (parts.length === 1) {
-      if (propParts.length === 1) {
-        return obj;
-      }
-      const filtered = obj.filter(item => item.id === propParts[1]);
-      if (filtered.length > 0) {
-        return filtered[0];
-      }
+  getData(key, data = this.__data) {
+    if (!data || !key) {
       return undefined;
     }
 
-    const subKey = parts.slice(1, parts.length).join('.');
-    return this.getData(subKey, fallback, obj);
+    const parts = key.split('.');
+    const head = parts[0];
+
+    const value = this.__resolveValue(head, data);
+
+    if (parts.length === 1) {
+      return value;
+    }
+
+    const tail = parts.slice(1, parts.length).join('.');
+    return this.getData(tail, value);
   }
 
-  getPathFromUrl(url, includedGroups = Configuration.groups.all) {
-    return this.findFirstPath(element => element.link === url, includedGroups);
+  // eslint-disable-next-line class-methods-use-this
+  __resolveValue(key, data) {
+    if (!data || !key) {
+      return undefined;
+    }
+
+    const parts = key.split(':');
+    if (parts.length === 1) {
+      const result = data[key];
+      return result;
+    }
+
+    if (parts.length === 2) {
+      const values = data[parts[0]].filter(item => item.id === parts[1]);
+      if (values.length > 0) {
+        return values[0];
+      }
+    }
+
+    return undefined;
   }
 
-  findFirstPath(selector /* (menu|item) => boolean */, includedGroups = Configuration.groups.all) {
-    return Configuration.toPath(this.findFirstNodePath(selector, includedGroups));
+  getPathFromUrl(url, includedGroupIds = this.groupIds) {
+    return this.findFirstPath(element => element.link === url, includedGroupIds);
   }
 
-  findFirstNodePath(selector /* (menu|item) => boolean */, includedGroups = Configuration.groups.all) {
+  findFirstPath(selector /* (menu|item) => boolean */, includedGroupIds = this.groupIds) {
+    return Configuration.toPath(this.findFirstNodePath(selector, includedGroupIds));
+  }
+
+  findFirstNodePath(selector /* (menu|item) => boolean */, includedGroupIds = this.groupIds) {
     if (!this.__data || !selector) {
       return undefined;
     }
 
-    for (let g = 0; g < includedGroups.length; g += 1) {
-      const group = includedGroups[g];
-      const menus = this.getData(`groups.${group}`, []);
+    for (let g = 0; g < includedGroupIds.length; g += 1) {
+      const group = this.getGroup(includedGroupIds[g]);
+      const { menus } = group;
 
       if (menus && menus.length > 0) {
         for (let m = 0; m < menus.length; m += 1) {
@@ -139,7 +143,7 @@ export class Configuration {
       return undefined;
     }
     return {
-      group: nodePath.group,
+      groupId: nodePath.group ? nodePath.group.id : undefined,
       menuId: nodePath.menu ? nodePath.menu.id : undefined,
       itemId: nodePath.item ? nodePath.item.id : undefined,
     };

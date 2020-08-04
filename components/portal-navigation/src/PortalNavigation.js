@@ -24,11 +24,21 @@ export class PortalNavigation extends LitElement {
     };
   }
 
+  static get groupIds() {
+    return {
+      main: 'main',
+      meta: 'meta',
+      profile: 'profile',
+      logout: 'logout',
+      all: ['main', 'meta', 'profile', 'logout'],
+    };
+  }
+
   static get events() {
     const ns = 'portal';
 
     return {
-      // routeTo: `${ns}.routeTo`,
+      routeTo: `${ns}.routeTo`,
       setLanguage: `${ns}.setLanguage`,
       setBadgeValue: `${ns}.setBadgeValue`,
       // setCurrentUser: `${ns}.setCurrentUser`,
@@ -50,7 +60,7 @@ export class PortalNavigation extends LitElement {
     return {
       src: { type: String }, // location from where to fetch the configuration (data.json)
       lang: { type: String }, // 'de' or 'en' - current language
-      activePath: { attribute: false }, // {group,menuId,itemId} - identifying the active item
+      activePath: { attribute: false }, // {groupId,menuId,itemId} - identifying the active item
       activeUrl: { type: String },
       currentApplication: { type: String },
       internalRouting: { type: Boolean },
@@ -65,22 +75,21 @@ export class PortalNavigation extends LitElement {
     this.lang = PortalNavigation.defaults.language;
     this.activePath = undefined;
     this.activeUrl = undefined;
-    this.currentApplication = undefined;
-    this.internalRouting = false;
+    this.currentApplication = 'ebanking'; // TODO: default must be undefined
+    this.internalRouting = true; // TODO: default must be false
     this.temporaryBadgeValues = new Map();
     this.hamburgerMenuExpanded = false;
     this.activeDropdown = undefined;
-    this.__configuration = new Configuration();
+    this.__configuration = new Configuration(PortalNavigation.groupIds.all);
   }
 
   connectedCallback() {
+    // eslint-disable-next-line no-console
     console.log('Connected');
 
     if (super.connectedCallback) {
       super.connectedCallback();
     }
-
-    this.__connected = true;
 
     // this._detectCurrentUser()
 
@@ -93,6 +102,7 @@ export class PortalNavigation extends LitElement {
     document.addEventListener('click', (...args) => this._onGlobalClick(...args));
     // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
 
+    // TODO: check id first, then url
     this.dispatchEvent(
       new CustomEvent(PortalNavigation.events.setBadgeValue, {
         detail: {
@@ -123,30 +133,32 @@ export class PortalNavigation extends LitElement {
   disconnectedCallback() {
     this.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
 
-    this.__connected = false;
-
     if (super.disconnectedCallback) {
       super.disconnectedCallback();
     }
 
+    // eslint-disable-next-line no-console
     console.log('Disconnected');
   }
 
   _fetchRemoteData() {
-    this.__configuration.setConfigData({});
+    this.__configuration.setConfigData(undefined);
 
+    // eslint-disable-next-line no-console
     console.log(`Fetching data from ${this.src}`);
     fetch(this.src)
       .then(response => {
         return response.json();
       })
       .then(data => {
+        // eslint-disable-next-line no-console
         console.log('Data received:', data);
         try {
           this.__configuration.setConfigData(data);
           this.__updateActivePathFromUrl();
           this.requestUpdate();
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.warn(e);
         }
       });
@@ -184,15 +196,14 @@ export class PortalNavigation extends LitElement {
         }),
       );
     }
-    if (name === 'hamburgerMenuExpanded') {
-      console.log(this.hamburgerMenuExpanded);
-    }
   }
 
   __updateActivePathFromUrl() {
+    // eslint-disable-next-line no-console
     console.log(`Updating activePath from activeUrl: ${this.activeUrl}`);
     const newPath = this.__configuration.getPathFromUrl(this.activeUrl);
     if (newPath) {
+      // eslint-disable-next-line no-console
       console.log(`activePath set to: ${JSON.stringify(newPath)}`);
       this.activePath = newPath;
     }
@@ -206,6 +217,7 @@ export class PortalNavigation extends LitElement {
   }
 
   setBadgeValue(menuOrItemId, value) {
+    // eslint-disable-next-line no-console
     console.log(`Setting badge of "${menuOrItemId}" to "${value}"`);
 
     // TODO: write to Store instead of temporary map
@@ -223,19 +235,22 @@ export class PortalNavigation extends LitElement {
   }
 
   render() {
+    // eslint-disable-next-line no-console
     console.debug(`Rendering with language set to “${this.lang}”.`);
 
     return html`<div class="nav-menu-container">
       <header class="nav-menu-header">
-        <div class="nav-menu-logo"><slot name="nav-menu-slot-logo"></slot></div>
+        <div class="nav-menu-logo"><slot name="logo"></slot></div>
         <div class="nav-menu-slot-left"><slot name="left"></slot></div>
         <div class="nav-menu-meta-group nav-menu-group">
-          ${this.__createGroupTemplate(Configuration.groups.meta)}
+          ${this.__createGroupTemplate(PortalNavigation.groupIds.meta)}
         </div>
         <div class="nav-menu-profile-group nav-menu-group">
-          ${this.__createGroupTemplate(Configuration.groups.profile)}
+          ${this.__createGroupTemplate(PortalNavigation.groupIds.profile)}
         </div>
-        <div class="nav-menu-logout nav-menu-group">${this.__createGroupTemplate(Configuration.groups.logout)}</div>
+        <div class="nav-menu-logout nav-menu-group">
+          ${this.__createGroupTemplate(PortalNavigation.groupIds.logout)}
+        </div>
         <div class="nav-menu-slot-right"><slot name="right"></slot></div>
         <!-- Hamburger Menu Tree Elements -->
         <portal-hamburger-menu
@@ -249,7 +264,7 @@ export class PortalNavigation extends LitElement {
 
       <main class="nav-menu-main-group">
         <div class="nav-menu-main-group-menus nav-menu-group">
-          <div class="nav-menu-content">${this.__createGroupTemplate(Configuration.groups.main)}</div>
+          <div class="nav-menu-content">${this.__createGroupTemplate(PortalNavigation.groupIds.main)}</div>
         </div>
         ${this.__createCurrentItemsTemplate()}
         <!-- Hamburger Menu Tree Elements -->
@@ -267,66 +282,77 @@ export class PortalNavigation extends LitElement {
       return html``;
     }
 
-    const { group, menuId } = this.activePath;
-    const activeMenu = this.__configuration.getData(`groups.${group}:${menuId}`, []);
+    const { groupId, menuId } = this.activePath;
+    const activeMenu = this.__configuration.getData(`groups.${groupId}.menus:${menuId}`);
 
     if (activeMenu && activeMenu.items && activeMenu.items.length > 0) {
       return html`<div class="nav-menu-current">
         <div class="nav-menu-content">
-          ${activeMenu.items.map(item => this.__createMenuItemTemplate(group, activeMenu, item))}
+          ${activeMenu.items.map(item => this.__createMenuItemTemplate(groupId, activeMenu, item))}
         </div>
       </div>`;
     }
     return html``;
   }
 
-  __createGroupTemplate(group) {
-    const menus = this.__configuration.getData(`groups.${group}`, []);
+  _getCurrentUserName(fallback = '') {
+    if (!this.__configuration) {
+      return fallback;
+    }
 
-    if (group === 'profile') {
-      const badge = this.getBadgeValue(group);
+    const user = this.__configuration.getData(`user`);
+    if (user && user.userName) {
+      return user.userName;
+    }
+
+    return fallback;
+  }
+
+  __createGroupTemplate(groupId) {
+    const group = this.__configuration.getGroup(groupId);
+
+    if (group && group.dropdown) {
+      const badge = this.getBadgeValue(groupId);
 
       const menuClasses = ['link', 'dropdown-link'];
-      if (this._isActive(group)) {
+      if (this._isActive(groupId)) {
         menuClasses.push(PortalNavigation.classes.selected);
       }
 
-      let label = '';
-      const user = this.__configuration.getData(`user`, {});
-      if (user && user.userName) {
-        label = user.userName;
-      }
-
-      const icon = '/data/account_circle-24px.svg';
-      const hasMenus = menus && menus.length > 0;
+      const label = this._getLabel(group.labels);
+      const hasMenus = group.menus && group.menus.length > 0;
 
       const templates = [];
       templates.push(html`<div class="first-level">
         ${hasMenus
-          ? html`<span class="${menuClasses.join(' ')}" @click="${e => this.__openDropdown(e, group)}"
-              >${this.__createLinkTemplate(label, icon, badge)}</span
+          ? html`<span class="${menuClasses.join(' ')}" @click="${e => this.__openDropdown(e, groupId)}"
+              >${this.__createLinkTemplate(label, group.icon, badge)}</span
             >`
-          : html`<span class="${menuClasses.join(' ')}">${this.__createLinkTemplate(label, icon, badge)}</span>`}
+          : html`<span class="${menuClasses.join(' ')}">${this.__createLinkTemplate(label, group.icon, badge)}</span>`}
       </div>`);
 
       if (hasMenus) {
         templates.push(
-          html`<div class="${classMap({ dropdown: true, '-showDropdown': this.activeDropdown === group })}">
-            ${menus.map(menu => this.__createMenuTemplate(group, menu))}
+          html`<div class="${classMap({ dropdown: true, '-showDropdown': this.activeDropdown === groupId })}">
+            ${group.menus.map(menu => this.__createMenuTemplate(groupId, menu))}
           </div> `,
         );
       }
       return templates;
     }
 
-    return html`${menus.map(menu => this.__createMenuTemplate(group, menu))}`;
+    if (group && group.menus) {
+      return html`${group.menus.map(menu => this.__createMenuTemplate(groupId, menu))}`;
+    }
+
+    return html``;
   }
 
-  __openDropdown(e, group) {
-    this.activeDropdown = this.activeDropdown ? undefined : group;
+  __openDropdown(e, groupId) {
+    this.activeDropdown = this.activeDropdown ? undefined : groupId;
   }
 
-  __createMenuTemplate(group, menu) {
+  __createMenuTemplate(groupId, menu) {
     const { link, icon, labels, items } = menu;
     const badge = this.getBadgeValue(menu.id);
 
@@ -344,7 +370,7 @@ export class PortalNavigation extends LitElement {
         ? html`<a
             href="${link}"
             class="${menuClasses.join(' ')}"
-            @click="${e => this.__setCurrentItems(e, group, menu)}"
+            @click="${e => this.__setCurrentItems(e, groupId, menu)}"
             >${this.__createLinkTemplate(label, icon, badge)}</a
           >`
         : html`<a
@@ -356,7 +382,7 @@ export class PortalNavigation extends LitElement {
     </div>`;
   }
 
-  __createMenuItemTemplate(group, menu, item) {
+  __createMenuItemTemplate(groupId, menu, item) {
     const itemClasses = ['link'];
     if (this._isActive(item.id)) {
       itemClasses.push(PortalNavigation.classes.selected);
@@ -370,7 +396,7 @@ export class PortalNavigation extends LitElement {
       return html`<a
         href="${item.link}"
         class="${itemClasses.join(' ')}"
-        @click="${e => this.__internalLinkClicked(e, group, menu, item)}"
+        @click="${e => this.__internalLinkClicked(e, groupId, menu, item)}"
         >${this.__createLinkTemplate(label, icon, badge)}</a
       >`;
     }
@@ -403,19 +429,22 @@ export class PortalNavigation extends LitElement {
   // Override to customize order and elements of tree structure in hamburger menu
   _createTreeTemplate() {
     const templates = [];
-    Configuration.groups.all.forEach(group => {
-      templates.push(this.__configuration.getMenus(group).map(menu => this.__createTreeMenuTemplate(group, menu)));
+    PortalNavigation.groupIds.all.forEach(groupId => {
+      const group = this.__configuration.getGroup(groupId);
+      if (group && group.menus && group.menus.length > 0) {
+        templates.push(group.menus.map(menu => this.__createTreeMenuTemplate(group, menu)));
+      }
     });
     return templates;
   }
 
-  __createTreeMenuTemplate(group, menu) {
+  __createTreeMenuTemplate(groupId, menu) {
     const isActiveMenu = this._isActive(menu.id);
 
     const templates = [];
     templates.push(
       html`<div class="nav-menu-tree-menu ${isActiveMenu ? PortalNavigation.classes.selected : ''}">
-        ${this.__createMenuTemplate(group, menu)}${menu.items && menu.items.length > 0
+        ${this.__createMenuTemplate(groupId, menu)}${menu.items && menu.items.length > 0
           ? html`<span class="${classMap({ button: true, '-selected': isActiveMenu })}"
               ><img
                 src="${isActiveMenu ? '/data/keyboard_arrow_up-24px.svg' : '/data/keyboard_arrow_down-24px.svg'}"
@@ -429,7 +458,7 @@ export class PortalNavigation extends LitElement {
     if (isActiveMenu) {
       templates.push(
         html`<div class="nav-menu-tree-menu-items">
-          ${menu.items.map(item => this.__createMenuItemTemplate(group, menu, item))}
+          ${menu.items.map(item => this.__createMenuItemTemplate(groupId, menu, item))}
         </div>`,
       );
     }
@@ -441,28 +470,44 @@ export class PortalNavigation extends LitElement {
   _isActive(id) {
     return (
       this.activePath &&
-      (id === this.activePath.group || id === this.activePath.menuId || id === this.activePath.itemId)
+      (id === this.activePath.groupId || id === this.activePath.menuId || id === this.activePath.itemId)
     );
   }
 
-  __setCurrentItems(e, group, menu) {
+  __setCurrentItems(e, groupId, menu) {
     e.preventDefault();
 
+    // eslint-disable-next-line no-console
     console.log(`Set current items to items of: ${this._getLabel(menu.labels)}`);
 
     const item = this.__getDefaultItemOf(menu);
 
     this.activeDropdown = undefined;
-    this.activePath = { group, menuId: menu.id, itemId: item ? item.id : undefined };
+    this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
   }
 
-  __internalLinkClicked(e, group, menu, item) {
+  // TODO: change to __onInternalLinkClicked
+  __internalLinkClicked(e, groupId, menu, item) {
     e.preventDefault();
 
+    // eslint-disable-next-line no-console
     console.log(`Internal link selected: ${this._getLabel(item.labels)}`);
 
     this.activeDropdown = undefined;
-    this.activePath = { group, menuId: menu.id, itemId: item.id };
+    this.activePath = { groupId, menuId: menu.id, itemId: item.id };
+
+    // TODO: remove setActiveItem event
+    // TODO: if menu and no default item -> no event
+    // TODO: if menu and default item -> routeTo default item
+    this.dispatchEvent(
+      new CustomEvent(PortalNavigation.events.routeTo, {
+        detail: {
+          link: item.link,
+          labels: item.labels,
+        },
+        bubbles: true,
+      }),
+    );
   }
 
   // eslint-disable-next-line class-methods-use-this
