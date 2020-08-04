@@ -339,8 +339,6 @@ export class PortalNavigation extends LitElement {
       menuClasses.push(PortalNavigation.classes.selected);
     }
 
-    // TODO: handle case of internalRouting===true (no items) (e.g. logout)
-
     const label = this._getLabel(labels);
 
     if (items && items.length > 0) {
