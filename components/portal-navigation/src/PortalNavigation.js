@@ -41,8 +41,6 @@ export class PortalNavigation extends LitElement {
       routeTo: `${ns}.routeTo`,
       setLanguage: `${ns}.setLanguage`,
       setBadgeValue: `${ns}.setBadgeValue`,
-      // setCurrentUser: `${ns}.setCurrentUser`,
-      setActiveItem: `${ns}.setActiveItem`,
     };
   }
 
@@ -50,9 +48,6 @@ export class PortalNavigation extends LitElement {
     return {
       selected: '-selected',
       decorator: '-decorator',
-      // showDropdown: '-show',
-      // open: '-open',
-      // empty: '-empty',
     };
   }
 
@@ -90,8 +85,6 @@ export class PortalNavigation extends LitElement {
     if (super.connectedCallback) {
       super.connectedCallback();
     }
-
-    // this._detectCurrentUser()
 
     if (this.src) {
       this._fetchRemoteData();
@@ -182,19 +175,6 @@ export class PortalNavigation extends LitElement {
     }
     if (name === 'activeUrl' && oldValue !== this.activeUrl) {
       this.__updateActivePathFromUrl();
-    }
-    if (name === 'activePath' && oldValue !== this.activePath) {
-      let item;
-      if (this.activePath && this.__configuration) {
-        item = this.__configuration.getItem(this.activePath);
-      }
-
-      this.dispatchEvent(
-        new CustomEvent(PortalNavigation.events.setActiveItem, {
-          detail: item,
-          bubbles: true,
-        }),
-      );
     }
   }
 
@@ -295,19 +275,6 @@ export class PortalNavigation extends LitElement {
     return html``;
   }
 
-  _getCurrentUserName(fallback = '') {
-    if (!this.__configuration) {
-      return fallback;
-    }
-
-    const user = this.__configuration.getData(`user`);
-    if (user && user.userName) {
-      return user.userName;
-    }
-
-    return fallback;
-  }
-
   __createGroupTemplate(groupId) {
     const group = this.__configuration.getGroup(groupId);
 
@@ -370,7 +337,7 @@ export class PortalNavigation extends LitElement {
         ? html`<a
             href="${link}"
             class="${menuClasses.join(' ')}"
-            @click="${e => this.__setCurrentItems(e, groupId, menu)}"
+            @click="${e => this.__onSetCurrentItems(e, groupId, menu)}"
             >${this.__createLinkTemplate(label, icon, badge)}</a
           >`
         : html`<a
@@ -396,7 +363,7 @@ export class PortalNavigation extends LitElement {
       return html`<a
         href="${item.link}"
         class="${itemClasses.join(' ')}"
-        @click="${e => this.__internalLinkClicked(e, groupId, menu, item)}"
+        @click="${e => this.__onInternalLinkClicked(e, groupId, menu, item)}"
         >${this.__createLinkTemplate(label, icon, badge)}</a
       >`;
     }
@@ -474,7 +441,7 @@ export class PortalNavigation extends LitElement {
     );
   }
 
-  __setCurrentItems(e, groupId, menu) {
+  __onSetCurrentItems(e, groupId, menu) {
     e.preventDefault();
 
     // eslint-disable-next-line no-console
@@ -486,8 +453,7 @@ export class PortalNavigation extends LitElement {
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
   }
 
-  // TODO: change to __onInternalLinkClicked
-  __internalLinkClicked(e, groupId, menu, item) {
+  __onInternalLinkClicked(e, groupId, menu, item) {
     e.preventDefault();
 
     // eslint-disable-next-line no-console
@@ -496,7 +462,6 @@ export class PortalNavigation extends LitElement {
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item.id };
 
-    // TODO: remove setActiveItem event
     // TODO: if menu and no default item -> no event
     // TODO: if menu and default item -> routeTo default item
     this.dispatchEvent(
