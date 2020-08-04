@@ -451,6 +451,18 @@ export class PortalNavigation extends LitElement {
 
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
+
+    if (item) {
+      this.dispatchEvent(
+        new CustomEvent(PortalNavigation.events.routeTo, {
+          detail: {
+            link: item.link,
+            labels: item.labels,
+          },
+          bubbles: true,
+        }),
+      );
+    }
   }
 
   __onInternalLinkClicked(e, groupId, menu, item) {
@@ -462,8 +474,6 @@ export class PortalNavigation extends LitElement {
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item.id };
 
-    // TODO: if menu and no default item -> no event
-    // TODO: if menu and default item -> routeTo default item
     this.dispatchEvent(
       new CustomEvent(PortalNavigation.events.routeTo, {
         detail: {
