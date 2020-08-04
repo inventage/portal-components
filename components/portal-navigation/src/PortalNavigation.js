@@ -343,20 +343,29 @@ export class PortalNavigation extends LitElement {
 
     const label = this._getLabel(labels);
 
+    if (items && items.length > 0) {
+      return html`<div class="first-level">
+        <a href="${link}" class="${menuClasses.join(' ')}" @click="${e => this.__onSetCurrentItems(e, groupId, menu)}"
+          >${this.__createLinkTemplate(label, icon, badge)}</a
+        >
+      </div>`;
+    }
+
+    if (this.__isInternalRouting(menu)) {
+      return html`<div class="first-level">
+        <a
+          href="${link}"
+          class="${menuClasses.join(' ')}"
+          @click="${e => this.__onInternalLinkClicked(e, groupId, menu)}"
+          >${this.__createLinkTemplate(label, icon, badge)}</a
+        >
+      </div>`;
+    }
+
     return html`<div class="first-level">
-      ${items && items.length > 0
-        ? html`<a
-            href="${link}"
-            class="${menuClasses.join(' ')}"
-            @click="${e => this.__onSetCurrentItems(e, groupId, menu)}"
-            >${this.__createLinkTemplate(label, icon, badge)}</a
-          >`
-        : html`<a
-            href="${link}"
-            class="${menuClasses.join(' ')}"
-            target="${menu.destination === 'extern' ? '_blank' : '_self'}"
-            >${this.__createLinkTemplate(label, icon, badge)}</a
-          >`}
+      <a href="${link}" class="${menuClasses.join(' ')}" target="${menu.destination === 'extern' ? '_blank' : '_self'}"
+        >${this.__createLinkTemplate(label, icon, badge)}</a
+      >
     </div>`;
   }
 
@@ -464,6 +473,8 @@ export class PortalNavigation extends LitElement {
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
 
     if (item) {
+      // eslint-disable-next-line no-console
+      console.log(`Route to: ${this._getLabel(item.labels)} (${item.link})`);
       this.dispatchEvent(
         new CustomEvent(PortalNavigation.events.routeTo, {
           detail: {
@@ -479,17 +490,22 @@ export class PortalNavigation extends LitElement {
   __onInternalLinkClicked(e, groupId, menu, item) {
     e.preventDefault();
 
+    const link = item ? item.link : menu.link;
+    const labels = item ? item.labels : menu.labels;
+
     // eslint-disable-next-line no-console
-    console.log(`Internal link selected: ${this._getLabel(item.labels)}`);
+    console.log(`Internal link selected: ${this._getLabel(labels)}`);
 
     this.activeDropdown = undefined;
-    this.activePath = { groupId, menuId: menu.id, itemId: item.id };
+    this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
 
+    // eslint-disable-next-line no-console
+    console.log(`Route to: ${this._getLabel(labels)} (${link})`);
     this.dispatchEvent(
       new CustomEvent(PortalNavigation.events.routeTo, {
         detail: {
-          link: item.link,
-          labels: item.labels,
+          link,
+          labels,
         },
         bubbles: true,
       }),
@@ -508,9 +524,9 @@ export class PortalNavigation extends LitElement {
     return items.find(item => item.id === defaultItem) || items[0];
   }
 
-  __isInternalRouting(item) {
+  __isInternalRouting(menuOrItem) {
     // Allow global `internalRouting` to be overridden by the item specific `internalRouting` property
-    const itemInternalRouting = 'internalRouting' in item ? item.internalRouting : this.internalRouting;
+    const itemInternalRouting = 'internalRouting' in menuOrItem ? menuOrItem.internalRouting : this.internalRouting;
 
     // Bail if we're not routing internally…
     if (!itemInternalRouting) {
@@ -523,15 +539,15 @@ export class PortalNavigation extends LitElement {
     }
 
     // Current application was set, but item is not application specific…
-    if (!('application' in item)) {
+    if (!('application' in menuOrItem)) {
       // We check whether the current application is in the list of `internalRoutingApplications`
       return (
-        'internalRoutingApplications' in item &&
-        Array.prototype.includes.call(item.internalRoutingApplications, this.currentApplication)
+        'internalRoutingApplications' in menuOrItem &&
+        Array.prototype.includes.call(menuOrItem.internalRoutingApplications, this.currentApplication)
       );
     }
 
-    return item.application === this.currentApplication;
+    return menuOrItem.application === this.currentApplication;
   }
 
   _getLabel(labels) {
