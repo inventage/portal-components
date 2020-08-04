@@ -27,3 +27,34 @@ export const Basic = () => html`<portal-navigation src="/data/data.json"></porta
 export const Extended = () => html`<ext-portal-navigation src="/data/data.json"></ext-portal-navigation>`;
 export const Composite = () => html`<comp-portal-navigation></comp-portal-navigation>`;
 ```
+
+```js script
+window.addEventListener('load', () => {
+  document.dispatchEvent(
+    new CustomEvent(PortalNavigation.events.setBadgeValue, {
+      detail: {
+        id: 'profile.preferences.userSettings',
+        value: { en: 'NEW', de: 'NEU' },
+      },
+    }),
+  );
+
+  document.dispatchEvent(
+    new CustomEvent(PortalNavigation.events.setBadgeValue, {
+      detail: {
+        id: 'meta.messages',
+        value: '9',
+      },
+    }),
+  );
+
+  document.dispatchEvent(
+    new CustomEvent(PortalNavigation.events.setBadgeValue, {
+      detail: {
+        link: '/ebanking/update-notification-preferences',
+        value: '34',
+      },
+    }),
+  );
+});
+```
