@@ -84,6 +84,7 @@ export class CompPortalNavigation extends LitElement {
 
   // eslint-disable-next-line class-methods-use-this
   __setLanguage(languageId) {
+    // eslint-disable-next-line no-console
     console.log(`Language set ${languageId} (Language chooser)`);
 
     // if (this._internalRouting === false) {

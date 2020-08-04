@@ -142,12 +142,12 @@
         {
           "name": "--hamburger-layer-border-radius",
           "type": "Length",
-          "default": "\"0\""
+          "default": "0"
         },
         {
           "name": "--hamburger-hover-opacity",
           "type": "Length",
-          "default": "\"1\""
+          "default": "1"
         },
         {
           "name": "--hamburger-hover-transition-duration",
@@ -183,12 +183,12 @@
         {
           "name": "currentApplication",
           "type": "string",
-          "default": "\"undefined\""
+          "default": "\"ebanking\""
         },
         {
           "name": "internalRouting",
           "type": "boolean",
-          "default": "false"
+          "default": "true"
         }
       ],
       "properties": [
@@ -218,94 +218,13 @@
           "name": "currentApplication",
           "attribute": "currentApplication",
           "type": "string",
-          "default": "\"undefined\""
+          "default": "\"ebanking\""
         },
         {
           "name": "internalRouting",
           "attribute": "internalRouting",
           "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "temporaryBadgeValues",
-          "type": "Map<any, any>"
-        },
-        {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "activeDropdown",
-          "type": "string",
-          "default": "\"undefined\""
-        }
-      ]
-    },
-    {
-      "name": "ext-portal-navigation",
-      "path": "./components/portal-navigation/src/ExtPortalNavigation.js",
-      "attributes": [
-        {
-          "name": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "type": "string",
-          "default": "\"language\""
-        },
-        {
-          "name": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "internalRouting",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "properties": [
-        {
-          "name": "src",
-          "attribute": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "attribute": "lang",
-          "type": "string",
-          "default": "\"language\""
-        },
-        {
-          "name": "activePath",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "activeUrl",
-          "attribute": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "currentApplication",
-          "attribute": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "internalRouting",
-          "attribute": "internalRouting",
-          "type": "boolean",
-          "default": "false"
+          "default": "true"
         },
         {
           "name": "temporaryBadgeValues",
@@ -333,6 +252,87 @@
         {
           "name": "languages",
           "default": "[]"
+        }
+      ]
+    },
+    {
+      "name": "ext-portal-navigation",
+      "path": "./components/portal-navigation/src/ExtPortalNavigation.js",
+      "attributes": [
+        {
+          "name": "src",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activeUrl",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "type": "string",
+          "default": "\"ebanking\""
+        },
+        {
+          "name": "internalRouting",
+          "type": "boolean",
+          "default": "true"
+        }
+      ],
+      "properties": [
+        {
+          "name": "src",
+          "attribute": "src",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "lang",
+          "attribute": "lang",
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activePath",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "activeUrl",
+          "attribute": "activeUrl",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "attribute": "currentApplication",
+          "type": "string",
+          "default": "\"ebanking\""
+        },
+        {
+          "name": "internalRouting",
+          "attribute": "internalRouting",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "temporaryBadgeValues",
+          "type": "Map<any, any>"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "activeDropdown",
+          "type": "string",
+          "default": "\"undefined\""
         }
       ]
     }
