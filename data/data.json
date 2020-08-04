@@ -1,28 +1,4 @@
 {
-  "user": {
-    "userName": "331045/inv1",
-    "environment": "d"
-  },
-  "languages": [
-    {
-      "id": "de",
-      "label": "Deutsch"
-    },
-    {
-      "id": "en",
-      "label": "English"
-    }
-  ],
-  "strings": {
-    "de": {
-      "anonymous": "Anonym",
-      "website": "Zur Webseite"
-    },
-    "en": {
-      "anonymous": "Anonymous",
-      "website": "To Website"
-    }
-  },
   "groups": {
     "main": {
       "menus": [

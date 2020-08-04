@@ -1,7 +1,6 @@
 export const data = {
   groups: {
     group1: {
-      id: 'd',
       menus: [
         {
           id: 'menu1',

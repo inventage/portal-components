@@ -205,10 +205,6 @@
           "default": "\"language\""
         },
         {
-          "name": "activePath",
-          "default": "\"undefined\""
-        },
-        {
           "name": "activeUrl",
           "attribute": "activeUrl",
           "type": "string",
@@ -229,16 +225,6 @@
         {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
-        },
-        {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "activeDropdown",
-          "type": "string",
-          "default": "\"undefined\""
         }
       ]
     },
@@ -299,10 +285,6 @@
           "default": "\"language\""
         },
         {
-          "name": "activePath",
-          "default": "\"undefined\""
-        },
-        {
           "name": "activeUrl",
           "attribute": "activeUrl",
           "type": "string",
@@ -323,16 +305,6 @@
         {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
-        },
-        {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "activeDropdown",
-          "type": "string",
-          "default": "\"undefined\""
         }
       ]
     }

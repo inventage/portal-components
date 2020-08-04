@@ -55,11 +55,20 @@ export class PortalNavigation extends LitElement {
     return {
       src: { type: String }, // location from where to fetch the configuration (data.json)
       lang: { type: String }, // 'de' or 'en' - current language
+      /**
+       * @private
+       */
       activePath: { attribute: false }, // {groupId,menuId,itemId} - identifying the active item
       activeUrl: { type: String },
       currentApplication: { type: String },
       internalRouting: { type: Boolean },
+      /**
+       * @private
+       */
       hamburgerMenuExpanded: { type: Boolean, attribute: false },
+      /**
+       * @private
+       */
       activeDropdown: { type: String, attribute: false },
     };
   }
@@ -94,33 +103,6 @@ export class PortalNavigation extends LitElement {
 
     document.addEventListener('click', (...args) => this._onGlobalClick(...args));
     // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
-
-    this.dispatchEvent(
-      new CustomEvent(PortalNavigation.events.setBadgeValue, {
-        detail: {
-          id: 'profile.preferences.userSettings',
-          value: { en: 'NEW', de: 'NEU' },
-        },
-      }),
-    );
-
-    this.dispatchEvent(
-      new CustomEvent(PortalNavigation.events.setBadgeValue, {
-        detail: {
-          id: 'meta.messages',
-          value: '9',
-        },
-      }),
-    );
-
-    this.dispatchEvent(
-      new CustomEvent(PortalNavigation.events.setBadgeValue, {
-        detail: {
-          link: '/ebanking/update-notification-preferences',
-          value: '34',
-        },
-      }),
-    );
   }
 
   _onGlobalClick(e) {
@@ -417,7 +399,7 @@ export class PortalNavigation extends LitElement {
     PortalNavigation.groupIds.all.forEach(groupId => {
       const group = this.__configuration.getGroup(groupId);
       if (group && group.menus && group.menus.length > 0) {
-        templates.push(group.menus.map(menu => this.__createTreeMenuTemplate(group, menu)));
+        templates.push(group.menus.map(menu => this.__createTreeMenuTemplate(groupId, menu)));
       }
     });
     return templates;
