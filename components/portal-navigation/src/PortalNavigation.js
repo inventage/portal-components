@@ -95,7 +95,6 @@ export class PortalNavigation extends LitElement {
     document.addEventListener('click', (...args) => this._onGlobalClick(...args));
     // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
 
-    // TODO: check id first, then url
     this.dispatchEvent(
       new CustomEvent(PortalNavigation.events.setBadgeValue, {
         detail: {
@@ -110,6 +109,15 @@ export class PortalNavigation extends LitElement {
         detail: {
           id: 'meta.messages',
           value: '9',
+        },
+      }),
+    );
+
+    this.dispatchEvent(
+      new CustomEvent(PortalNavigation.events.setBadgeValue, {
+        detail: {
+          link: '/ebanking/update-notification-preferences',
+          value: '34',
         },
       }),
     );
@@ -192,22 +200,25 @@ export class PortalNavigation extends LitElement {
   __setBadgeValueEventListener(e) {
     const { detail } = e;
     if (detail) {
-      this.setBadgeValue(detail.id, detail.value);
+      this.setBadgeValue(detail.id, detail.link, detail.value);
     }
   }
 
-  setBadgeValue(menuOrItemId, value) {
+  setBadgeValue(menuOrItemId, link, value) {
     // eslint-disable-next-line no-console
-    console.log(`Setting badge of "${menuOrItemId}" to "${value}"`);
+    console.log(`Setting badge of "${menuOrItemId || link}" to "${value}"`);
 
     // TODO: write to Store instead of temporary map
-    this.temporaryBadgeValues.set(menuOrItemId, value);
+    this.temporaryBadgeValues.set(menuOrItemId || link, value);
     this._requestUpdate();
   }
 
-  getBadgeValue(menuOrItemId) {
+  getBadgeValue(groupOrMenuOrItemId) {
     // TODO: read from Store instead of temporary map
-    const value = this.temporaryBadgeValues.get(menuOrItemId);
+    let value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.id);
+    if (!value) {
+      value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.link);
+    }
     if (value && typeof value === 'object' && value.constructor === Object) {
       return this._getLabel(value);
     }
@@ -279,7 +290,7 @@ export class PortalNavigation extends LitElement {
     const group = this.__configuration.getGroup(groupId);
 
     if (group && group.dropdown) {
-      const badge = this.getBadgeValue(groupId);
+      const badge = this.getBadgeValue(group);
 
       const menuClasses = ['link', 'dropdown-link'];
       if (this._isActive(groupId)) {
@@ -321,7 +332,7 @@ export class PortalNavigation extends LitElement {
 
   __createMenuTemplate(groupId, menu) {
     const { link, icon, labels, items } = menu;
-    const badge = this.getBadgeValue(menu.id);
+    const badge = this.getBadgeValue(menu);
 
     const menuClasses = ['link'];
     if (this._isActive(menu.id)) {
@@ -356,7 +367,7 @@ export class PortalNavigation extends LitElement {
     }
 
     const { icon, labels } = item;
-    const badge = this.getBadgeValue(item.id);
+    const badge = this.getBadgeValue(item);
     const label = this._getLabel(labels);
 
     if (this.__isInternalRouting(item)) {
@@ -533,9 +544,5 @@ export class PortalNavigation extends LitElement {
     }
 
     return '(noLabel)';
-
-    // TODO: must return the label for the current language (this.lang)
-    // TODO: if this language is not supported use the first language from the languages array in remote
-    // TODO: if languages is not defined, used the first label in the array of the item
   }
 }
