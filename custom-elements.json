@@ -183,12 +183,12 @@
         {
           "name": "currentApplication",
           "type": "string",
-          "default": "\"ebanking\""
+          "default": "\"undefined\""
         },
         {
           "name": "internalRouting",
           "type": "boolean",
-          "default": "true"
+          "default": "false"
         }
       ],
       "properties": [
@@ -214,13 +214,13 @@
           "name": "currentApplication",
           "attribute": "currentApplication",
           "type": "string",
-          "default": "\"ebanking\""
+          "default": "\"undefined\""
         },
         {
           "name": "internalRouting",
           "attribute": "internalRouting",
           "type": "boolean",
-          "default": "true"
+          "default": "false"
         },
         {
           "name": "temporaryBadgeValues",
@@ -263,12 +263,12 @@
         {
           "name": "currentApplication",
           "type": "string",
-          "default": "\"ebanking\""
+          "default": "\"undefined\""
         },
         {
           "name": "internalRouting",
           "type": "boolean",
-          "default": "true"
+          "default": "false"
         }
       ],
       "properties": [
@@ -294,13 +294,13 @@
           "name": "currentApplication",
           "attribute": "currentApplication",
           "type": "string",
-          "default": "\"ebanking\""
+          "default": "\"undefined\""
         },
         {
           "name": "internalRouting",
           "attribute": "internalRouting",
           "type": "boolean",
-          "default": "true"
+          "default": "false"
         },
         {
           "name": "temporaryBadgeValues",
