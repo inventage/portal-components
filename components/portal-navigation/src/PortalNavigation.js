@@ -536,14 +536,18 @@ export class PortalNavigation extends LitElement {
   }
 
   _getLabel(labels) {
-    if (!this.lang) {
-      return '(noLang)';
+    if (typeof labels === 'string') {
+      return labels;
+    }
+
+    if (!labels || !this.lang) {
+      return '';
     }
 
     if (this.lang in labels) {
       return labels[this.lang];
     }
 
-    return '(noLabel)';
+    return '';
   }
 }
