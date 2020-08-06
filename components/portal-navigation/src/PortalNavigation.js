@@ -79,8 +79,8 @@ export class PortalNavigation extends LitElement {
     this.lang = PortalNavigation.defaults.language;
     this.activePath = undefined;
     this.activeUrl = undefined;
-    this.currentApplication = 'ebanking'; // TODO: default must be undefined
-    this.internalRouting = true; // TODO: default must be false
+    this.currentApplication = undefined;
+    this.internalRouting = false;
     this.temporaryBadgeValues = new Map();
     this.hamburgerMenuExpanded = false;
     this.activeDropdown = undefined;
