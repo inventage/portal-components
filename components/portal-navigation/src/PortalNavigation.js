@@ -324,8 +324,12 @@ export class PortalNavigation extends LitElement {
     const label = this._getLabel(labels);
 
     if (items && items.length > 0) {
+      const defaultItem = this.__getDefaultItemOf(menu);
       return html`<div class="first-level">
-        <a href="${link}" class="${menuClasses.join(' ')}" @click="${e => this.__onSetCurrentItems(e, groupId, menu)}"
+        <a
+          href="${defaultItem ? defaultItem.link : link}"
+          class="${menuClasses.join(' ')}"
+          @click="${e => this.__onSetCurrentItems(e, groupId, menu)}"
           >${this.__createLinkTemplate(label, icon, badge)}</a
         >
       </div>`;
@@ -496,11 +500,12 @@ export class PortalNavigation extends LitElement {
   __getDefaultItemOf(menu) {
     const { defaultItem, items } = menu;
 
-    if (Array.isArray(items) === false || items.length < 1 || typeof defaultItem !== 'string') {
+    // there are no items to choose from
+    if (Array.isArray(items) === false || items.length < 1) {
       return null;
     }
 
-    // If default item wasn't found, take the first one
+    // if no defaultItem is defined or it can't be found use the first item.
     return items.find(item => item.id === defaultItem) || items[0];
   }
 

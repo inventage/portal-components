@@ -343,7 +343,6 @@
           ]
         },
         {
-          "defaultItem": "main.superuser.userOverview",
           "labels": {
             "de": "Superuser",
             "en": "Superuser"
