@@ -41,7 +41,7 @@ export class Configuration {
   }
 
   getGroup(groupId) {
-    return this.getData(`groups.${groupId}`);
+    return this.getData(['groups', groupId]);
   }
 
   getItem(path /* { groupId, menuId, itemId } */) {
@@ -59,21 +59,20 @@ export class Configuration {
     return undefined;
   }
 
-  getData(key, data = this.__data) {
-    if (!data || !key) {
+  getData(keyPath, data = this.__data) {
+    if (!data || !keyPath || keyPath.length <= 0) {
       return undefined;
     }
 
-    const parts = key.split('.');
-    const head = parts[0];
+    const head = keyPath[0];
 
     const value = this.__resolveValue(head, data);
 
-    if (parts.length === 1) {
+    if (keyPath.length === 1) {
       return value;
     }
 
-    const tail = parts.slice(1, parts.length).join('.');
+    const tail = keyPath.slice(1, keyPath.length);
     return this.getData(tail, value);
   }
 
@@ -83,14 +82,13 @@ export class Configuration {
       return undefined;
     }
 
-    const parts = key.split(':');
-    if (parts.length === 1) {
-      const result = data[key];
-      return result;
+    const keyParts = key.split('::');
+    if (keyParts.length === 1) {
+      return data[key];
     }
 
-    if (parts.length === 2) {
-      const values = data[parts[0]].filter(item => item.id === parts[1]);
+    if (keyParts.length === 2) {
+      const values = data[keyParts[0]].filter(item => item.id === keyParts[1]);
       if (values.length > 0) {
         return values[0];
       }

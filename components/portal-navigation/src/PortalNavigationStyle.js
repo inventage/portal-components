@@ -24,14 +24,19 @@ export const portalNavigationStyle = css`
     margin: auto 0;
   }
 
+  .first-level {
+    display: flex;
+  }
+
   .portal-navigation-slot-left {
     margin: 0 0 0 auto;
   }
 
-  .portal-navigation-main-group-menus {
+  .portal-navigation-group-main-menus {
     background: #e8edf5;
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
+    justify-content: flex-end;
   }
 
   .portal-navigation-content {
@@ -45,7 +50,6 @@ export const portalNavigationStyle = css`
     margin: 0.25rem 0.5rem;
     display: flex;
     align-items: center;
-    text-transform: uppercase;
     color: darkslategray;
   }
 
@@ -54,7 +58,6 @@ export const portalNavigationStyle = css`
   }
 
   .dropdown-link {
-    text-transform: none;
     cursor: pointer;
   }
 
@@ -127,7 +130,8 @@ export const portalNavigationStyle = css`
   }
 
   .badge.-decorator:not(:empty) {
-    transform: translate(-40%, 40%);
+    transform: translate(-1rem, 0.35rem);
+    margin-right: -0.5rem;
   }
 
   .portal-navigation-header-toggle {
@@ -166,7 +170,8 @@ export const portalNavigationStyle = css`
     margin-right: 0.5rem;
   }
 
-  .portal-navigation-profile-group {
+  .portal-navigation-group {
+    display: flex;
     position: relative;
   }
 
@@ -176,11 +181,11 @@ export const portalNavigationStyle = css`
       display: block;
     }
     .portal-navigation-slot-left,
-    .portal-navigation-meta-group,
-    .portal-navigation-profile-group,
+    .portal-navigation-group-meta,
+    .portal-navigation-group-profile,
     .portal-navigation-logout,
     .portal-navigation-slot-right,
-    .portal-navigation-main-group-menus,
+    .portal-navigation-group-main-menus,
     .portal-navigation-current {
       display: none;
     }
