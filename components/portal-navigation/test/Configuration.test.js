@@ -72,6 +72,17 @@ describe('Configuration', () => {
     expect(group1.id).to.equal('group1');
   });
 
+  it('setConfigData should not generate ids on invalid data', () => {
+    const configuration = new Configuration(['group1', 'group2']);
+
+    [undefined, null, 0].forEach(configData => {
+      configuration.setConfigData(configData);
+
+      expect(configuration.getGroup('group1')).to.equal(undefined);
+      expect(configuration.getGroup('group2')).to.equal(undefined);
+    });
+  });
+
   it('findFirstNodePath returns first node path matching criteria', () => {
     // given
     const configuration = new Configuration(['group1', 'group2']);
