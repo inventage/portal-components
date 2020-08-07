@@ -27,7 +27,7 @@ describe('PortalNavigation', () => {
 });
 
 describe('Configuration', () => {
-  it('getData returns group with menus', () => {
+  it('getGroup returns group with menus', () => {
     // given
     const configuration = new Configuration(['group1', 'group2']);
     configuration.setConfigData(data);
@@ -92,7 +92,7 @@ describe('Configuration', () => {
     configuration.setConfigData(data);
 
     // when
-    const result = configuration.getData('groups.group2.menus:menu4');
+    const result = configuration.getData(['groups', 'group2', `menus::menu4`]);
 
     // then
     expect(result.id).to.equal('menu4');
