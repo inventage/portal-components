@@ -6,35 +6,35 @@ export const portalNavigationStyle = css`
     font-size: 1.25rem;
   }
 
-  .nav-menu-container {
+  .portal-navigation-container {
     margin: 0;
   }
 
-  .nav-menu-header {
+  .portal-navigation-header {
     display: flex;
     background: #e8edf5;
     padding-top: 0.5rem;
   }
 
-  .nav-menu-logout {
+  .portal-navigation-logout {
     display: flex;
   }
 
-  .nav-menu-logout .first-level {
+  .portal-navigation-logout .first-level {
     margin: auto 0;
   }
 
-  .nav-menu-slot-left {
+  .portal-navigation-slot-left {
     margin: 0 0 0 auto;
   }
 
-  .nav-menu-main-group-menus {
+  .portal-navigation-main-group-menus {
     background: #e8edf5;
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
   }
 
-  .nav-menu-content {
+  .portal-navigation-content {
     display: flex;
     justify-content: flex-end;
   }
@@ -107,11 +107,11 @@ export const portalNavigationStyle = css`
     display: block;
   }
 
-  .nav-menu-tree-container .link {
+  .portal-navigation-tree-container .link {
     text-transform: none;
   }
 
-  .nav-menu-icon {
+  .portal-navigation-icon {
     margin-right: 0.25rem;
   }
 
@@ -130,61 +130,61 @@ export const portalNavigationStyle = css`
     transform: translate(-40%, 40%);
   }
 
-  .nav-menu-header-toggle {
+  .portal-navigation-header-toggle {
     display: none;
     margin-left: auto;
     margin-right: 0.5rem;
   }
 
-  .nav-menu-tree-container {
+  .portal-navigation-tree-container {
     display: none;
   }
 
-  .nav-menu-tree-menu {
+  .portal-navigation-tree-menu {
     display: flex;
     margin: 0.25rem 0.5rem 0.25rem 0;
     border-bottom: solid 1px #e8edf5;
   }
 
-  .nav-menu-tree-menu-items {
+  .portal-navigation-tree-menu-items {
   }
 
-  .nav-menu-tree-menu-items .link:first-child {
+  .portal-navigation-tree-menu-items .link:first-child {
     margin-top: 0.5rem;
   }
 
-  .nav-menu-tree-menu-items .link:last-child {
+  .portal-navigation-tree-menu-items .link:last-child {
     margin-bottom: 1rem;
   }
 
-  .nav-menu-tree-menu-items .link {
+  .portal-navigation-tree-menu-items .link {
     font-size: 0.75rem;
   }
 
-  .nav-menu-tree-menu .button {
+  .portal-navigation-tree-menu .button {
     margin-left: auto;
     margin-right: 0.5rem;
   }
 
-  .nav-menu-profile-group {
+  .portal-navigation-profile-group {
     position: relative;
   }
 
   @media screen and (max-width: 800px) {
-    .nav-menu-header-toggle,
-    .nav-menu-tree-container {
+    .portal-navigation-header-toggle,
+    .portal-navigation-tree-container {
       display: block;
     }
-    .nav-menu-slot-left,
-    .nav-menu-meta-group,
-    .nav-menu-profile-group,
-    .nav-menu-logout,
-    .nav-menu-slot-right,
-    .nav-menu-main-group-menus,
-    .nav-menu-current {
+    .portal-navigation-slot-left,
+    .portal-navigation-meta-group,
+    .portal-navigation-profile-group,
+    .portal-navigation-logout,
+    .portal-navigation-slot-right,
+    .portal-navigation-main-group-menus,
+    .portal-navigation-current {
       display: none;
     }
-    .nav-menu-header {
+    .portal-navigation-header {
       padding-bottom: 0.5rem;
     }
   }

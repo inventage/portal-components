@@ -211,23 +211,23 @@ export class PortalNavigation extends LitElement {
     // eslint-disable-next-line no-console
     console.debug(`Rendering with language set to “${this.lang}”.`);
 
-    return html`<div class="nav-menu-container">
-      <header class="nav-menu-header">
-        <div class="nav-menu-logo"><slot name="logo"></slot></div>
-        <div class="nav-menu-slot-left"><slot name="left"></slot></div>
-        <div class="nav-menu-meta-group nav-menu-group">
+    return html`<div class="portal-navigation-container">
+      <header class="portal-navigation-header">
+        <div class="portal-navigation-logo"><slot name="logo"></slot></div>
+        <div class="portal-navigation-slot-left"><slot name="left"></slot></div>
+        <div class="portal-navigation-meta-group portal-navigation-group">
           ${this.__createGroupTemplate(PortalNavigation.groupIds.meta)}
         </div>
-        <div class="nav-menu-profile-group nav-menu-group">
+        <div class="portal-navigation-profile-group portal-navigation-group">
           ${this.__createGroupTemplate(PortalNavigation.groupIds.profile)}
         </div>
-        <div class="nav-menu-logout nav-menu-group">
+        <div class="portal-navigation-logout portal-navigation-group">
           ${this.__createGroupTemplate(PortalNavigation.groupIds.logout)}
         </div>
-        <div class="nav-menu-slot-right"><slot name="right"></slot></div>
+        <div class="portal-navigation-slot-right"><slot name="right"></slot></div>
         <!-- Hamburger Menu Tree Elements -->
         <portal-hamburger-menu
-          class="nav-menu-header-toggle"
+          class="portal-navigation-header-toggle"
           .toggled="${this.hamburgerMenuExpanded}"
           @state-changed="${e => {
             this.hamburgerMenuExpanded = e.detail;
@@ -235,14 +235,14 @@ export class PortalNavigation extends LitElement {
         ></portal-hamburger-menu>
       </header>
 
-      <main class="nav-menu-main-group">
-        <div class="nav-menu-main-group-menus nav-menu-group">
-          <div class="nav-menu-content">${this.__createGroupTemplate(PortalNavigation.groupIds.main)}</div>
+      <main class="portal-navigation-main-group">
+        <div class="portal-navigation-main-group-menus portal-navigation-group">
+          <div class="portal-navigation-content">${this.__createGroupTemplate(PortalNavigation.groupIds.main)}</div>
         </div>
         ${this.__createCurrentItemsTemplate()}
         <!-- Hamburger Menu Tree Elements -->
         ${this.hamburgerMenuExpanded
-          ? html`<div class="nav-menu-tree-container">
+          ? html`<div class="portal-navigation-tree-container">
               ${this._createTreeTemplate()}
             </div>`
           : html``}
@@ -259,8 +259,8 @@ export class PortalNavigation extends LitElement {
     const activeMenu = this.__configuration.getData(`groups.${groupId}.menus:${menuId}`);
 
     if (activeMenu && activeMenu.items && activeMenu.items.length > 0) {
-      return html`<div class="nav-menu-current">
-        <div class="nav-menu-content">
+      return html`<div class="portal-navigation-current">
+        <div class="portal-navigation-content">
           ${activeMenu.items.map(item => this.__createMenuItemTemplate(groupId, activeMenu, item))}
         </div>
       </div>`;
@@ -383,7 +383,7 @@ export class PortalNavigation extends LitElement {
   __createLinkTemplate(label, icon, badge) {
     const result = [];
     if (icon) {
-      result.push(html`<img src="${icon}" alt="" class="nav-menu-icon" />`);
+      result.push(html`<img src="${icon}" alt="" class="portal-navigation-icon" />`);
       if (badge) {
         result.push(html`<span class="badge ${PortalNavigation.classes.decorator}">${badge}</span>`);
       }
@@ -414,7 +414,7 @@ export class PortalNavigation extends LitElement {
 
     const templates = [];
     templates.push(
-      html`<div class="nav-menu-tree-menu ${isActiveMenu ? PortalNavigation.classes.selected : ''}">
+      html`<div class="portal-navigation-tree-menu ${isActiveMenu ? PortalNavigation.classes.selected : ''}">
         ${this.__createMenuTemplate(groupId, menu)}${menu.items && menu.items.length > 0
           ? html`<span class="${classMap({ button: true, '-selected': isActiveMenu })}"
               ><img
@@ -428,7 +428,7 @@ export class PortalNavigation extends LitElement {
 
     if (isActiveMenu) {
       templates.push(
-        html`<div class="nav-menu-tree-menu-items">
+        html`<div class="portal-navigation-tree-menu-items">
           ${menu.items.map(item => this.__createMenuItemTemplate(groupId, menu, item))}
         </div>`,
       );
