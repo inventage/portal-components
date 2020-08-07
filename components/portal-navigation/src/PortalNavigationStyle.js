@@ -146,8 +146,9 @@ export const portalNavigationStyle = css`
 
   .portal-navigation-tree-menu {
     display: flex;
-    margin: 0.25rem 0.5rem 0.25rem 0;
+    padding: 0.5rem 0.5rem 0.5rem 0;
     border-bottom: solid 1px #e8edf5;
+    cursor: pointer;
   }
 
   .portal-navigation-tree-menu-items {
@@ -162,7 +163,8 @@ export const portalNavigationStyle = css`
   }
 
   .portal-navigation-tree-menu-items .link {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    padding: 0.25rem 0;
   }
 
   .portal-navigation-tree-menu .button {

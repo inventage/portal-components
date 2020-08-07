@@ -313,7 +313,7 @@ export class PortalNavigation extends LitElement {
   }
 
   __createMenuTemplate(groupId, menu) {
-    const { link, icon, labels, items } = menu;
+    const { link, icon, labels } = menu;
     const badge = this.getBadgeValue(menu);
 
     const menuClasses = ['link'];
@@ -322,32 +322,13 @@ export class PortalNavigation extends LitElement {
     }
 
     const label = this._getLabel(labels);
-
-    if (items && items.length > 0) {
-      const defaultItem = this.__getDefaultItemOf(menu);
-      return html`<div class="first-level">
-        <a
-          href="${defaultItem ? defaultItem.link : link}"
-          class="${menuClasses.join(' ')}"
-          @click="${e => this.__onSetCurrentItems(e, groupId, menu)}"
-          >${this.__createLinkTemplate(label, icon, badge)}</a
-        >
-      </div>`;
-    }
-
-    if (this.__isInternalRouting(menu)) {
-      return html`<div class="first-level">
-        <a
-          href="${link}"
-          class="${menuClasses.join(' ')}"
-          @click="${e => this.__onInternalLinkClicked(e, groupId, menu)}"
-          >${this.__createLinkTemplate(label, icon, badge)}</a
-        >
-      </div>`;
-    }
-
+    const defaultItem = this.__getDefaultItemOf(menu);
     return html`<div class="first-level">
-      <a href="${link}" class="${menuClasses.join(' ')}" target="${menu.destination === 'extern' ? '_blank' : '_self'}"
+      <a
+        href="${defaultItem ? defaultItem.link : link}"
+        class="${menuClasses.join(' ')}"
+        target="${menu.destination === 'extern' ? '_blank' : '_self'}"
+        @click="${e => this.__onLink(e, groupId, menu)}"
         >${this.__createLinkTemplate(label, icon, badge)}</a
       >
     </div>`;
@@ -363,17 +344,10 @@ export class PortalNavigation extends LitElement {
     const badge = this.getBadgeValue(item);
     const label = this._getLabel(labels);
 
-    if (this.__isInternalRouting(item)) {
-      return html`<a
-        href="${item.link}"
-        class="${itemClasses.join(' ')}"
-        @click="${e => this.__onInternalLinkClicked(e, groupId, menu, item)}"
-        >${this.__createLinkTemplate(label, icon, badge)}</a
-      >`;
-    }
     return html`<a
       href="${item.link}"
       class="${itemClasses.join(' ')}"
+      @click="${e => this.__onLink(e, groupId, menu, item)}"
       target="${item.destination === 'extern' ? '_blank' : '_self'}"
       >${this.__createLinkTemplate(label, icon, badge)}</a
     >`;
@@ -414,7 +388,10 @@ export class PortalNavigation extends LitElement {
 
     const templates = [];
     templates.push(
-      html`<div class="portal-navigation-tree-menu ${isActiveMenu ? PortalNavigation.classes.selected : ''}">
+      html`<div
+        class="portal-navigation-tree-menu ${isActiveMenu ? PortalNavigation.classes.selected : ''}"
+        @click="${() => this.__onLink(undefined, groupId, menu)}"
+      >
         ${this.__createMenuTemplate(groupId, menu)}${menu.items && menu.items.length > 0
           ? html`<span class="${classMap({ button: true, '-selected': isActiveMenu })}"
               ><img
@@ -426,7 +403,7 @@ export class PortalNavigation extends LitElement {
       </div>`,
     );
 
-    if (isActiveMenu) {
+    if (isActiveMenu && menu.items && menu.items.length > 0) {
       templates.push(
         html`<div class="portal-navigation-tree-menu-items">
           ${menu.items.map(item => this.__createMenuItemTemplate(groupId, menu, item))}
@@ -445,9 +422,32 @@ export class PortalNavigation extends LitElement {
     );
   }
 
-  __onSetCurrentItems(e, groupId, menu) {
-    e.preventDefault();
+  __onLink(e, groupId, menu, item /* optional */) {
+    if (item) {
+      if (this.__isInternalRouting(item)) {
+        if (e) {
+          e.preventDefault();
+        }
+        this.__internalLinkSelected(groupId, menu, item);
+      } else if (!e) {
+        window.location = item.link;
+      }
+    } else if (menu.items && menu.items.length > 0) {
+      if (e) {
+        e.preventDefault();
+      }
+      this.__setCurrentItems(groupId, menu);
+    } else if (this.__isInternalRouting(menu)) {
+      if (e) {
+        e.preventDefault();
+      }
+      this.__internalLinkSelected(groupId, menu);
+    } else if (!e) {
+      window.location = menu.link;
+    }
+  }
 
+  __setCurrentItems(groupId, menu) {
     // eslint-disable-next-line no-console
     console.log(`Set current items to items of: ${this._getLabel(menu.labels)}`);
 
@@ -471,9 +471,7 @@ export class PortalNavigation extends LitElement {
     }
   }
 
-  __onInternalLinkClicked(e, groupId, menu, item) {
-    e.preventDefault();
-
+  __internalLinkSelected(groupId, menu, item) {
     const link = item ? item.link : menu.link;
     const labels = item ? item.labels : menu.labels;
 
