@@ -394,11 +394,38 @@ export class PortalNavigation extends LitElement {
       >
         ${this.__createMenuTemplate(groupId, menu)}${menu.items && menu.items.length > 0
           ? html`<span class="${classMap({ button: true, '-selected': isActiveMenu })}"
-              ><img
-                src="${isActiveMenu ? '/data/keyboard_arrow_up-24px.svg' : '/data/keyboard_arrow_down-24px.svg'}"
-                alt=""
-                class="icon"
-            /></span>`
+              >${isActiveMenu
+                ? html`<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <polyline points="6 15 12 9 18 15" />
+                  </svg>`
+                : html`<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>`}</span
+            >`
           : html``}
       </div>`,
     );
