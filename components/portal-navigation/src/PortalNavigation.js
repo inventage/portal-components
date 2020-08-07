@@ -215,10 +215,10 @@ export class PortalNavigation extends LitElement {
       <header class="portal-navigation-header">
         <div class="portal-navigation-logo"><slot name="logo"></slot></div>
         <div class="portal-navigation-slot-left"><slot name="left"></slot></div>
-        <div class="portal-navigation-meta-group portal-navigation-group">
+        <div class="portal-navigation-group-meta portal-navigation-group">
           ${this.__createGroupTemplate(PortalNavigation.groupIds.meta)}
         </div>
-        <div class="portal-navigation-profile-group portal-navigation-group">
+        <div class="portal-navigation-group-profile portal-navigation-group">
           ${this.__createGroupTemplate(PortalNavigation.groupIds.profile)}
         </div>
         <div class="portal-navigation-logout portal-navigation-group">
@@ -235,8 +235,8 @@ export class PortalNavigation extends LitElement {
         ></portal-hamburger-menu>
       </header>
 
-      <main class="portal-navigation-main-group">
-        <div class="portal-navigation-main-group-menus portal-navigation-group">
+      <main class="portal-navigation-group-main">
+        <div class="portal-navigation-group-main-menus portal-navigation-group">
           <div class="portal-navigation-content">${this.__createGroupTemplate(PortalNavigation.groupIds.main)}</div>
         </div>
         ${this.__createCurrentItemsTemplate()}
@@ -256,7 +256,7 @@ export class PortalNavigation extends LitElement {
     }
 
     const { groupId, menuId } = this.activePath;
-    const activeMenu = this.__configuration.getData(`groups.${groupId}.menus:${menuId}`);
+    const activeMenu = this.__configuration.getData(['groups', groupId, `menus::${menuId}`]);
 
     if (activeMenu && activeMenu.items && activeMenu.items.length > 0) {
       return html`<div class="portal-navigation-current">

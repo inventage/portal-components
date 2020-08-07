@@ -380,6 +380,22 @@
     "meta": {
       "menus": [
         {
+          "id": "meta.urgent",
+          "labels": "[!!!]",
+          "items": [
+            {
+              "labels": "Urgent Messages",
+              "link": "/ebanking/show-urgent-messages",
+              "application": "ebanking"
+            },
+            {
+              "labels": "Warnings",
+              "link": "/ebanking/show-warnings",
+              "application": "ebanking"
+            }
+          ]
+        },
+        {
           "id": "meta.messages",
           "defaultItem": "meta.messages.inbox",
           "labels": {
@@ -530,7 +546,20 @@
       ]
     },
     "logout": {
+      "dropdown": true,
+      "labels": "Logout",
       "menus": [
+        {
+          "labels": {
+            "de": "Erscheine Offline",
+            "en": "Appear Offline"
+          },
+          "link": "/portal/api/offline",
+          "internalRouting": true,
+          "internalRoutingApplications": [
+            "ebanking"
+          ]
+        },
         {
           "labels": {
             "de": "Logout",
