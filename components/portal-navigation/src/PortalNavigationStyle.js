@@ -2,8 +2,21 @@ import { css } from 'lit-element';
 
 export const portalNavigationStyle = css`
   :host {
+    --portal-navigation-color-primary: #2c3e50;
+    --portal-navigation-color-secondary: rgb(66, 136, 245);
+    --portal-navigation-color-selected: var(--portal-navigation-color-secondary);
+    --portal-navigation-color-hover: var(--portal-navigation-color-secondary);
+    --portal-navigation-color-badge: white;
+    --portal-navigation-color-badge-background: var(--portal-navigation-color-secondary);
+    --portal-navigation-color-dropdown-background: white;
+    --portal-navigation-color-border: rgba(44, 62, 80, 0.1);
+    --portal-navigation-color-header-background: rgba(66, 135, 245, 0.1);
+
+    --portal-navigation-font-size: 1.25rem;
+    --portal-navigation-font-size-badge: 1rem;
+    --portal-navigation-font-size-tree-second-level: 1rem;
+
     font-family: Helvetica, sans-serif;
-    font-size: 1.25rem;
   }
 
   .portal-navigation-container {
@@ -12,7 +25,7 @@ export const portalNavigationStyle = css`
 
   .portal-navigation-header {
     display: flex;
-    background: #e8edf5;
+    background: var(--portal-navigation-color-header-background);
     padding-top: 0.5rem;
   }
 
@@ -33,7 +46,7 @@ export const portalNavigationStyle = css`
   }
 
   .portal-navigation-group-main-menus {
-    background: #e8edf5;
+    background: var(--portal-navigation-color-header-background);
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
     justify-content: flex-end;
@@ -46,7 +59,7 @@ export const portalNavigationStyle = css`
 
   .link {
     text-decoration: none;
-    font-size: 1rem;
+    font-size: var(--portal-navigation-font-size);
     margin: 0.25rem 0.5rem;
     display: flex;
     align-items: center;
@@ -54,7 +67,11 @@ export const portalNavigationStyle = css`
   }
 
   .link.-selected {
-    color: #4287f5;
+    color: var(--portal-navigation-color-selected);
+  }
+
+  .link:hover {
+    color: var(--portal-navigation-color-hover);
   }
 
   .dropdown-link {
@@ -64,7 +81,7 @@ export const portalNavigationStyle = css`
   .dropdown {
     display: none;
 
-    background-color: #fff;
+    background-color: var(--portal-navigation-color-dropdown-background);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     margin: 0;
     min-width: 260px;
@@ -81,7 +98,7 @@ export const portalNavigationStyle = css`
   }
 
   .dropdown::before {
-    background-color: #fff;
+    background-color: var(--portal-navigation-color-dropdown-background);
     box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.25);
     content: '';
     height: 12px;
@@ -119,12 +136,12 @@ export const portalNavigationStyle = css`
   }
 
   .badge:not(:empty) {
-    background-color: #4287f5;
+    background-color: var(--portal-navigation-color-badge-background);
     border-radius: 1em;
-    font-size: 1rem;
+    font-size: var(--portal-navigation-font-size-badge);
     padding: 2px 8px 0px 8px;
     text-align: center;
-    color: white;
+    color: var(--portal-navigation-color-badge);
     font-family: Helvetica, sans-serif;
     transform: translate(5%, -30%);
   }
@@ -146,8 +163,8 @@ export const portalNavigationStyle = css`
 
   .portal-navigation-tree-menu {
     display: flex;
-    padding: 0.5rem 0.5rem 0.5rem 0;
-    border-bottom: solid 1px #e8edf5;
+    padding: 0.5rem 0 0.5rem 0;
+    border-bottom: solid 1px var(--portal-navigation-color-border);
     cursor: pointer;
   }
 
@@ -160,7 +177,7 @@ export const portalNavigationStyle = css`
   }
 
   .portal-navigation-tree-menu-items .link {
-    font-size: 0.8rem;
+    font-size: var(--portal-navigation-font-size-tree-second-level);
     padding: 0.25rem 0;
   }
 
