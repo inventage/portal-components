@@ -151,9 +151,6 @@ export const portalNavigationStyle = css`
     cursor: pointer;
   }
 
-  .portal-navigation-tree-menu-items {
-  }
-
   .portal-navigation-tree-menu-items .link:first-child {
     margin-top: 0.5rem;
   }

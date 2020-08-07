@@ -74,9 +74,13 @@ export class CompPortalNavigation extends LitElement {
     return this.languages.map(
       language =>
         html`<a
-          href="${this.__setLanguage(language.id)}"
+          href="${`set-lang-to-${language.id}`}"
           class="${classMap({ link: true, '-selected': language === this.lang })}"
           title="${language.label}"
+          @click="${e => {
+            e.preventDefault();
+            this.__setLanguage(language.id);
+          }}"
           >${language.id}</a
         >`,
     );
