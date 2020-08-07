@@ -32,7 +32,9 @@
   "scripts": {
     "start": "concurrently -n wca,storybook 'npm run watch:analyze:custom-elements' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
+    "clean": "run-p clean:*",
     "clean:types": "rimraf '*.d.ts' 'components/**/*.d.ts'",
+    "clean:test": "rimraf coverage",
     "build": "run-s build:* && npm run copy:data",
     "build:types": "npm run clean:types && tsc -p tsconfig.json",
     "build:analyze:custom-elements": "wca analyze 'components/**/*.js' --outFile custom-elements.json",
