@@ -98,7 +98,18 @@ export class Configuration {
   }
 
   getPathFromUrl(url, includedGroupIds = this.groupIds) {
-    return this.findFirstPath(element => element.link === url, includedGroupIds);
+    if (!url) {
+      return undefined;
+    }
+    const result = this.findFirstPath(element => element.link === url, includedGroupIds);
+    if (result) {
+      return result;
+    }
+    const index = url.lastIndexOf('/');
+    if (index > 0) {
+      return this.getPathFromUrl(url.substring(0, index), includedGroupIds);
+    }
+    return undefined;
   }
 
   findFirstPath(selector /* (menu|item) => boolean */, includedGroupIds = this.groupIds) {

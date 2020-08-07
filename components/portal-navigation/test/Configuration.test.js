@@ -1,4 +1,4 @@
-import { expect } from '@open-wc/testing/index';
+import { expect } from '@open-wc/testing';
 
 import { Configuration } from '../src/Configuration.js';
 import { data } from './test-data-json.js';
@@ -25,6 +25,34 @@ describe('Configuration', () => {
 
     // when
     const result = configuration.getPathFromUrl('/some/path/item2.2', ['group1']);
+
+    // then
+    expect(result.groupId).to.equal('group1');
+    expect(result.menuId).to.equal('menu2');
+    expect(result.itemId).to.equal('item2.2');
+  });
+
+  it('getPathFromUrl returns first item matching url, and tries to match without trailing slash as a fallback', () => {
+    // given
+    const configuration = new Configuration(['group1', 'group2']);
+    configuration.setConfigData(data);
+
+    // when
+    const result = configuration.getPathFromUrl('/some/path/item2.2/', ['group1']);
+
+    // then
+    expect(result.groupId).to.equal('group1');
+    expect(result.menuId).to.equal('menu2');
+    expect(result.itemId).to.equal('item2.2');
+  });
+
+  it('getPathFromUrl returns first item matching url, and tries to match subpath as a fallback', () => {
+    // given
+    const configuration = new Configuration(['group1', 'group2']);
+    configuration.setConfigData(data);
+
+    // when
+    const result = configuration.getPathFromUrl('/some/path/item2.2/unknown-subitem', ['group1']);
 
     // then
     expect(result.groupId).to.equal('group1');
