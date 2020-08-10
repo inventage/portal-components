@@ -27,6 +27,7 @@ export const data = {
                 en: 'Item 2.1_en',
               },
               link: '/some/path/item2.1',
+              application: 'app1',
             },
             {
               id: 'item2.2',
@@ -35,6 +36,7 @@ export const data = {
                 en: 'Item 2.2_en',
               },
               link: '/some/path/item2.2',
+              application: 'app1',
             },
           ],
         },
