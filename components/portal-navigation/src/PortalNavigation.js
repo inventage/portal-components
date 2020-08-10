@@ -30,7 +30,6 @@ export class PortalNavigation extends LitElement {
       meta: 'meta',
       profile: 'profile',
       logout: 'logout',
-      all: ['main', 'meta', 'profile', 'logout'],
     };
   }
 
@@ -84,7 +83,12 @@ export class PortalNavigation extends LitElement {
     this.temporaryBadgeValues = new Map();
     this.hamburgerMenuExpanded = false;
     this.activeDropdown = undefined;
-    this.__configuration = new Configuration(PortalNavigation.groupIds.all);
+    this.__configuration = new Configuration([
+      PortalNavigation.groupIds.main,
+      PortalNavigation.groupIds.meta,
+      PortalNavigation.groupIds.profile,
+      PortalNavigation.groupIds.logout,
+    ]);
   }
 
   connectedCallback() {
@@ -354,7 +358,7 @@ export class PortalNavigation extends LitElement {
   // Override to customize order and elements of tree structure in hamburger menu
   _createTreeTemplate() {
     const templates = [];
-    PortalNavigation.groupIds.all.forEach(groupId => {
+    this.__configuration.groupIds.forEach(groupId => {
       const group = this.__configuration.getGroup(groupId);
       if (group && group.menus && group.menus.length > 0) {
         templates.push(group.menus.map(menu => this.__createTreeMenuTemplate(groupId, menu)));
