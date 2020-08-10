@@ -5,7 +5,7 @@
 import { html, LitElement } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { baseStyles } from '../../helpers/baseStyles.js';
-import { portalNavigationStyle } from './PortalNavigationStyle.js';
+import { portalNavigationStyles } from './portalNavigationStyles.js';
 import { Configuration } from './Configuration.js';
 import '../../portal-hamburger-menu/portal-hamburger-menu.js';
 
@@ -15,7 +15,7 @@ export class PortalNavigation extends LitElement {
    * @returns {CSSResult|CSSResultArray}
    */
   static get styles() {
-    return [baseStyles, portalNavigationStyle];
+    return [baseStyles, portalNavigationStyles];
   }
 
   static get defaults() {
