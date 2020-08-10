@@ -154,11 +154,16 @@ export class PortalNavigation extends LitElement {
     // @ts-ignore
     super._requestUpdate(name, oldValue);
 
-    if (name === 'lang') {
-      this.dispatchEvent(new CustomEvent(PortalNavigation.events.setLanguage, { detail: this.lang, bubbles: true }));
-    }
     if (name === 'activeUrl' && oldValue !== this.activeUrl) {
       this.__updateActivePathFromUrl();
+    }
+  }
+
+  updated(_changedProperties) {
+    super.updated(_changedProperties);
+
+    if (_changedProperties.has('lang')) {
+      this.dispatchEvent(new CustomEvent(PortalNavigation.events.setLanguage, { detail: this.lang, bubbles: true }));
     }
   }
 
