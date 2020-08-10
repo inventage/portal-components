@@ -112,7 +112,7 @@ describe('Configuration', () => {
 
     // then
     expect(result.id).to.equal('menu4');
-    expect(result.link).to.equal('/some/path/menu4');
+    expect(result.url).to.equal('/some/path/menu4');
   });
 
   it('findFirstPath returns first menu matching id', () => {

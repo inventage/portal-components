@@ -182,16 +182,16 @@ export class PortalNavigation extends LitElement {
   __setBadgeValueEventListener(e) {
     const { detail } = e;
     if (detail) {
-      this.setBadgeValue(detail.id, detail.link, detail.value);
+      this.setBadgeValue(detail.id, detail.url, detail.value);
     }
   }
 
-  setBadgeValue(menuOrItemId, link, value) {
+  setBadgeValue(menuOrItemId, url, value) {
     // eslint-disable-next-line no-console
-    console.log(`Setting badge of "${menuOrItemId || link}" to "${value}"`);
+    console.log(`Setting badge of "${menuOrItemId || url}" to "${value}"`);
 
     // TODO: write to Store instead of temporary map
-    this.temporaryBadgeValues.set(menuOrItemId || link, value);
+    this.temporaryBadgeValues.set(menuOrItemId || url, value);
     this._requestUpdate();
   }
 
@@ -199,7 +199,7 @@ export class PortalNavigation extends LitElement {
     // TODO: read from Store instead of temporary map
     let value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.id);
     if (!value) {
-      value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.link);
+      value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.url);
     }
     if (value && typeof value === 'object' && value.constructor === Object) {
       return this._getLabel(value);
@@ -313,7 +313,7 @@ export class PortalNavigation extends LitElement {
   }
 
   __createMenuTemplate(groupId, menu) {
-    const { link, icon, labels } = menu;
+    const { url, icon, labels } = menu;
     const badge = this.getBadgeValue(menu);
 
     const menuClasses = ['link'];
@@ -325,7 +325,7 @@ export class PortalNavigation extends LitElement {
     const defaultItem = this.__getDefaultItemOf(menu);
     return html`<div class="first-level">
       <a
-        href="${defaultItem ? defaultItem.link : link}"
+        href="${defaultItem ? defaultItem.url : url}"
         class="${menuClasses.join(' ')}"
         target="${menu.destination === 'extern' ? '_blank' : '_self'}"
         @click="${e => this.__onLink(e, groupId, menu)}"
@@ -345,7 +345,7 @@ export class PortalNavigation extends LitElement {
     const label = this._getLabel(labels);
 
     return html`<a
-      href="${item.link}"
+      href="${item.url}"
       class="${itemClasses.join(' ')}"
       @click="${e => this.__onLink(e, groupId, menu, item)}"
       target="${item.destination === 'extern' ? '_blank' : '_self'}"
@@ -458,7 +458,7 @@ export class PortalNavigation extends LitElement {
         }
         this.__internalLinkSelected(groupId, menu, item);
       } else if (!e) {
-        window.location = item.link;
+        window.location = item.url;
       }
     } else if (menu.items && menu.items.length > 0) {
       if (e) {
@@ -471,7 +471,7 @@ export class PortalNavigation extends LitElement {
       }
       this.__internalLinkSelected(groupId, menu);
     } else if (!e) {
-      window.location = menu.link;
+      window.location = menu.url;
     }
   }
 
@@ -486,11 +486,11 @@ export class PortalNavigation extends LitElement {
 
     if (item) {
       // eslint-disable-next-line no-console
-      console.log(`Route to: ${this._getLabel(item.labels)} (${item.link})`);
+      console.log(`Route to: ${this._getLabel(item.labels)} (${item.url})`);
       this.dispatchEvent(
         new CustomEvent(PortalNavigation.events.routeTo, {
           detail: {
-            link: item.link,
+            url: item.url,
             labels: item.labels,
           },
           bubbles: true,
@@ -500,21 +500,21 @@ export class PortalNavigation extends LitElement {
   }
 
   __internalLinkSelected(groupId, menu, item) {
-    const link = item ? item.link : menu.link;
+    const url = item ? item.url : menu.url;
     const labels = item ? item.labels : menu.labels;
 
     // eslint-disable-next-line no-console
-    console.log(`Internal link selected: ${this._getLabel(labels)}`);
+    console.log(`Internal url selected: ${this._getLabel(labels)}`);
 
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
 
     // eslint-disable-next-line no-console
-    console.log(`Route to: ${this._getLabel(labels)} (${link})`);
+    console.log(`Route to: ${this._getLabel(labels)} (${url})`);
     this.dispatchEvent(
       new CustomEvent(PortalNavigation.events.routeTo, {
         detail: {
-          link,
+          url,
           labels,
         },
         bubbles: true,

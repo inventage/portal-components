@@ -47,7 +47,7 @@ window.addEventListener('load', () => {
   document.dispatchEvent(
     new CustomEvent(PortalNavigation.events.setBadgeValue, {
       detail: {
-        link: '/ebanking/update-notification-preferences',
+        url: '/ebanking/update-notification-preferences',
         value: '34',
       },
     }),

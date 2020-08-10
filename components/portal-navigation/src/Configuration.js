@@ -101,7 +101,7 @@ export class Configuration {
     if (!url) {
       return undefined;
     }
-    const result = this.findFirstPath(element => element.link === url, includedGroupIds);
+    const result = this.findFirstPath(element => element.url === url, includedGroupIds);
     if (result) {
       return result;
     }
