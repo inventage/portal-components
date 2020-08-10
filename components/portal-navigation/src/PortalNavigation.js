@@ -46,8 +46,8 @@ export class PortalNavigation extends LitElement {
 
   static get classes() {
     return {
-      selected: '-selected',
-      decorator: '-decorator',
+      selected: '-selected', // TODO: add a comment to describe this
+      decorator: '-decorator', // TODO: remove, use inline
     };
   }
 
@@ -383,6 +383,7 @@ export class PortalNavigation extends LitElement {
     return templates;
   }
 
+  // TODO: replace <svg> with <span> -- add icons with datauri in css url(...)
   __createTreeMenuTemplate(groupId, menu) {
     const isActiveMenu = this._isActive(menu.id);
 
@@ -535,8 +536,13 @@ export class PortalNavigation extends LitElement {
   }
 
   __isInternalRouting(menuOrItem) {
+    let refItem = menuOrItem;
+    if (menuOrItem.items && menuOrItem.items.length > 0) {
+      refItem = this.__getDefaultItemOf(menuOrItem);
+    }
+
     // Allow global `internalRouting` to be overridden by the item specific `internalRouting` property
-    const itemInternalRouting = 'internalRouting' in menuOrItem ? menuOrItem.internalRouting : this.internalRouting;
+    const itemInternalRouting = 'internalRouting' in refItem ? refItem.internalRouting : this.internalRouting;
 
     // Bail if we're not routing internally…
     if (!itemInternalRouting) {
@@ -549,15 +555,15 @@ export class PortalNavigation extends LitElement {
     }
 
     // Current application was set, but item is not application specific…
-    if (!('application' in menuOrItem)) {
+    if (!('application' in refItem)) {
       // We check whether the current application is in the list of `internalRoutingApplications`
       return (
-        'internalRoutingApplications' in menuOrItem &&
-        Array.prototype.includes.call(menuOrItem.internalRoutingApplications, this.currentApplication)
+        'internalRoutingApplications' in refItem &&
+        Array.prototype.includes.call(refItem.internalRoutingApplications, this.currentApplication)
       );
     }
 
-    return menuOrItem.application === this.currentApplication;
+    return refItem.application === this.currentApplication;
   }
 
   _getLabel(labels) {
