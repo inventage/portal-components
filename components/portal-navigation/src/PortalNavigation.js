@@ -46,7 +46,6 @@ export class PortalNavigation extends LitElement {
   static get classes() {
     return {
       selected: '-selected', // TODO: add a comment to describe this
-      decorator: '-decorator', // TODO: remove, use inline
     };
   }
 
@@ -356,7 +355,7 @@ export class PortalNavigation extends LitElement {
     if (icon) {
       result.push(html`<img src="${icon}" alt="" class="portal-navigation-icon" />`);
       if (badge) {
-        result.push(html`<span class="badge ${PortalNavigation.classes.decorator}">${badge}</span>`);
+        result.push(html`<span class="badge">${badge}</span>`);
       }
     }
     if (label) {

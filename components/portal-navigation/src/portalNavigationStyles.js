@@ -131,10 +131,6 @@ export const portalNavigationStyles = css`
     text-transform: none;
   }
 
-  .portal-navigation-icon {
-    margin-right: 0.25rem;
-  }
-
   .badge:not(:empty) {
     background-color: var(--portal-navigation-color-badge-background);
     border-radius: 1em;
@@ -146,7 +142,11 @@ export const portalNavigationStyles = css`
     transform: translate(5%, -30%);
   }
 
-  .badge.-decorator:not(:empty) {
+  .portal-navigation-icon {
+    margin-right: 0.25rem;
+  }
+
+  .portal-navigation-icon + .badge:not(:empty) {
     transform: translate(-1rem, 0.35rem);
     margin-right: -0.5rem;
   }
