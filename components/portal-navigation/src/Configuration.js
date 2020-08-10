@@ -44,21 +44,6 @@ export class Configuration {
     return this.getData(['groups', groupId]);
   }
 
-  getItem(path /* { groupId, menuId, itemId } */) {
-    if (!path || !path.groupId || !path.menuId || !path.itemId) {
-      return undefined;
-    }
-
-    const nodePath = this.findFirstNodePath(element => {
-      return element.id === path.itemId;
-    });
-
-    if (nodePath) {
-      return nodePath.item;
-    }
-    return undefined;
-  }
-
   getData(keyPath, data = this.__data) {
     if (!data || !keyPath || keyPath.length <= 0) {
       return undefined;

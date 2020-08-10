@@ -1,6 +1,6 @@
 import { css } from 'lit-element';
 
-export const portalNavigationStyle = css`
+export const portalNavigationStyles = css`
   :host {
     --portal-navigation-color-primary: #2c3e50;
     --portal-navigation-color-secondary: rgb(66, 136, 245);
