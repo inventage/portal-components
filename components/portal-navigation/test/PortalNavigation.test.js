@@ -27,9 +27,7 @@ describe('PortalNavigation', () => {
 
   it('doesnt route internally when default item of menu has different application', async () => {
     // given
-    const el = await fixture(
-      html`<portal-navigation currentApplication="app2" internalRouting="true"></portal-navigation>`,
-    );
+    const el = await fixture(html`<portal-navigation currentApplication="app2" internalRouting></portal-navigation>`);
     const configuration = new Configuration(['group1', 'group2']);
     configuration.setConfigData(data);
     el.__configuration = configuration;
@@ -44,9 +42,7 @@ describe('PortalNavigation', () => {
 
   it('does route internally when default item of menu has same application', async () => {
     // given
-    const el = await fixture(
-      html`<portal-navigation currentApplication="app1" internalRouting="true"></portal-navigation>`,
-    );
+    const el = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
     const configuration = new Configuration(['group1', 'group2']);
     configuration.setConfigData(data);
     el.__configuration = configuration;
