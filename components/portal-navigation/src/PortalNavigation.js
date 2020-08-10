@@ -88,9 +88,6 @@ export class PortalNavigation extends LitElement {
   }
 
   connectedCallback() {
-    // eslint-disable-next-line no-console
-    console.log('Connected');
-
     if (super.connectedCallback) {
       super.connectedCallback();
     }
@@ -119,23 +116,16 @@ export class PortalNavigation extends LitElement {
     if (super.disconnectedCallback) {
       super.disconnectedCallback();
     }
-
-    // eslint-disable-next-line no-console
-    console.log('Disconnected');
   }
 
   _fetchRemoteData() {
     this.__configuration.setConfigData(undefined);
 
-    // eslint-disable-next-line no-console
-    console.log(`Fetching data from ${this.src}`);
     fetch(this.src)
       .then(response => {
         return response.json();
       })
       .then(data => {
-        // eslint-disable-next-line no-console
-        console.log('Data received:', data);
         try {
           this.__configuration.setConfigData(data);
           this.__updateActivePathFromUrl();
@@ -169,12 +159,8 @@ export class PortalNavigation extends LitElement {
   }
 
   __updateActivePathFromUrl() {
-    // eslint-disable-next-line no-console
-    console.log(`Updating activePath from activeUrl: ${this.activeUrl}`);
     const newPath = this.__configuration.getPathFromUrl(this.activeUrl);
     if (newPath) {
-      // eslint-disable-next-line no-console
-      console.log(`activePath set to: ${JSON.stringify(newPath)}`);
       this.activePath = newPath;
     }
   }
@@ -187,9 +173,6 @@ export class PortalNavigation extends LitElement {
   }
 
   setBadgeValue(menuOrItemId, url, value) {
-    // eslint-disable-next-line no-console
-    console.log(`Setting badge of "${menuOrItemId || url}" to "${value}"`);
-
     // TODO: write to Store instead of temporary map
     this.temporaryBadgeValues.set(menuOrItemId || url, value);
     this._requestUpdate();
@@ -208,9 +191,6 @@ export class PortalNavigation extends LitElement {
   }
 
   render() {
-    // eslint-disable-next-line no-console
-    console.debug(`Rendering with language set to “${this.lang}”.`);
-
     return html`<div class="portal-navigation-container">
       <header class="portal-navigation-header">
         <div class="portal-navigation-logo"><slot name="logo"></slot></div>
@@ -444,17 +424,12 @@ export class PortalNavigation extends LitElement {
   }
 
   __setCurrentItems(groupId, menu) {
-    // eslint-disable-next-line no-console
-    console.log(`Set current items to items of: ${this._getLabel(menu.labels)}`);
-
     const item = this.__getDefaultItemOf(menu);
 
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
 
     if (item) {
-      // eslint-disable-next-line no-console
-      console.log(`Route to: ${this._getLabel(item.labels)} (${item.url})`);
       this.dispatchEvent(
         new CustomEvent(PortalNavigation.events.routeTo, {
           detail: {
@@ -471,14 +446,9 @@ export class PortalNavigation extends LitElement {
     const url = item ? item.url : menu.url;
     const labels = item ? item.labels : menu.labels;
 
-    // eslint-disable-next-line no-console
-    console.log(`Internal url selected: ${this._getLabel(labels)}`);
-
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
 
-    // eslint-disable-next-line no-console
-    console.log(`Route to: ${this._getLabel(labels)} (${url})`);
     this.dispatchEvent(
       new CustomEvent(PortalNavigation.events.routeTo, {
         detail: {
