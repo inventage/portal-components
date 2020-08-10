@@ -296,26 +296,34 @@ export class PortalNavigation extends LitElement {
     this.activeDropdown = this.activeDropdown ? undefined : groupId;
   }
 
-  __createMenuTemplate(groupId, menu) {
-    const { url, icon, labels } = menu;
+  __createMenuTemplate(groupId, menu, isTreeMode = false) {
+    const { url, icon, labels, items } = menu;
     const badge = this.getBadgeValue(menu);
-
-    const menuClasses = ['link'];
-    if (this._isActive(menu.id)) {
-      menuClasses.push(PortalNavigation.classes.selected);
-    }
-
+    const active = this._isActive(menu.id);
     const label = this._getLabel(labels);
     const defaultItem = this.__getDefaultItemOf(menu);
+    const hasItems = items && items.length > 0;
+
     return html`<div class="first-level">
-      <a
-        href="${defaultItem ? defaultItem.url : url}"
-        class="${menuClasses.join(' ')}"
-        target="${menu.destination === 'extern' ? '_blank' : '_self'}"
-        @click="${e => this.__onLink(e, groupId, menu)}"
-        >${this.__createLinkTemplate(label, icon, badge)}</a
-      >
-    </div>`;
+        <a
+          href="${defaultItem ? defaultItem.url : url}"
+          class="${classMap({
+            link: true,
+            'portal-navigation-tree-menu': isTreeMode,
+            [PortalNavigation.classes.selected]: active,
+          })}"
+          target="${menu.destination === 'extern' ? '_blank' : '_self'}"
+          @click="${e => this.__onLink(e, groupId, menu)}"
+          >${this.__createLinkTemplate(label, icon, badge)}${isTreeMode && hasItems
+            ? html`<span class="button"></span>`
+            : html``}</a
+        >
+      </div>
+      ${isTreeMode && active && hasItems
+        ? html`<div class="portal-navigation-tree-menu-items">
+            ${menu.items.map(item => this.__createMenuItemTemplate(groupId, menu, item))}
+          </div>`
+        : html``}`;
   }
 
   __createMenuItemTemplate(groupId, menu, item) {
@@ -361,36 +369,9 @@ export class PortalNavigation extends LitElement {
     this.__configuration.groupIds.forEach(groupId => {
       const group = this.__configuration.getGroup(groupId);
       if (group && group.menus && group.menus.length > 0) {
-        templates.push(group.menus.map(menu => this.__createTreeMenuTemplate(groupId, menu)));
+        templates.push(group.menus.map(menu => this.__createMenuTemplate(groupId, menu, true)));
       }
     });
-    return templates;
-  }
-
-  // TODO: replace <svg> with <span> -- add icons with datauri in css url(...)
-  __createTreeMenuTemplate(groupId, menu) {
-    const isActiveMenu = this._isActive(menu.id);
-
-    const templates = [];
-    templates.push(
-      html`<div
-        class="portal-navigation-tree-menu ${isActiveMenu ? PortalNavigation.classes.selected : ''}"
-        @click="${() => this.__onLink(undefined, groupId, menu)}"
-      >
-        ${this.__createMenuTemplate(groupId, menu)}${menu.items && menu.items.length > 0
-          ? html`<span class="${classMap({ button: true, [PortalNavigation.classes.selected]: isActiveMenu })}"></span>`
-          : html``}
-      </div>`,
-    );
-
-    if (isActiveMenu && menu.items && menu.items.length > 0) {
-      templates.push(
-        html`<div class="portal-navigation-tree-menu-items">
-          ${menu.items.map(item => this.__createMenuItemTemplate(groupId, menu, item))}
-        </div>`,
-      );
-    }
-
     return templates;
   }
 
@@ -402,29 +383,27 @@ export class PortalNavigation extends LitElement {
     );
   }
 
-  __onLink(e, groupId, menu, item /* optional */) {
-    if (item) {
-      if (this.__isInternalRouting(item)) {
-        if (e) {
-          e.preventDefault();
-        }
-        this.__internalLinkSelected(groupId, menu, item);
-      } else if (!e) {
-        window.location = item.url;
-      }
-    } else if (menu.items && menu.items.length > 0) {
-      if (e) {
-        e.preventDefault();
-      }
-      this.__setCurrentItems(groupId, menu);
-    } else if (this.__isInternalRouting(menu)) {
-      if (e) {
-        e.preventDefault();
-      }
-      this.__internalLinkSelected(groupId, menu);
-    } else if (!e) {
-      window.location = menu.url;
+  __onLink(e, groupId, menu, item = undefined) {
+    if (item && this.__isInternalRouting(item)) {
+      e.preventDefault();
+      this.__internalLinkSelected(groupId, menu, item);
+      return undefined;
     }
+
+    // menu with items selected - display child items
+    if (menu.items && menu.items.length > 0) {
+      e.preventDefault();
+      this.__setCurrentItems(groupId, menu);
+      return undefined;
+    }
+
+    if (this.__isInternalRouting(menu)) {
+      e.preventDefault();
+      this.__internalLinkSelected(groupId, menu);
+      return undefined;
+    }
+
+    return undefined;
   }
 
   __setCurrentItems(groupId, menu) {

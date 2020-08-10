@@ -162,10 +162,23 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-tree-menu {
-    display: flex;
     padding: 0.5rem 0 0.5rem 0;
     border-bottom: solid 1px var(--portal-navigation-color-border);
-    cursor: pointer;
+    width: 100%;
+  }
+
+  .portal-navigation-tree-menu .button {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-down' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z'/%3E%3Cpolyline points='6 9 12 15 18 9' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .portal-navigation-tree-menu.-selected .button {
+    transform: rotate(180deg);
+    transition: transform 0.5s;
   }
 
   .portal-navigation-tree-menu-items .link:first-child {
@@ -179,20 +192,6 @@ export const portalNavigationStyles = css`
   .portal-navigation-tree-menu-items .link {
     font-size: var(--portal-navigation-font-size-tree-second-level);
     padding: 0.25rem 0;
-  }
-
-  .portal-navigation-tree-menu .button {
-    margin-left: auto;
-    margin-right: 0.5rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-down' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z'/%3E%3Cpolyline points='6 9 12 15 18 9' /%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .portal-navigation-tree-menu .button.-selected {
-    transform: rotate(180deg);
-    transition: transform 0.5s;
   }
 
   .portal-navigation-group {
