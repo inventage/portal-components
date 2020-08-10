@@ -7,7 +7,7 @@
             "de": "Home",
             "en": "Home"
           },
-          "link": "/ebanking/show-dashboard",
+          "url": "/ebanking/show-dashboard",
           "application": "ebanking"
         },
         {
@@ -24,7 +24,7 @@
                 "de": "Vermögensübersicht",
                 "en": "Asset Overview"
               },
-              "link": "/ebanking/show-assets",
+              "url": "/ebanking/show-assets",
               "application": "ebanking"
             },
             {
@@ -32,7 +32,7 @@
                 "de": "Kontoauszug",
                 "en": "Account Statement"
               },
-              "link": "/ebanking/show-asset-statement",
+              "url": "/ebanking/show-asset-statement",
               "application": "ebanking"
             },
             {
@@ -40,7 +40,7 @@
                 "de": "Depotanalyse",
                 "en": "Portfolio Analysis"
               },
-              "link": "/ebanking/show-asset-portfolio-analysis",
+              "url": "/ebanking/show-asset-portfolio-analysis",
               "application": "ebanking"
             },
             {
@@ -49,7 +49,7 @@
                 "en": "Maturities"
               },
               "badge": "maturitiesCount",
-              "link": "/ebanking/show-asset-maturities",
+              "url": "/ebanking/show-asset-maturities",
               "application": "ebanking"
             },
             {
@@ -57,7 +57,7 @@
                 "de": "Listen",
                 "en": "Lists"
               },
-              "link": "/ebanking/show-asset-lists",
+              "url": "/ebanking/show-asset-lists",
               "application": "ebanking"
             }
           ]
@@ -75,7 +75,7 @@
                 "de": "Auftragsübersicht",
                 "en": "Order Overview"
               },
-              "link": "/ebanking/show-payments",
+              "url": "/ebanking/show-payments",
               "application": "ebanking"
             },
             {
@@ -83,7 +83,7 @@
                 "de": "Auftrag erfassen",
                 "en": "Create Order"
               },
-              "link": "/ebanking/create-payment",
+              "url": "/ebanking/create-payment",
               "application": "ebanking"
             },
             {
@@ -91,7 +91,7 @@
                 "de": "Daueraufträge",
                 "en": "Standing Order Overview"
               },
-              "link": "/ebanking/show-payment-standing-orders",
+              "url": "/ebanking/show-payment-standing-orders",
               "application": "ebanking"
             },
             {
@@ -99,7 +99,7 @@
                 "de": "ISO",
                 "en": "ISO"
               },
-              "link": "/ebanking/show-payment-data-transfer",
+              "url": "/ebanking/show-payment-data-transfer",
               "application": "ebanking"
             },
             {
@@ -107,7 +107,7 @@
                 "de": "BESR",
                 "en": "BESR"
               },
-              "link": "/ebanking/show-payment-besr",
+              "url": "/ebanking/show-payment-besr",
               "application": "ebanking"
             },
             {
@@ -115,7 +115,7 @@
                 "de": "QRR",
                 "en": "QRR"
               },
-              "link": "/ebanking/show-payment-camt",
+              "url": "/ebanking/show-payment-camt",
               "application": "ebanking"
             },
             {
@@ -123,7 +123,7 @@
                 "de": "LSV",
                 "en": "LSV"
               },
-              "link": "/ebanking/show-lsv-contracts",
+              "url": "/ebanking/show-lsv-contracts",
               "application": "ebanking"
             }
           ]
@@ -141,7 +141,7 @@
                 "de": "Börsenaufträge",
                 "en": "Stock Market Orders"
               },
-              "link": "/ebanking/show-stex-orders",
+              "url": "/ebanking/show-stex-orders",
               "application": "ebanking"
             },
             {
@@ -149,7 +149,7 @@
                 "de": "Kauf",
                 "en": "Buy"
               },
-              "link": "/ebanking/create-stex-buy-order",
+              "url": "/ebanking/create-stex-buy-order",
               "application": "ebanking"
             },
             {
@@ -157,7 +157,7 @@
                 "de": "Verkauf",
                 "en": "Sell"
               },
-              "link": "/ebanking/create-stex-sell-order",
+              "url": "/ebanking/create-stex-sell-order",
               "application": "ebanking"
             }
           ]
@@ -175,7 +175,7 @@
                 "de": "Marktübersicht",
                 "en": "Market Overview"
               },
-              "link": "/marketdata/overview",
+              "url": "/marketdata/overview",
               "application": "marketdata",
               "internalRouting": false
             },
@@ -184,7 +184,7 @@
                 "de": "Aktien",
                 "en": "Stocks"
               },
-              "link": "/marketdata/stocks",
+              "url": "/marketdata/stocks",
               "application": "marketdata",
               "internalRouting": false
             },
@@ -193,7 +193,7 @@
                 "de": "Zinsen / Anleihen",
                 "en": "Bonds"
               },
-              "link": "/marketdata/bonds",
+              "url": "/marketdata/bonds",
               "application": "marketdata",
               "internalRouting": false
             },
@@ -202,7 +202,7 @@
                 "de": "Fonds",
                 "en": "Funds"
               },
-              "link": "/marketdata/fonds",
+              "url": "/marketdata/fonds",
               "application": "marketdata",
               "internalRouting": false
             },
@@ -211,7 +211,7 @@
                 "de": "Devisen",
                 "en": "Currencies"
               },
-              "link": "/marketdata/currencies",
+              "url": "/marketdata/currencies",
               "application": "marketdata",
               "internalRouting": false
             },
@@ -220,7 +220,7 @@
                 "de": "Rohstoffe",
                 "en": "Commodities"
               },
-              "link": "/marketdata/commodities",
+              "url": "/marketdata/commodities",
               "application": "marketdata",
               "internalRouting": false
             },
@@ -229,7 +229,7 @@
                 "de": "Watchliste",
                 "en": "Watchlist"
               },
-              "link": "/marketdata/watchlist",
+              "url": "/marketdata/watchlist",
               "application": "marketdata",
               "internalRouting": false
             }
@@ -248,7 +248,7 @@
                 "de": "e-Post",
                 "en": "e-Post"
               },
-              "link": "/ebanking/show-documents",
+              "url": "/ebanking/show-documents",
               "application": "ebanking"
             },
             {
@@ -256,7 +256,7 @@
                 "de": "Archivierung",
                 "en": "Archiving"
               },
-              "link": "/ebanking/show-delivery",
+              "url": "/ebanking/show-delivery",
               "application": "ebanking"
             },
             {
@@ -264,7 +264,7 @@
                 "de": "Auszug generieren",
                 "en": "Generate statements"
               },
-              "link": "/ebanking/create-document-order",
+              "url": "/ebanking/create-document-order",
               "application": "ebanking"
             },
             {
@@ -272,7 +272,7 @@
                 "de": "Auszug abholen",
                 "en": "Download statements"
               },
-              "link": "/ebanking/show-document-orders",
+              "url": "/ebanking/show-document-orders",
               "application": "ebanking"
             }
           ]
@@ -290,7 +290,7 @@
                 "de": "Platzhalter",
                 "en": "Placeholder"
               },
-              "link": "/placeholder/1",
+              "url": "/placeholder/1",
               "application": "products",
               "internalRouting": false
             }
@@ -309,7 +309,7 @@
                 "de": "Märkte & Ideen",
                 "en": "Market Overview"
               },
-              "link": "/prolink/node/95",
+              "url": "/prolink/node/95",
               "application": "prolink",
               "internalRouting": false
             },
@@ -318,7 +318,7 @@
                 "de": "Regulierung & Knowhow",
                 "en": "Regulations & Knowhow"
               },
-              "link": "/prolink/node/89",
+              "url": "/prolink/node/89",
               "application": "prolink",
               "internalRouting": false
             },
@@ -327,7 +327,7 @@
                 "de": "Formulare",
                 "en": "Forms"
               },
-              "link": "/prolink/node/248",
+              "url": "/prolink/node/248",
               "application": "prolink",
               "internalRouting": false
             },
@@ -336,7 +336,7 @@
                 "de": "Kontakte",
                 "en": "Contacts"
               },
-              "link": "/prolink/node/394",
+              "url": "/prolink/node/394",
               "application": "prolink",
               "internalRouting": false
             }
@@ -354,7 +354,7 @@
                 "de": "Benutzerübersicht",
                 "en": "User Overview"
               },
-              "link": "/ebanking/show-users",
+              "url": "/ebanking/show-users",
               "application": "ebanking"
             },
             {
@@ -362,7 +362,7 @@
                 "de": "Benutzer erfassen",
                 "en": "Create User"
               },
-              "link": "/ebanking/create-user",
+              "url": "/ebanking/create-user",
               "application": "ebanking"
             },
             {
@@ -370,7 +370,7 @@
                 "de": "Kundenübersicht",
                 "en": "Customer Overview"
               },
-              "link": "/ebanking/show-customers",
+              "url": "/ebanking/show-customers",
               "application": "ebanking"
             }
           ]
@@ -385,12 +385,12 @@
           "items": [
             {
               "labels": "Urgent Messages",
-              "link": "/ebanking/show-urgent-messages",
+              "url": "/ebanking/show-urgent-messages",
               "application": "ebanking"
             },
             {
               "labels": "Warnings",
-              "link": "/ebanking/show-warnings",
+              "url": "/ebanking/show-warnings",
               "application": "ebanking"
             }
           ]
@@ -410,7 +410,7 @@
                 "de": "Posteingang",
                 "en": "Inbox"
               },
-              "link": "/ebanking/show-messages-inbox",
+              "url": "/ebanking/show-messages-inbox",
               "application": "ebanking"
             },
             {
@@ -418,7 +418,7 @@
                 "de": "Postausgang",
                 "en": "Outbox"
               },
-              "link": "/ebanking/show-messages-outbox",
+              "url": "/ebanking/show-messages-outbox",
               "application": "ebanking"
             },
             {
@@ -426,7 +426,7 @@
                 "de": "Nachricht erfassen",
                 "en": "Create message"
               },
-              "link": "/ebanking/create-message",
+              "url": "/ebanking/create-message",
               "application": "ebanking"
             }
           ]
@@ -454,7 +454,7 @@
                 "de": "Benutzereinstellungen",
                 "en": "User Settings"
               },
-              "link": "/ebanking/update-user-preferences",
+              "url": "/ebanking/update-user-preferences",
               "application": "ebanking"
             },
             {
@@ -462,7 +462,7 @@
                 "de": "Sicherheit",
                 "en": "Security"
               },
-              "link": "/ebanking/update-security-preferences",
+              "url": "/ebanking/update-security-preferences",
               "application": "ebanking"
             },
             {
@@ -470,7 +470,7 @@
                 "de": "Darstellung",
                 "en": "Presentation"
               },
-              "link": "/ebanking/update-presentation-preferences",
+              "url": "/ebanking/update-presentation-preferences",
               "application": "ebanking"
             },
             {
@@ -478,7 +478,7 @@
                 "de": "Benachrichtigungen",
                 "en": "Notifications"
               },
-              "link": "/ebanking/update-notification-preferences",
+              "url": "/ebanking/update-notification-preferences",
               "application": "ebanking"
             },
             {
@@ -486,7 +486,7 @@
                 "de": "Mobiles Banking",
                 "en": "Mobile Banking"
               },
-              "link": "/ebanking/update-mobile-preferences",
+              "url": "/ebanking/update-mobile-preferences",
               "application": "ebanking"
             }
           ]
@@ -504,7 +504,7 @@
                 "de": "Kundengruppen",
                 "en": "Customer groups"
               },
-              "link": "/ebanking/show-customer-groups",
+              "url": "/ebanking/show-customer-groups",
               "application": "ebanking"
             },
             {
@@ -512,7 +512,7 @@
                 "de": "Kundengruppe erstellen",
                 "en": "Create customer group"
               },
-              "link": "/ebanking/create-customer-group",
+              "url": "/ebanking/create-customer-group",
               "application": "ebanking"
             }
           ]
@@ -522,7 +522,7 @@
             "de": "Alias verwalten",
             "en": "Manage alias"
           },
-          "link": "/ebanking/show-alias",
+          "url": "/ebanking/show-alias",
           "application": "ebanking"
         },
         {
@@ -530,7 +530,7 @@
             "de": "Zugriffe Dritter",
             "en": "Third party access"
           },
-          "link": "/ebanking/tpp-access",
+          "url": "/ebanking/tpp-access",
           "application": "ebanking"
         },
         {
@@ -538,7 +538,7 @@
             "de": "Kontakt & Support",
             "en": "Contact & support"
           },
-          "link": "/node/226",
+          "url": "/node/226",
           "application": "portal",
           "internalRouting": false,
           "destination": "extern"
@@ -554,7 +554,7 @@
             "de": "Erscheine Offline",
             "en": "Appear Offline"
           },
-          "link": "/portal/api/offline",
+          "url": "/portal/api/offline",
           "internalRouting": true,
           "internalRoutingApplications": [
             "ebanking"
@@ -565,7 +565,7 @@
             "de": "Logout",
             "en": "Logout"
           },
-          "link": "/portal/api/logout",
+          "url": "/portal/api/logout",
           "internalRouting": true,
           "internalRoutingApplications": [
             "ebanking"
