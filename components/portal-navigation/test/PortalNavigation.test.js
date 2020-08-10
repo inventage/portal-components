@@ -58,4 +58,20 @@ describe('PortalNavigation', () => {
     // then
     expect(internal).to.equal(true);
   });
+
+  it('sets corresponding activePath when activeUrl is set', async () => {
+    // given
+    const el = await fixture(html`<portal-navigation></portal-navigation>`);
+    const configuration = new Configuration(['group1', 'group2']);
+    configuration.setConfigData(data);
+    el.__configuration = configuration;
+
+    // when
+    el.activeUrl = '/some/path/item3.2';
+
+    // then
+    expect(el.activePath.groupId).to.eq('group2');
+    expect(el.activePath.menuId).to.eq('menu3');
+    expect(el.activePath.itemId).to.eq('item3.2');
+  });
 });
