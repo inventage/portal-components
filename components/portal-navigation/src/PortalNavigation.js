@@ -301,8 +301,7 @@ export class PortalNavigation extends LitElement {
   }
 
   __openDropdown(e, groupId) {
-    this.activeDropdown = groupId;
-    // this.activeDropdown = this.activeDropdown ? undefined : groupId;
+    this.activeDropdown = this.activeDropdown ? undefined : groupId;
   }
 
   __createMenuTemplate(groupId, menu, isTreeMode = false) {
