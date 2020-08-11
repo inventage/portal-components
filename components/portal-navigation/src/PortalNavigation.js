@@ -105,7 +105,7 @@ export class PortalNavigation extends LitElement {
 
     this.addEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
 
-    document.addEventListener('click', (...args) => this._onGlobalClick(...args));
+    // document.addEventListener('click', (...args) => this._onGlobalClick(...args));
     // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
   }
 
