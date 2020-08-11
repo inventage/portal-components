@@ -1,10 +1,5 @@
 export class Configuration {
-  constructor(groupIds) {
-    this.__data = undefined;
-    this.groupIds = groupIds;
-  }
-
-  setConfigData(data) {
+  constructor(data) {
     this.__data = data || undefined;
     this.__generateUniqueIds();
   }
@@ -15,7 +10,7 @@ export class Configuration {
     }
 
     let id = 0;
-    this.groupIds.forEach(groupId => {
+    this.getGroupIds().forEach(groupId => {
       const group = this.getGroup(groupId);
       group.id = groupId;
 
@@ -40,10 +35,35 @@ export class Configuration {
     });
   }
 
+  /**
+   * Returns all groupIds found in 'groups'.
+   * @returns {string[]}
+   */
+  getGroupIds() {
+    const groups = this.getData(['groups']);
+    return Object.keys(groups);
+  }
+
+  /**
+   * Returns the group object identified by the given groupId.
+   * @param {string} groupId - a groupId of a group found within the configuration.
+   * @returns {*} the group object found in the configuration.
+   */
   getGroup(groupId) {
     return this.getData(['groups', groupId]);
   }
 
+  /**
+   * Returns the first object within the given data that matches the given 'path' array (keyPath).
+   * By default the configurations data will be used, but you can pass subsets of the data to only earch these parts.
+   * A key within the path can be a simple string (refering to a property name) or a two strings delimited by '::'.
+   * This refers a menu/item (by id) within an array structure. e.g. ['groups', 'group1', 'menus::menu3'] would find
+   * the first of match of a menu identified by id 'menu3' within the menus property of the group identified by id
+   * 'group1' within the groups property.
+   * @param {string[]} keyPath - a path of property names describing the path to the object to be found.
+   * @param data the data set to be searched. the configurtions data set by default.
+   * @returns {undefined|*} the first object matching the given path.
+   */
   getData(keyPath, data = this.__data) {
     if (!data || !keyPath || keyPath.length <= 0) {
       return undefined;
@@ -61,53 +81,33 @@ export class Configuration {
     return this.getData(tail, value);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  __resolveValue(key, data) {
-    if (!data || !key) {
-      return undefined;
-    }
-
-    const keyParts = key.split('::');
-    if (keyParts.length === 1) {
-      return data[key];
-    }
-
-    if (keyParts.length === 2) {
-      const values = data[keyParts[0]].filter(item => item.id === keyParts[1]);
-      if (values.length > 0) {
-        return values[0];
-      }
-    }
-
-    return undefined;
-  }
-
-  getPathFromUrl(url, includedGroupIds = this.groupIds) {
+  getPathFromUrl(url) {
     if (!url) {
       return undefined;
     }
-    const result = this.findFirstPath(element => element.url === url, includedGroupIds);
+    const result = this.findFirstPath(element => element.url === url);
     if (result) {
       return result;
     }
     const index = url.lastIndexOf('/');
     if (index > 0) {
-      return this.getPathFromUrl(url.substring(0, index), includedGroupIds);
+      return this.getPathFromUrl(url.substring(0, index));
     }
     return undefined;
   }
 
-  findFirstPath(selector /* (menu|item) => boolean */, includedGroupIds = this.groupIds) {
-    return Configuration.toPath(this.findFirstNodePath(selector, includedGroupIds));
+  findFirstPath(selector /* (menu|item) => boolean */) {
+    return Configuration.toPath(this.findFirstNodePath(selector));
   }
 
-  findFirstNodePath(selector /* (menu|item) => boolean */, includedGroupIds = this.groupIds) {
+  findFirstNodePath(selector /* (menu|item) => boolean */) {
     if (!this.__data || !selector) {
       return undefined;
     }
 
-    for (let g = 0; g < includedGroupIds.length; g += 1) {
-      const group = this.getGroup(includedGroupIds[g]);
+    const groupIds = this.getGroupIds();
+    for (let g = 0; g < groupIds.length; g += 1) {
+      const group = this.getGroup(groupIds[g]);
       const { menus } = group;
 
       if (menus && menus.length > 0) {
@@ -126,6 +126,27 @@ export class Configuration {
             }
           }
         }
+      }
+    }
+
+    return undefined;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  __resolveValue(key, data) {
+    if (!data || !key) {
+      return undefined;
+    }
+
+    const keyParts = key.split('::');
+    if (keyParts.length === 1) {
+      return data[key];
+    }
+
+    if (keyParts.length === 2) {
+      const values = data[keyParts[0]].filter(item => item.id === keyParts[1]);
+      if (values.length > 0) {
+        return values[0];
       }
     }
 
