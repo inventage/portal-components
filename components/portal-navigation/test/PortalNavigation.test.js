@@ -114,4 +114,39 @@ describe('PortalNavigation', () => {
     expect(el.activePath.menuId).to.eq('menu3');
     expect(el.activePath.itemId).to.eq('item3.2');
   });
+
+  it('does route externally when item overrides globally set internalRouting=true with false.', async () => {
+    // given
+    const el = await fixture(html`<portal-navigation currentApplication="app2" internalRouting></portal-navigation>`);
+    el.__configuration = new Configuration(data);
+
+    // when
+    const item = el.__configuration.getData(['groups', 'group2', 'menus::menu3', 'items::item3.2']);
+    const internal = el.__isInternalRouting(item);
+
+    // then
+    expect(internal).to.equal(false);
+  });
+
+  it('does route externally when item overrides globally set internalRouting=true with false, and does not call e.preventDefault()', async () => {
+    // given
+    const el = await fixture(html`<portal-navigation currentApplication="app2" internalRouting></portal-navigation>`);
+    el.__configuration = new Configuration(data);
+
+    const e = new MockEvent();
+
+    // when
+    const menu = el.__configuration.getData(['groups', 'group2', 'menus::menu3']);
+    const item = el.__configuration.getData(['groups', 'group2', 'menus::menu3', 'items::item3.2']);
+    const result = el.__onLink(e, 'group2', menu, item);
+
+    console.log(result);
+
+    // then
+    expect(menu).not.to.be.undefined;
+    expect(item).not.to.be.undefined;
+    expect(menu.id).to.equal('menu3');
+    expect(item.id).to.equal('item3.2');
+    expect(e.count).to.equal(0);
+  });
 });

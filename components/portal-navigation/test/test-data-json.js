@@ -9,7 +9,6 @@ export const data = {
             en: 'Menu1_en',
           },
           url: '/some/path/menu1',
-          internalRouting: true,
           application: 'app1',
         },
         {
@@ -74,6 +73,7 @@ export const data = {
                 en: 'Item 3.2_en',
               },
               url: '/some/path/item3.2',
+              internalRouting: false,
             },
             {
               labels: {
