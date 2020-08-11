@@ -4,10 +4,22 @@ import { Configuration } from '../src/Configuration.js';
 import { data } from './test-data-json.js';
 
 describe('Configuration', () => {
+  it('getGroupIds returns all groupIds found in groups property', () => {
+    // given
+    const configuration = new Configuration(data);
+
+    // when
+    const result = configuration.getGroupIds();
+
+    // then
+    expect(result.length).to.equal(2);
+    expect(result[0]).to.equal('group1');
+    expect(result[1]).to.equal('group2');
+  });
+
   it('getGroup returns group with menus', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
     const result = configuration.getGroup('group1');
@@ -20,11 +32,10 @@ describe('Configuration', () => {
 
   it('getPathFromUrl returns first item matching url', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getPathFromUrl('/some/path/item2.2', ['group1']);
+    const result = configuration.getPathFromUrl('/some/path/item2.2');
 
     // then
     expect(result.groupId).to.equal('group1');
@@ -34,11 +45,10 @@ describe('Configuration', () => {
 
   it('getPathFromUrl returns first item matching url, and tries to match without trailing slash as a fallback', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getPathFromUrl('/some/path/item2.2/', ['group1']);
+    const result = configuration.getPathFromUrl('/some/path/item2.2/');
 
     // then
     expect(result.groupId).to.equal('group1');
@@ -48,11 +58,10 @@ describe('Configuration', () => {
 
   it('getPathFromUrl returns first item matching url, and tries to match subpath as a fallback', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getPathFromUrl('/some/path/item2.2/unknown-subitem', ['group1']);
+    const result = configuration.getPathFromUrl('/some/path/item2.2/unknown-subitem');
 
     // then
     expect(result.groupId).to.equal('group1');
@@ -60,23 +69,18 @@ describe('Configuration', () => {
     expect(result.itemId).to.equal('item2.2');
   });
 
-  it('setConfigData should set generate ids', () => {
-    // given
-    const configuration = new Configuration(['group1', 'group2']);
-
+  it('should generate missing ids on creation', () => {
     // when
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // then
     const group1 = configuration.getGroup('group1');
     expect(group1.id).to.equal('group1');
   });
 
-  it('setConfigData should not generate ids on invalid data', () => {
-    const configuration = new Configuration(['group1', 'group2']);
-
+  it('should not generate ids on invalid data', () => {
     [undefined, null, 0].forEach(configData => {
-      configuration.setConfigData(configData);
+      const configuration = new Configuration(configData);
 
       expect(configuration.getGroup('group1')).to.equal(undefined);
       expect(configuration.getGroup('group2')).to.equal(undefined);
@@ -85,8 +89,7 @@ describe('Configuration', () => {
 
   it('findFirstNodePath returns first node path matching criteria', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
     const result = configuration.findFirstNodePath(
@@ -104,8 +107,7 @@ describe('Configuration', () => {
 
   it('getData returns nested menus by path', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
     const result = configuration.getData(['groups', 'group2', `menus::menu4`]);
@@ -117,11 +119,10 @@ describe('Configuration', () => {
 
   it('findFirstPath returns first menu matching id', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
-    const result = configuration.findFirstPath(element => element.id === 'menu2', ['group1']);
+    const result = configuration.findFirstPath(element => element.id === 'menu2');
 
     // then
     expect(result.groupId).to.equal('group1');
@@ -131,11 +132,10 @@ describe('Configuration', () => {
 
   it('findFirstPathTo returns first item matching id', () => {
     // given
-    const configuration = new Configuration(['group1', 'group2']);
-    configuration.setConfigData(data);
+    const configuration = new Configuration(data);
 
     // when
-    const result = configuration.findFirstPath(element => element.id === 'item2.2', ['group1']);
+    const result = configuration.findFirstPath(element => element.id === 'item2.2');
 
     // then
     expect(result.groupId).to.equal('group1');

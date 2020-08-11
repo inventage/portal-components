@@ -14,7 +14,7 @@ export const data = {
         },
         {
           id: 'menu2',
-          defaultItem: 'item.2.2',
+          defaultItem: 'item2.2',
           labels: {
             de: 'Menu2_de',
             en: 'Menu2_en',
@@ -65,6 +65,7 @@ export const data = {
                 en: 'Item 3.1_en',
               },
               url: '/some/path/item3.1',
+              application: 'app2',
             },
             {
               id: 'item3.2',

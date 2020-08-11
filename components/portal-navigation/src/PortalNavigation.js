@@ -33,6 +33,15 @@ export class PortalNavigation extends LitElement {
     };
   }
 
+  static get groupIdsOrdered() {
+    return [
+      PortalNavigation.groupIds.main,
+      PortalNavigation.groupIds.meta,
+      PortalNavigation.groupIds.profile,
+      PortalNavigation.groupIds.logout,
+    ];
+  }
+
   static get events() {
     const ns = 'portal';
 
@@ -82,12 +91,7 @@ export class PortalNavigation extends LitElement {
     this.temporaryBadgeValues = new Map();
     this.hamburgerMenuExpanded = false;
     this.activeDropdown = undefined;
-    this.__configuration = new Configuration([
-      PortalNavigation.groupIds.main,
-      PortalNavigation.groupIds.meta,
-      PortalNavigation.groupIds.profile,
-      PortalNavigation.groupIds.logout,
-    ]);
+    this.__configuration = new Configuration();
   }
 
   connectedCallback() {
@@ -122,7 +126,7 @@ export class PortalNavigation extends LitElement {
   }
 
   _fetchRemoteData() {
-    this.__configuration.setConfigData(undefined);
+    this.__configuration = new Configuration();
 
     fetch(this.src)
       .then(response => {
@@ -130,7 +134,7 @@ export class PortalNavigation extends LitElement {
       })
       .then(data => {
         try {
-          this.__configuration.setConfigData(data);
+          this.__configuration = new Configuration(data);
           this.__updateActivePathFromUrl();
           this.requestUpdate();
         } catch (e) {
@@ -371,7 +375,7 @@ export class PortalNavigation extends LitElement {
   // Override to customize order and elements of tree structure in hamburger menu
   _createTreeTemplate() {
     const templates = [];
-    this.__configuration.groupIds.forEach(groupId => {
+    PortalNavigation.groupIdsOrdered.forEach(groupId => {
       const group = this.__configuration.getGroup(groupId);
       if (group && group.menus && group.menus.length > 0) {
         templates.push(group.menus.map(menu => this.__createMenuTemplate(groupId, menu, true)));
@@ -395,14 +399,17 @@ export class PortalNavigation extends LitElement {
       return undefined;
     }
 
-    // menu with items selected - display child items
-    if (menu.items && menu.items.length > 0) {
-      e.preventDefault();
+    const hasItems = menu.items && menu.items.length > 0;
+    const isInternal = this.__isInternalRouting(menu);
+    if (hasItems) {
+      if (isInternal) {
+        e.preventDefault();
+      }
       this.__setCurrentItems(groupId, menu);
       return undefined;
     }
 
-    if (this.__isInternalRouting(menu)) {
+    if (isInternal) {
       e.preventDefault();
       this.__internalLinkSelected(groupId, menu);
       return undefined;
