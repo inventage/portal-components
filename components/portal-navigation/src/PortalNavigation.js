@@ -392,9 +392,12 @@ export class PortalNavigation extends LitElement {
   }
 
   __onLink(e, groupId, menu, item = undefined) {
-    if (item && this.__isInternalRouting(item)) {
-      e.preventDefault();
-      this.__internalLinkSelected(groupId, menu, item);
+    if (item) {
+      if (this.__isInternalRouting(item)) {
+        e.preventDefault();
+        this.__internalLinkSelected(groupId, menu, item);
+        return undefined;
+      }
       return undefined;
     }
 
