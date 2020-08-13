@@ -92,6 +92,10 @@ export class PortalNavigation extends LitElement {
     this.hamburgerMenuExpanded = false;
     this.activeDropdown = undefined;
     this.__configuration = new Configuration();
+
+    // Make sure global (document / window) listeners are bound to `this`, otherwise we cannot properly remove them
+    // @see https://open-wc.org/faq/events.html#on-elements-outside-of-your-element
+    this.__setBadgeValueEventListener = this.__setBadgeValueEventListener.bind(this);
   }
 
   connectedCallback() {
@@ -103,13 +107,14 @@ export class PortalNavigation extends LitElement {
       this._fetchRemoteData();
     }
 
-    this.addEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
-
     const parsedUrl = new URL(window.location.href);
     if (parsedUrl && parsedUrl.pathname && parsedUrl.pathname !== '/') {
       const { pathname } = parsedUrl;
       this.activeUrl = pathname;
     }
+
+    // Register global listeners
+    document.addEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
 
     // document.addEventListener('click', (...args) => this._onGlobalClick(...args));
     // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
@@ -124,7 +129,8 @@ export class PortalNavigation extends LitElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
+    // Remove existing global listeners
+    document.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
 
     if (super.disconnectedCallback) {
       super.disconnectedCallback();
