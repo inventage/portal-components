@@ -34,12 +34,7 @@ export class PortalNavigation extends LitElement {
   }
 
   static get groupIdsOrdered() {
-    return [
-      PortalNavigation.groupIds.main,
-      PortalNavigation.groupIds.meta,
-      PortalNavigation.groupIds.profile,
-      PortalNavigation.groupIds.logout,
-    ];
+    return Object.values(PortalNavigation.groupIds);
   }
 
   static get events() {
