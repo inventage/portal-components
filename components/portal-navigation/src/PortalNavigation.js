@@ -105,6 +105,12 @@ export class PortalNavigation extends LitElement {
 
     this.addEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
 
+    const parsedUrl = new URL(window.location.href);
+    if (parsedUrl && parsedUrl.pathname && parsedUrl.pathname !== '/') {
+      const { pathname } = parsedUrl;
+      this.activeUrl = pathname;
+    }
+
     // document.addEventListener('click', (...args) => this._onGlobalClick(...args));
     // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
   }
