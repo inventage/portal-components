@@ -40,8 +40,17 @@ window.addEventListener('load', () => {
   document.dispatchEvent(
     new CustomEvent(PortalNavigation.events.setBadgeValue, {
       detail: {
+        id: 'main.assetCount',
+        value: { en: 'new', de: 'neu' },
+      },
+    }),
+  );
+
+  document.dispatchEvent(
+    new CustomEvent(PortalNavigation.events.setBadgeValue, {
+      detail: {
         id: 'meta.messages',
-        value: '9',
+        value: 9,
       },
     }),
   );
@@ -50,7 +59,7 @@ window.addEventListener('load', () => {
     new CustomEvent(PortalNavigation.events.setBadgeValue, {
       detail: {
         url: '/ebanking/update-notification-preferences',
-        value: '34',
+        value: 34,
       },
     }),
   );
