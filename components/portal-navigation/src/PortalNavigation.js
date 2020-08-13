@@ -142,6 +142,7 @@ export class PortalNavigation extends LitElement {
         try {
           this.__configuration = new Configuration(data);
           this.__updateActivePathFromUrl();
+          // @ts-ignore
           this.requestUpdate();
         } catch (e) {
           // eslint-disable-next-line no-console
@@ -193,6 +194,7 @@ export class PortalNavigation extends LitElement {
   setBadgeValue(menuOrItemId, url, value) {
     // TODO: write to Store instead of temporary map
     this.temporaryBadgeValues.set(menuOrItemId || url, value);
+    // @ts-ignore
     this._requestUpdate();
   }
 
