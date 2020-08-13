@@ -1,6 +1,7 @@
 ```js script
 import { html, withKnobs, withWebComponentsKnobs } from '@open-wc/demoing-storybook';
 import '../portal-navigation.js';
+import { PortalNavigation } from '../src/PortalNavigation.js';
 
 export default {
   title: 'Components/PortalNavigation',
