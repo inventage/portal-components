@@ -13,6 +13,7 @@
         {
           "defaultItem": "main.assetCount.assetOverview",
           "badge": "assetCount",
+          "id": "main.assetCount",
           "labels": {
             "de": "Vermögen",
             "en": "Assets"
