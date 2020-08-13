@@ -62,17 +62,20 @@ export class PortalNavigation extends LitElement {
     return {
       src: { type: String }, // location from where to fetch the configuration (data.json)
       lang: { type: String }, // 'de' or 'en' - current language
+      activeUrl: { type: String },
+      currentApplication: { type: String },
+      internalRouting: { type: Boolean },
+
       /**
        * @private
        */
       activePath: { attribute: false }, // {groupId,menuId,itemId} - identifying the active item
-      activeUrl: { type: String },
-      currentApplication: { type: String },
-      internalRouting: { type: Boolean },
+
       /**
        * @private
        */
       hamburgerMenuExpanded: { type: Boolean, attribute: false },
+
       /**
        * @private
        */
@@ -96,6 +99,7 @@ export class PortalNavigation extends LitElement {
     // Make sure global (document / window) listeners are bound to `this`, otherwise we cannot properly remove them
     // @see https://open-wc.org/faq/events.html#on-elements-outside-of-your-element
     this.__setBadgeValueEventListener = this.__setBadgeValueEventListener.bind(this);
+    this.__globalClickListener = this.__globalClickListener.bind(this);
   }
 
   connectedCallback() {
@@ -115,22 +119,40 @@ export class PortalNavigation extends LitElement {
 
     // Register global listeners
     document.addEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
-
-    // document.addEventListener('click', (...args) => this._onGlobalClick(...args));
-    // this.shadowRoot.addEventListener('click', (...args) => this._onGlobalClick(...args));
+    document.addEventListener('click', this.__globalClickListener);
   }
 
-  _onGlobalClick(e) {
-    const isOutsideOfComponent = e.target !== this;
-
-    if (isOutsideOfComponent) {
-      this.activeDropdown = undefined;
+  /**
+   * Hides any active dropdowns when a click occurs outside of the dropdown or its group.
+   *
+   * @param e
+   * @private
+   */
+  __globalClickListener(e) {
+    if (!this.activeDropdown || !e.composed) {
+      return;
     }
+
+    // At this point, there should be an open dropdown
+    const activeDropdownElement = this.shadowRoot.querySelector('.dropdown.-show');
+    if (!activeDropdownElement) {
+      return;
+    }
+
+    // If the event path contains either the dropdown itself or its menu group, let's bail…
+    const elementGroup = activeDropdownElement.closest('.portal-navigation-group');
+    if (e.composedPath().includes(activeDropdownElement) || e.composedPath().includes(elementGroup)) {
+      return;
+    }
+
+    // Click was outside of target elements, let's hide the currently active dropdown
+    this.activeDropdown = undefined;
   }
 
   disconnectedCallback() {
     // Remove existing global listeners
     document.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
+    document.removeEventListener('click', this.__globalClickListener);
 
     if (super.disconnectedCallback) {
       super.disconnectedCallback();
@@ -299,9 +321,9 @@ export class PortalNavigation extends LitElement {
 
       if (hasMenus) {
         templates.push(
-          html`<div class="${classMap({ dropdown: true, '-showDropdown': this.activeDropdown === groupId })}">
+          html`<div class="dropdown ${classMap({ '-show': this.activeDropdown === groupId })}">
             ${group.menus.map(menu => this.__createMenuTemplate(groupId, menu))}
-          </div> `,
+          </div>`,
         );
       }
       return templates;
