@@ -90,11 +90,6 @@ export const portalNavigationStyles = css`
     top: calc(100% + 6px);
     z-index: 99;
     padding: 0.5rem 0;
-
-    @supports (filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5))) {
-      box-shadow: none;
-      filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
-    }
   }
 
   .dropdown::before {
@@ -107,10 +102,6 @@ export const portalNavigationStyles = css`
     top: -6px;
     transform: rotate(45deg);
     width: 12px;
-
-    @supports (filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5))) {
-      box-shadow: none;
-    }
   }
 
   .dropdown .first-level.-selected > link,
@@ -204,6 +195,7 @@ export const portalNavigationStyles = css`
     .portal-navigation-tree-container {
       display: block;
     }
+
     .portal-navigation-slot-left,
     .portal-navigation-group-meta,
     .portal-navigation-group-profile,
@@ -213,6 +205,7 @@ export const portalNavigationStyles = css`
     .portal-navigation-current {
       display: none;
     }
+
     .portal-navigation-header {
       padding-bottom: 0.5rem;
     }
