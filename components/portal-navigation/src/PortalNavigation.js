@@ -277,7 +277,7 @@ export class PortalNavigation extends LitElement {
       const templates = [];
       templates.push(html`<div class="first-level">
         ${hasMenus
-          ? html`<span class="${menuClasses.join(' ')}" @click="${e => this.__openDropdown(e, groupId)}"
+          ? html`<span class="${menuClasses.join(' ')}" @click="${e => this.__toggleDropdown(e, groupId)}"
               >${this.__createLinkTemplate(label, group.icon, badge)}</span
             >`
           : html`<span class="${menuClasses.join(' ')}">${this.__createLinkTemplate(label, group.icon, badge)}</span>`}
@@ -300,7 +300,7 @@ export class PortalNavigation extends LitElement {
     return html``;
   }
 
-  __openDropdown(e, groupId) {
+  __toggleDropdown(e, groupId) {
     this.activeDropdown = this.activeDropdown ? undefined : groupId;
   }
 
