@@ -114,7 +114,7 @@ export const portalNavigationStyles = css`
     padding: 0.25rem 0.5rem;
   }
 
-  .dropdown.-showDropdown {
+  .dropdown.-show {
     display: block;
   }
 
