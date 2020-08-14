@@ -4,10 +4,10 @@
  */
 export class Configuration {
   /**
-   * @param {*} data - configuration data. On more info how this needs to be structured see
+   * @param {*|undefined} data - configuration data. On more info how this needs to be structured see
    * [documentation]{@link https://github.com/inventage/portal-components/blob/master/docs/portal-navigation/configuration.md}.
    */
-  constructor(data) {
+  constructor(data = undefined) {
     this.__data = data || undefined;
     this.__generateUniqueIds();
   }
