@@ -49,7 +49,7 @@ export class PortalNavigation extends LitElement {
 
   static get classes() {
     return {
-      selected: '-selected', // TODO: add a comment to describe this
+      selected: '-selected',
     };
   }
 
@@ -210,27 +210,38 @@ export class PortalNavigation extends LitElement {
   __setBadgeValueEventListener(e) {
     const { detail } = e;
     if (detail) {
-      this.setBadgeValue(detail.id, detail.url, detail.value);
+      this.setBadgeValue(detail.id || detail.url, detail.value);
     }
   }
 
-  setBadgeValue(menuOrItemId, url, value) {
+  /**
+   * Set a badge value for a specific key. Groups will automatically look up badge values by their groupId. Items will
+   * first check for badge values by using their id and then by using their url.
+   *
+   * @param {string} key - groupId or itemId or url
+   * @param {*} value - the badge value (could be a l11n label object)
+   */
+  setBadgeValue(key, value) {
     // TODO: write to Store instead of temporary map
-    this.temporaryBadgeValues.set(menuOrItemId || url, value);
+    this.temporaryBadgeValues.set(key, value);
     // @ts-ignore
     this._requestUpdate();
   }
 
-  getBadgeValue(groupOrMenuOrItemId) {
+  getBadgeValue(id, url) {
     // TODO: read from Store instead of temporary map
-    let value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.id);
+    let value = this.temporaryBadgeValues.get(id);
     if (!value) {
-      value = this.temporaryBadgeValues.get(groupOrMenuOrItemId.url);
+      value = this.temporaryBadgeValues.get(url);
     }
     if (value && typeof value === 'object' && value.constructor === Object) {
       return this._getLabel(value);
     }
     return value;
+  }
+
+  __toggleDropdown(e, groupId) {
+    this.activeDropdown = this.activeDropdown ? undefined : groupId;
   }
 
   render() {
@@ -273,113 +284,99 @@ export class PortalNavigation extends LitElement {
     </div>`;
   }
 
+  __createGroupTemplate(groupId) {
+    const group = this.__configuration.getGroup(groupId);
+
+    if (!group || !group.items || group.items.length <= 0) {
+      return html``;
+    }
+
+    if (group && group.dropdown) {
+      const badge = this.getBadgeValue(group.id);
+      const label = this._getLabel(group);
+      return html`<div class="first-level">
+          <span
+            class="${classMap({
+              link: true,
+              'dropdown-link': true,
+              [PortalNavigation.classes.selected]: this._isActive(groupId),
+            })}"
+            @click="${e => this.__toggleDropdown(e, groupId)}"
+            >${this.__createLinkTemplate(label, group.icon, badge)}</span
+          >
+        </div>
+        <div class="dropdown ${classMap({ '-show': this.activeDropdown === groupId })}">
+          ${group.items.map(item => this.__createFirstLevelItemTemplate(groupId, item))}
+        </div>`;
+    }
+    return html`${group.items.map(item => this.__createFirstLevelItemTemplate(groupId, item))}`;
+  }
+
+  __createFirstLevelItemTemplate(groupId, item, isTreeMode = false) {
+    const { id, icon, items } = item;
+    const isMenu = items && items.length > 0;
+    const badge = this.getBadgeValue(id);
+    const label = this._getLabel(item);
+    const active = this._isActive(id);
+
+    let refItem = item;
+    if (isMenu) {
+      refItem = this.__getDefaultItemOf(item) || item;
+    }
+
+    const { url, destination } = refItem;
+
+    return html`<div class="first-level">
+        <a
+          href="${url}"
+          class="${classMap({
+            link: true,
+            'portal-navigation-tree-menu': isTreeMode,
+            [PortalNavigation.classes.selected]: active,
+          })}"
+          target="${destination === 'extern' && !isMenu ? '_blank' : '_self'}"
+          @click="${e => this.__onLink(e, groupId, item)}"
+          >${this.__createLinkTemplate(label, icon, badge)}${isTreeMode && isMenu
+            ? html`<span class="button"></span>`
+            : html``}</a
+        >
+      </div>
+      ${isTreeMode && active && isMenu
+        ? html`<div class="portal-navigation-tree-menu-items">
+            ${item.items.map(childItem => this.__createSecondLevelItemTemplate(groupId, item, childItem))}
+          </div>`
+        : html``}`;
+  }
+
   __createCurrentItemsTemplate() {
-    if (!this.activePath) {
+    if (!this.activePath || !this.activePath.menuId) {
       return html``;
     }
 
     const { groupId, menuId } = this.activePath;
-    const activeMenu = this.__configuration.getData(['groups', groupId, `menus::${menuId}`]);
+    const activeMenu = this.__configuration.getData(['groups', groupId, `items::${menuId}`]);
 
     if (activeMenu && activeMenu.items && activeMenu.items.length > 0) {
       return html`<div class="portal-navigation-current">
         <div class="portal-navigation-content">
-          ${activeMenu.items.map(item => this.__createMenuItemTemplate(groupId, activeMenu, item))}
+          ${activeMenu.items.map(item => this.__createSecondLevelItemTemplate(groupId, activeMenu, item))}
         </div>
       </div>`;
     }
     return html``;
   }
 
-  __createGroupTemplate(groupId) {
-    const group = this.__configuration.getGroup(groupId);
-
-    if (group && group.dropdown) {
-      const badge = this.getBadgeValue(group);
-
-      const menuClasses = ['link', 'dropdown-link'];
-      if (this._isActive(groupId)) {
-        menuClasses.push(PortalNavigation.classes.selected);
-      }
-
-      const label = this._getLabel(group);
-      const hasMenus = group.menus && group.menus.length > 0;
-
-      const templates = [];
-      templates.push(html`<div class="first-level">
-        ${hasMenus
-          ? html`<span class="${menuClasses.join(' ')}" @click="${e => this.__toggleDropdown(e, groupId)}"
-              >${this.__createLinkTemplate(label, group.icon, badge)}</span
-            >`
-          : html`<span class="${menuClasses.join(' ')}">${this.__createLinkTemplate(label, group.icon, badge)}</span>`}
-      </div>`);
-
-      if (hasMenus) {
-        templates.push(
-          html`<div class="dropdown ${classMap({ '-show': this.activeDropdown === groupId })}">
-            ${group.menus.map(menu => this.__createMenuTemplate(groupId, menu))}
-          </div>`,
-        );
-      }
-      return templates;
-    }
-
-    if (group && group.menus) {
-      return html`${group.menus.map(menu => this.__createMenuTemplate(groupId, menu))}`;
-    }
-
-    return html``;
-  }
-
-  __toggleDropdown(e, groupId) {
-    this.activeDropdown = this.activeDropdown ? undefined : groupId;
-  }
-
-  __createMenuTemplate(groupId, menu, isTreeMode = false) {
-    const { url, icon, items } = menu;
-    const badge = this.getBadgeValue(menu);
-    const active = this._isActive(menu.id);
-    const label = this._getLabel(menu);
-    const defaultItem = this.__getDefaultItemOf(menu);
-    const hasItems = items && items.length > 0;
-
-    return html`<div class="first-level">
-        <a
-          href="${defaultItem ? defaultItem.url : url}"
-          class="${classMap({
-            link: true,
-            'portal-navigation-tree-menu': isTreeMode,
-            [PortalNavigation.classes.selected]: active,
-          })}"
-          target="${menu.destination === 'extern' ? '_blank' : '_self'}"
-          @click="${e => this.__onLink(e, groupId, menu)}"
-          >${this.__createLinkTemplate(label, icon, badge)}${isTreeMode && hasItems
-            ? html`<span class="button"></span>`
-            : html``}</a
-        >
-      </div>
-      ${isTreeMode && active && hasItems
-        ? html`<div class="portal-navigation-tree-menu-items">
-            ${menu.items.map(item => this.__createMenuItemTemplate(groupId, menu, item))}
-          </div>`
-        : html``}`;
-  }
-
-  __createMenuItemTemplate(groupId, menu, item) {
-    const itemClasses = ['link'];
-    if (this._isActive(item.id)) {
-      itemClasses.push(PortalNavigation.classes.selected);
-    }
-
-    const { icon } = item;
-    const badge = this.getBadgeValue(item);
+  __createSecondLevelItemTemplate(groupId, menu, item) {
+    const { id, icon, url, destination } = item;
+    const badge = this.getBadgeValue(id, url);
     const label = this._getLabel(item);
+    const active = this._isActive(id);
 
     return html`<a
-      href="${item.url}"
-      class="${itemClasses.join(' ')}"
+      href="${url}"
+      class="${classMap({ link: true, [PortalNavigation.classes.selected]: active })}"
       @click="${e => this.__onLink(e, groupId, menu, item)}"
-      target="${item.destination === 'extern' ? '_blank' : '_self'}"
+      target="${destination === 'extern' ? '_blank' : '_self'}"
       >${this.__createLinkTemplate(label, icon, badge)}</a
     >`;
   }
@@ -407,8 +404,8 @@ export class PortalNavigation extends LitElement {
     const templates = [];
     PortalNavigation.groupIdsOrdered.forEach(groupId => {
       const group = this.__configuration.getGroup(groupId);
-      if (group && group.menus && group.menus.length > 0) {
-        templates.push(group.menus.map(menu => this.__createMenuTemplate(groupId, menu, true)));
+      if (group && group.items && group.items.length > 0) {
+        templates.push(group.items.map(item => this.__createFirstLevelItemTemplate(groupId, item, true)));
       }
     });
     return templates;
@@ -435,7 +432,8 @@ export class PortalNavigation extends LitElement {
     const hasItems = menu.items && menu.items.length > 0;
     const isInternal = this.__isInternalRouting(menu);
     if (hasItems) {
-      if (isInternal) {
+      // if the default item of the menu is external we don't want to honor this flag when clicking on a menu
+      if (isInternal || this.__getDefaultItemOf(menu).destination === 'extern') {
         e.preventDefault();
       }
       this.__setCurrentItems(groupId, menu);
@@ -454,10 +452,12 @@ export class PortalNavigation extends LitElement {
   __setCurrentItems(groupId, menu) {
     const item = this.__getDefaultItemOf(menu);
 
-    this.activeDropdown = undefined;
-    this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
+    const ignoreDefaultItem = item.destination === 'extern';
 
-    if (item) {
+    this.activeDropdown = undefined;
+    this.activePath = { groupId, menuId: menu.id, itemId: item && !ignoreDefaultItem ? item.id : undefined };
+
+    if (item && !ignoreDefaultItem) {
       this.dispatchEvent(
         new CustomEvent(PortalNavigation.events.routeTo, {
           detail: {
@@ -500,10 +500,10 @@ export class PortalNavigation extends LitElement {
     return items.find(item => item.id === defaultItem) || items[0];
   }
 
-  __isInternalRouting(menuOrItem) {
-    let refItem = menuOrItem;
-    if (menuOrItem.items && menuOrItem.items.length > 0) {
-      refItem = this.__getDefaultItemOf(menuOrItem);
+  __isInternalRouting(item) {
+    let refItem = item;
+    if (item.items && item.items.length > 0) {
+      refItem = this.__getDefaultItemOf(item);
     }
 
     // Allow global `internalRouting` to be overridden by the item specific `internalRouting` property

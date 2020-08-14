@@ -12,12 +12,13 @@ describe('Configuration', () => {
     const result = configuration.getGroupIds();
 
     // then
-    expect(result.length).to.equal(2);
+    expect(result.length).to.equal(3);
     expect(result[0]).to.equal('group1');
     expect(result[1]).to.equal('group2');
+    expect(result[2]).to.equal('group3');
   });
 
-  it('getGroup returns group with menus', () => {
+  it('getGroup returns group with items', () => {
     // given
     const configuration = new Configuration(data);
 
@@ -25,9 +26,9 @@ describe('Configuration', () => {
     const result = configuration.getGroup('group1');
 
     // then
-    expect(result.menus.length).to.equal(2);
-    expect(result.menus[0].id).to.equal('menu1');
-    expect(result.menus[1].id).to.equal('menu2');
+    expect(result.items.length).to.equal(2);
+    expect(result.items[0].id).to.equal('menu1');
+    expect(result.items[1].id).to.equal('menu2');
   });
 
   it('getPathFromUrl returns first item matching url', () => {
@@ -105,12 +106,12 @@ describe('Configuration', () => {
     expect(result.item.id).to.equal('item2.2');
   });
 
-  it('getData returns nested menus by path', () => {
+  it('getData returns nested first level items by path', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getData(['groups', 'group2', `menus::menu4`]);
+    const result = configuration.getData(['groups', 'group2', `items::menu4`]);
 
     // then
     expect(result.id).to.equal('menu4');

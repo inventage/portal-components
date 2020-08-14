@@ -1,7 +1,7 @@
 export const data = {
   groups: {
     group1: {
-      menus: [
+      items: [
         {
           id: 'menu1',
           label: {
@@ -48,7 +48,7 @@ export const data = {
         en: 'Group2_en',
         de: 'Group2_de',
       },
-      menus: [
+      items: [
         {
           id: 'menu3',
           label: {
@@ -91,6 +91,24 @@ export const data = {
             en: 'Menu4_en',
           },
           url: '/some/path/menu4',
+        },
+      ],
+    },
+    group3: {
+      items: [
+        {
+          id: 'menu5',
+          label: 'Menu5',
+          url: '/some/path/menu5',
+          items: [
+            {
+              id: 'item5.1',
+              label: 'Item 5.1',
+              url: '/some/path/item5.1',
+              internalRouting: false,
+              destination: 'extern',
+            },
+          ],
         },
       ],
     },
