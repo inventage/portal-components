@@ -3,7 +3,7 @@
     "main": {
       "menus": [
         {
-          "labels": {
+          "label": {
             "de": "Home",
             "en": "Home"
           },
@@ -12,16 +12,15 @@
         },
         {
           "defaultItem": "main.assetCount.assetOverview",
-          "badge": "assetCount",
           "id": "main.assetCount",
-          "labels": {
+          "label": {
             "de": "Vermögen",
             "en": "Assets"
           },
           "items": [
             {
               "id": "main.assetCount.assetOverview",
-              "labels": {
+              "label": {
                 "de": "Vermögensübersicht",
                 "en": "Asset Overview"
               },
@@ -29,7 +28,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Kontoauszug",
                 "en": "Account Statement"
               },
@@ -37,7 +36,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Depotanalyse",
                 "en": "Portfolio Analysis"
               },
@@ -45,16 +44,15 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Fälligkeiten",
                 "en": "Maturities"
               },
-              "badge": "maturitiesCount",
               "url": "/ebanking/show-asset-maturities",
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Listen",
                 "en": "Lists"
               },
@@ -65,14 +63,14 @@
         },
         {
           "defaultItem": "main.payments.orderOverview",
-          "labels": {
+          "label": {
             "de": "Zahlungen",
             "en": "Payments"
           },
           "items": [
             {
               "id": "main.payments.orderOverview",
-              "labels": {
+              "label": {
                 "de": "Auftragsübersicht",
                 "en": "Order Overview"
               },
@@ -80,7 +78,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Auftrag erfassen",
                 "en": "Create Order"
               },
@@ -88,7 +86,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Daueraufträge",
                 "en": "Standing Order Overview"
               },
@@ -96,7 +94,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "ISO",
                 "en": "ISO"
               },
@@ -104,7 +102,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "BESR",
                 "en": "BESR"
               },
@@ -112,7 +110,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "QRR",
                 "en": "QRR"
               },
@@ -120,7 +118,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "LSV",
                 "en": "LSV"
               },
@@ -131,14 +129,14 @@
         },
         {
           "defaultItem": "main.trade.stockMarketOrders",
-          "labels": {
+          "label": {
             "de": "Handel",
             "en": "Trade"
           },
           "items": [
             {
               "id": "main.trade.stockMarketOrders",
-              "labels": {
+              "label": {
                 "de": "Börsenaufträge",
                 "en": "Stock Market Orders"
               },
@@ -146,7 +144,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Kauf",
                 "en": "Buy"
               },
@@ -154,7 +152,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Verkauf",
                 "en": "Sell"
               },
@@ -165,14 +163,14 @@
         },
         {
           "defaultItem": "main.markets.marketOverview",
-          "labels": {
+          "label": {
             "de": "Märkte",
             "en": "Markets"
           },
           "items": [
             {
               "id": "main.markets.marketOverview",
-              "labels": {
+              "label": {
                 "de": "Marktübersicht",
                 "en": "Market Overview"
               },
@@ -181,7 +179,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Aktien",
                 "en": "Stocks"
               },
@@ -190,7 +188,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Zinsen / Anleihen",
                 "en": "Bonds"
               },
@@ -199,7 +197,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Fonds",
                 "en": "Funds"
               },
@@ -208,7 +206,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Devisen",
                 "en": "Currencies"
               },
@@ -217,7 +215,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Rohstoffe",
                 "en": "Commodities"
               },
@@ -226,7 +224,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Watchliste",
                 "en": "Watchlist"
               },
@@ -238,14 +236,14 @@
         },
         {
           "defaultItem": "main.documents.ePost",
-          "labels": {
+          "label": {
             "de": "Dokumente",
             "en": "Documents"
           },
           "items": [
             {
               "id": "main.documents.ePost",
-              "labels": {
+              "label": {
                 "de": "e-Post",
                 "en": "e-Post"
               },
@@ -253,7 +251,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Archivierung",
                 "en": "Archiving"
               },
@@ -261,7 +259,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Auszug generieren",
                 "en": "Generate statements"
               },
@@ -269,7 +267,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Auszug abholen",
                 "en": "Download statements"
               },
@@ -280,14 +278,14 @@
         },
         {
           "defaultItem": "main.products.placeholder",
-          "labels": {
+          "label": {
             "de": "Produkte",
             "en": "Products"
           },
           "items": [
             {
               "id": "main.products.placeholder",
-              "labels": {
+              "label": {
                 "de": "Platzhalter",
                 "en": "Placeholder"
               },
@@ -299,14 +297,14 @@
         },
         {
           "defaultItem": "main.prolink.marketOverview",
-          "labels": {
+          "label": {
             "de": "Prolink",
             "en": "Prolink"
           },
           "items": [
             {
               "id": "main.prolink.marketOverview",
-              "labels": {
+              "label": {
                 "de": "Märkte & Ideen",
                 "en": "Market Overview"
               },
@@ -315,7 +313,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Regulierung & Knowhow",
                 "en": "Regulations & Knowhow"
               },
@@ -324,7 +322,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Formulare",
                 "en": "Forms"
               },
@@ -333,7 +331,7 @@
               "internalRouting": false
             },
             {
-              "labels": {
+              "label": {
                 "de": "Kontakte",
                 "en": "Contacts"
               },
@@ -344,14 +342,14 @@
           ]
         },
         {
-          "labels": {
+          "label": {
             "de": "Superuser",
             "en": "Superuser"
           },
           "items": [
             {
               "id": "main.superuser.userOverview",
-              "labels": {
+              "label": {
                 "de": "Benutzerübersicht",
                 "en": "User Overview"
               },
@@ -359,7 +357,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Benutzer erfassen",
                 "en": "Create User"
               },
@@ -367,7 +365,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Kundenübersicht",
                 "en": "Customer Overview"
               },
@@ -382,15 +380,15 @@
       "menus": [
         {
           "id": "meta.urgent",
-          "labels": "[!!!]",
+          "label": "[!!!]",
           "items": [
             {
-              "labels": "Urgent Messages",
+              "label": "Urgent Messages",
               "url": "/ebanking/show-urgent-messages",
               "application": "ebanking"
             },
             {
-              "labels": "Warnings",
+              "label": "Warnings",
               "url": "/ebanking/show-warnings",
               "application": "ebanking"
             }
@@ -399,7 +397,7 @@
         {
           "id": "meta.messages",
           "defaultItem": "meta.messages.inbox",
-          "labels": {
+          "label": {
             "de": "Nachrichten",
             "en": "Messages"
           },
@@ -407,7 +405,7 @@
           "items": [
             {
               "id": "meta.messages.inbox",
-              "labels": {
+              "label": {
                 "de": "Posteingang",
                 "en": "Inbox"
               },
@@ -415,7 +413,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Postausgang",
                 "en": "Outbox"
               },
@@ -423,7 +421,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Nachricht erfassen",
                 "en": "Create message"
               },
@@ -437,21 +435,21 @@
     "profile": {
       "dropdown": true,
       "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-user' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z'/%3E%3Ccircle cx='12' cy='7' r='4' /%3E%3Cpath d='M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2' /%3E%3C/svg%3E",
-      "labels": {
+      "label": {
         "en": "331045/inv1",
         "de": "331045/inv1"
       },
       "menus": [
         {
           "defaultItem": "profile.preferences.userSettings",
-          "labels": {
+          "label": {
             "de": "Einstellungen",
             "en": "Preferences"
           },
           "items": [
             {
               "id": "profile.preferences.userSettings",
-              "labels": {
+              "label": {
                 "de": "Benutzereinstellungen",
                 "en": "User Settings"
               },
@@ -459,7 +457,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Sicherheit",
                 "en": "Security"
               },
@@ -467,7 +465,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Darstellung",
                 "en": "Presentation"
               },
@@ -475,7 +473,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Benachrichtigungen",
                 "en": "Notifications"
               },
@@ -483,7 +481,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Mobiles Banking",
                 "en": "Mobile Banking"
               },
@@ -494,14 +492,14 @@
         },
         {
           "defaultItem": "profile.manageCustomerGroups.customerGroups",
-          "labels": {
+          "label": {
             "de": "Kundengruppen verwalten",
             "en": "Manage customer groups"
           },
           "items": [
             {
               "id": "profile.manageCustomerGroups.customerGroups",
-              "labels": {
+              "label": {
                 "de": "Kundengruppen",
                 "en": "Customer groups"
               },
@@ -509,7 +507,7 @@
               "application": "ebanking"
             },
             {
-              "labels": {
+              "label": {
                 "de": "Kundengruppe erstellen",
                 "en": "Create customer group"
               },
@@ -519,7 +517,7 @@
           ]
         },
         {
-          "labels": {
+          "label": {
             "de": "Alias verwalten",
             "en": "Manage alias"
           },
@@ -527,7 +525,7 @@
           "application": "ebanking"
         },
         {
-          "labels": {
+          "label": {
             "de": "Zugriffe Dritter",
             "en": "Third party access"
           },
@@ -535,7 +533,7 @@
           "application": "ebanking"
         },
         {
-          "labels": {
+          "label": {
             "de": "Kontakt & Support",
             "en": "Contact & support"
           },
@@ -548,10 +546,10 @@
     },
     "logout": {
       "dropdown": true,
-      "labels": "Logout",
+      "label": "Logout",
       "menus": [
         {
-          "labels": {
+          "label": {
             "de": "Erscheine Offline",
             "en": "Appear Offline"
           },
@@ -562,7 +560,7 @@
           ]
         },
         {
-          "labels": {
+          "label": {
             "de": "Logout",
             "en": "Logout"
           },
