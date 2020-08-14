@@ -302,7 +302,7 @@ export class PortalNavigation extends LitElement {
         menuClasses.push(PortalNavigation.classes.selected);
       }
 
-      const label = this._getLabel(group.labels);
+      const label = this._getLabel(group);
       const hasMenus = group.menus && group.menus.length > 0;
 
       const templates = [];
@@ -336,10 +336,10 @@ export class PortalNavigation extends LitElement {
   }
 
   __createMenuTemplate(groupId, menu, isTreeMode = false) {
-    const { url, icon, labels, items } = menu;
+    const { url, icon, items } = menu;
     const badge = this.getBadgeValue(menu);
     const active = this._isActive(menu.id);
-    const label = this._getLabel(labels);
+    const label = this._getLabel(menu);
     const defaultItem = this.__getDefaultItemOf(menu);
     const hasItems = items && items.length > 0;
 
@@ -371,9 +371,9 @@ export class PortalNavigation extends LitElement {
       itemClasses.push(PortalNavigation.classes.selected);
     }
 
-    const { icon, labels } = item;
+    const { icon } = item;
     const badge = this.getBadgeValue(item);
-    const label = this._getLabel(labels);
+    const label = this._getLabel(item);
 
     return html`<a
       href="${item.url}"
@@ -462,7 +462,7 @@ export class PortalNavigation extends LitElement {
         new CustomEvent(PortalNavigation.events.routeTo, {
           detail: {
             url: item.url,
-            labels: item.labels,
+            label: item.label,
           },
           bubbles: true,
         }),
@@ -472,7 +472,6 @@ export class PortalNavigation extends LitElement {
 
   __internalLinkSelected(groupId, menu, item) {
     const url = item ? item.url : menu.url;
-    const labels = item ? item.labels : menu.labels;
 
     this.activeDropdown = undefined;
     this.activePath = { groupId, menuId: menu.id, itemId: item ? item.id : undefined };
@@ -481,7 +480,7 @@ export class PortalNavigation extends LitElement {
       new CustomEvent(PortalNavigation.events.routeTo, {
         detail: {
           url,
-          labels,
+          label: item ? item.label : menu.label,
         },
         bubbles: true,
       }),
@@ -532,17 +531,22 @@ export class PortalNavigation extends LitElement {
     return refItem.application === this.currentApplication;
   }
 
-  _getLabel(labels) {
-    if (typeof labels === 'string') {
-      return labels;
+  _getLabel(labelProvider) {
+    let labelObj = labelProvider;
+    if ('label' in labelProvider) {
+      labelObj = labelProvider.label;
     }
 
-    if (!labels || !this.lang) {
+    if (typeof labelObj === 'string') {
+      return labelObj;
+    }
+
+    if (!labelObj || !this.lang) {
       return '';
     }
 
-    if (this.lang in labels) {
-      return labels[this.lang];
+    if (this.lang in labelObj) {
+      return labelObj[this.lang];
     }
 
     return '';

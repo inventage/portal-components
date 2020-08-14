@@ -1,9 +1,23 @@
+/**
+ * Wraps the json structured configuration of a portal navigation, does some basic sanitizing of the received data
+ * (e.g. generating missing ids), and provides convenience functions to access groups, menus and items with the data.
+ */
 export class Configuration {
+  /**
+   * @param {*} data - configuration data. On more info how this needs to be structured see
+   * [documentation]{@link https://github.com/inventage/portal-components/blob/master/docs/portal-navigation/configuration.md}.
+   */
   constructor(data) {
     this.__data = data || undefined;
     this.__generateUniqueIds();
   }
 
+  /**
+   * Generates "unique ids" for menus and items missing an id.
+   * Also, sets the name of each group as an id of the respective group for convenience.
+   *
+   * @private
+   */
   __generateUniqueIds() {
     if (!this.__data) {
       return;
@@ -37,6 +51,7 @@ export class Configuration {
 
   /**
    * Returns all groupIds found in 'groups'.
+   *
    * @returns {string[]}
    */
   getGroupIds() {
@@ -46,6 +61,7 @@ export class Configuration {
 
   /**
    * Returns the group object identified by the given groupId.
+   *
    * @param {string} groupId - a groupId of a group found within the configuration.
    * @returns {*} the group object found in the configuration.
    */
@@ -60,6 +76,7 @@ export class Configuration {
    * This refers a menu/item (by id) within an array structure. e.g. ['groups', 'group1', 'menus::menu3'] would find
    * the first of match of a menu identified by id 'menu3' within the menus property of the group identified by id
    * 'group1' within the groups property.
+   *
    * @param {string[]} keyPath - a path of property names describing the path to the object to be found.
    * @param data the data set to be searched. the configurtions data set by default.
    * @returns {undefined|*} the first object matching the given path.
@@ -81,6 +98,14 @@ export class Configuration {
     return this.getData(tail, value);
   }
 
+  /**
+   * Returns the id path to the first menu or item, whose url matches the given url.
+   * If none can be found the process is repeated while the given url is "reduced" step by step by removing the last
+   * part delimited with '/' until a match can be found. If still none can be found undefined is returned.
+   *
+   * @param {string} url - the url of an menu or item within the data set.
+   * @returns {{itemId: (string), groupId: (string), menuId: (string|undefined)}|undefined}
+   */
   getPathFromUrl(url) {
     if (!url) {
       return undefined;
@@ -96,11 +121,30 @@ export class Configuration {
     return undefined;
   }
 
-  findFirstPath(selector /* (menu|item) => boolean */) {
+  /**
+   * @callback selector
+   * @param {*} menuOrItem - a menu or item object.
+   * @return {boolean} - returns true if the menu or item should be selected.
+   */
+
+  /**
+   * Returns an id path to the first menu or item that is selected by the given selector.
+   *
+   * @param {selector} selector
+   * @returns {{itemId: (string), groupId: (string), menuId: (string|undefined)}}
+   */
+  findFirstPath(selector) {
     return Configuration.toPath(this.findFirstNodePath(selector));
   }
 
-  findFirstNodePath(selector /* (menu|item) => boolean */) {
+  /**
+   * Returns a node path (full objects from data set, not just ids) to the first menu or item that is selected by the
+   * given selector.
+   *
+   * @param {selector} selector
+   * @returns {{group: *, menu: *, item: *|undefined}|undefined}
+   */
+  findFirstNodePath(selector) {
     if (!this.__data || !selector) {
       return undefined;
     }
@@ -132,6 +176,18 @@ export class Configuration {
     return undefined;
   }
 
+  /**
+   * Returns the value of the property specified by the given key from the given data object. If the value of the
+   * property is an array, you can specify which array element you want resolved by appending '::' with the id of
+   * the desired menu or item in the array. e.g.: menus::idOfMenu4
+   *
+   * @param {string} key - a string that is either the name of a property or the name of a property, that's expected to
+   * be an array, followed by '::' and an id of the menu or item within that array to tbe returned.
+   * @param {*} data - a object from the data set.
+   * @returns {*|undefined} - the object found in data based on the given key, which is either the value of the property
+   * or a specific array element if the property's value is an array.
+   * @private
+   */
   // eslint-disable-next-line class-methods-use-this
   __resolveValue(key, data) {
     if (!data || !key) {
@@ -153,6 +209,12 @@ export class Configuration {
     return undefined;
   }
 
+  /**
+   * Returns a path just defined by ids (groupId, menuId, itemId) from a full node path (full object from the data set).
+   *
+   * @param {{group: *, menu: *, item: *|undefined}|undefined} nodePath
+   * @returns {{itemId: (string), groupId: (string), menuId: (string|undefined)}|undefined}
+   */
   static toPath(nodePath /* {group, menu, item} */) {
     if (!nodePath || !nodePath.group) {
       return undefined;
