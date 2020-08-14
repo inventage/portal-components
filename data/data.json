@@ -1,7 +1,7 @@
 {
   "groups": {
     "main": {
-      "menus": [
+      "items": [
         {
           "label": {
             "de": "Home",
@@ -377,7 +377,7 @@
       ]
     },
     "meta": {
-      "menus": [
+      "items": [
         {
           "id": "meta.urgent",
           "label": "[!!!]",
@@ -439,7 +439,7 @@
         "en": "331045/inv1",
         "de": "331045/inv1"
       },
-      "menus": [
+      "items": [
         {
           "defaultItem": "profile.preferences.userSettings",
           "label": {
@@ -547,7 +547,7 @@
     "logout": {
       "dropdown": true,
       "label": "Logout",
-      "menus": [
+      "items": [
         {
           "label": {
             "de": "Erscheine Offline",
