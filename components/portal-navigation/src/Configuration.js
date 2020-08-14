@@ -1,6 +1,6 @@
 /**
  * Wraps the json structured configuration of a portal navigation, does some basic sanitizing of the received data
- * (e.g. generating missing ids), and provides convenience functions to access groups, menus and items with the data.
+ * (e.g. generating missing ids), and provides convenience functions to access groups and items with the data.
  */
 export class Configuration {
   /**
@@ -13,7 +13,7 @@ export class Configuration {
   }
 
   /**
-   * Generates "unique ids" for menus and items missing an id.
+   * Generates "unique ids" for items missing an id.
    * Also, sets the name of each group as an id of the respective group for convenience.
    *
    * @private
@@ -28,8 +28,8 @@ export class Configuration {
       const group = this.getGroup(groupId);
       group.id = groupId;
 
-      if (group.menus && group.menus.length > 0) {
-        group.menus.forEach(menu => {
+      if (group.items && group.items.length > 0) {
+        group.items.forEach(menu => {
           if (!menu.id) {
             // eslint-disable-next-line no-param-reassign
             menu.id = `(${id})`;
@@ -73,8 +73,8 @@ export class Configuration {
    * Returns the first object within the given data that matches the given 'path' array (keyPath).
    * By default the configurations data will be used, but you can pass subsets of the data to only earch these parts.
    * A key within the path can be a simple string (refering to a property name) or a two strings delimited by '::'.
-   * This refers a menu/item (by id) within an array structure. e.g. ['groups', 'group1', 'menus::menu3'] would find
-   * the first of match of a menu identified by id 'menu3' within the menus property of the group identified by id
+   * This refers a menu/item (by id) within an array structure. e.g. ['groups', 'group1', 'items::menu3'] would find
+   * the first of match of a menu identified by id 'menu3' within the items property of the group identified by id
    * 'group1' within the groups property.
    *
    * @param {string[]} keyPath - a path of property names describing the path to the object to be found.
@@ -152,18 +152,18 @@ export class Configuration {
     const groupIds = this.getGroupIds();
     for (let g = 0; g < groupIds.length; g += 1) {
       const group = this.getGroup(groupIds[g]);
-      const { menus } = group;
+      const { items } = group;
 
-      if (menus && menus.length > 0) {
-        for (let m = 0; m < menus.length; m += 1) {
-          const menu = menus[m];
+      if (items && items.length > 0) {
+        for (let m = 0; m < items.length; m += 1) {
+          const menu = items[m];
           if (menu && selector(menu)) {
             return { group, menu, item: undefined };
           }
-          const { items } = menu;
-          if (items && items.length > 0) {
-            for (let i = 0; i < items.length; i += 1) {
-              const item = items[i];
+          const { items: childItems } = menu;
+          if (childItems && childItems.length > 0) {
+            for (let i = 0; i < childItems.length; i += 1) {
+              const item = childItems[i];
               if (item && selector(item)) {
                 return { group, menu, item };
               }
@@ -179,7 +179,7 @@ export class Configuration {
   /**
    * Returns the value of the property specified by the given key from the given data object. If the value of the
    * property is an array, you can specify which array element you want resolved by appending '::' with the id of
-   * the desired menu or item in the array. e.g.: menus::idOfMenu4
+   * the desired menu or item in the array. e.g.: items::idOfMenu4
    *
    * @param {string} key - a string that is either the name of a property or the name of a property, that's expected to
    * be an array, followed by '::' and an id of the menu or item within that array to tbe returned.
