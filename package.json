@@ -105,7 +105,8 @@
     ],
     "plugins": [
       "lit"
-    ]
+    ],
+    "ignorePatterns": ["*.ts"]
   },
   "prettier": {
     "singleQuote": true,
