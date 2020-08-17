@@ -5,9 +5,9 @@ import { Configuration } from '../src/Configuration.js';
 import { data } from './test-data-json.js';
 import { MockEvent } from './MockEvent.js';
 import { MockEventListener } from './MockEventListener.js';
-import { PortalNavigation } from '../src/PortalNavigation.js';
+import { PortalNavigation } from '../index.js';
 
-describe('PortalNavigation', () => {
+describe('<portal-navigation>', () => {
   // it('is empty by default', async () => {
   //   const el = await fixture(html`<portal-navigation></portal-navigation>`);
   //   expect(el.shadowRoot.innerHTML).to.equal('<!----><!---->');
