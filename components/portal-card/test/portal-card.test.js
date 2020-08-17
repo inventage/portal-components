@@ -2,7 +2,7 @@ import { html, fixture, expect } from '@open-wc/testing';
 
 import '../portal-card.js';
 
-describe('PortalCard', () => {
+describe('<portal-card>', () => {
   it('has a default title "I am a glorious title', async () => {
     const el = await fixture(html`<portal-card></portal-card>`);
 
