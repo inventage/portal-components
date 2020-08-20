@@ -7,8 +7,9 @@ adhere to the following structure.
 
 ```json
 {
-  "groups": {
-    "main": {
+  "menus": [
+    {
+      "id": "main",
       "items": [
         {
           "label": "Home",
@@ -29,15 +30,12 @@ adhere to the following structure.
           ]
         }
       ]
-    },
-    "meta": {},
-    "profile": {},
-    "logout": {}
-  }
+    }
+  ]
 }
 ```
 
-## Group
+## Menu
 
 | Attribute    | Type                                  | Mandatory | Default |
 | ------------ | ------------------------------------- | --------- | ------- |
@@ -63,15 +61,15 @@ adhere to the following structure.
 
 (1) If you need to identify an item to be able to make it a defaultItem or assign badge values, you need an explicit id.
 
-(2) If a menu only shows its child items and never needs any routing you might get away with having no url. Otherwise this can be considered mandatory.
+(2) If a parent item only shows its child items and never needs any routing you might get away with having no url. Otherwise, this can be considered mandatory.
 
 (3) You need to provide a label and/or an icon.
 
-(4) If an item has itself items it is a menu. Some item attributes have no effect on menus.
+(4) If an item has itself items it is a parent item. Some item attributes have no effect on parent items.
 
-(5) Menus will show the default item's url (or the first item's url, if there is no default item).
+(5) Parent items will show the default item's url (or the first item's url, if there is no default item).
 
-## Menu
+## Parent Items
 
 | Attribute   | Type          | Mandatory | Default          |
 | ----------- | ------------- | --------- | ---------------- |
