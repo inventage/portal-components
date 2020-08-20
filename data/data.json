@@ -1,6 +1,7 @@
 {
-  "groups": {
-    "main": {
+  "menus": [
+    {
+      "id": "main",
       "items": [
         {
           "label": {
@@ -376,7 +377,8 @@
         }
       ]
     },
-    "meta": {
+    {
+      "id": "meta",
       "items": [
         {
           "id": "meta.urgent",
@@ -432,7 +434,8 @@
         }
       ]
     },
-    "profile": {
+    {
+      "id": "profile",
       "dropdown": true,
       "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-user' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z'/%3E%3Ccircle cx='12' cy='7' r='4' /%3E%3Cpath d='M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2' /%3E%3C/svg%3E",
       "label": {
@@ -544,7 +547,8 @@
         }
       ]
     },
-    "logout": {
+    {
+      "id": "logout",
       "dropdown": true,
       "label": "Logout",
       "items": [
@@ -572,5 +576,5 @@
         }
       ]
     }
-  }
+  ]
 }

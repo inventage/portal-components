@@ -1,7 +1,11 @@
 /**
  * Wraps the json structured configuration of a portal navigation, does some basic sanitizing of the received data
- * (e.g. generating missing ids), and provides convenience functions to access groups and items with the data.
+ * (e.g. generating missing ids), and provides convenience functions to access menus and items with the data.
  */
+import { ObjectPath } from './ObjectPath.js';
+// eslint-disable-next-line no-unused-vars
+import { IdPath } from './IdPath.js';
+
 export class Configuration {
   /**
    * @param {*|undefined} data - configuration data. On more info how this needs to be structured see
@@ -9,76 +13,69 @@ export class Configuration {
    */
   constructor(data = undefined) {
     this.__data = data || undefined;
-    this.__generateUniqueIds();
+    this.__generateAllMissingIds();
   }
 
   /**
-   * Generates "unique ids" for items missing an id.
-   * Also, sets the name of each group as an id of the respective group for convenience.
+   * Generates "unique ids" for menus/items missing an id.
    *
    * @private
    */
-  __generateUniqueIds() {
+  __generateAllMissingIds() {
     if (!this.__data) {
       return;
     }
 
     let id = 0;
-    this.getGroupIds().forEach(groupId => {
-      const group = this.getGroup(groupId);
-      group.id = groupId;
-
-      if (group.items && group.items.length > 0) {
-        group.items.forEach(menu => {
-          if (!menu.id) {
-            // eslint-disable-next-line no-param-reassign
-            menu.id = `(${id})`;
-            id += 1;
-          }
-          if (menu.items && menu.items.length > 0) {
-            menu.items.forEach(item => {
-              if (!item.id) {
-                // eslint-disable-next-line no-param-reassign
-                item.id = `(${id})`;
-                id += 1;
-              }
-            });
-          }
-        });
-      }
+    this.getMenus().forEach(menu => {
+      id = this.__generateMissingIds(menu, id);
     });
   }
 
-  /**
-   * Returns all groupIds found in 'groups'.
-   *
-   * @returns {string[]}
-   */
-  getGroupIds() {
-    const groups = this.getData(['groups']);
-    return Object.keys(groups);
+  __generateMissingIds(object, nextAvailableId) {
+    let id = nextAvailableId;
+    if (!object.id) {
+      // eslint-disable-next-line no-param-reassign
+      object.id = `(${id})`;
+      id += 1;
+    }
+
+    if (object.items && object.items.length > 0) {
+      object.items.forEach(item => {
+        id = this.__generateMissingIds(item, id);
+      });
+    }
+
+    return id;
   }
 
   /**
-   * Returns the group object identified by the given groupId.
-   *
-   * @param {string} groupId - a groupId of a group found within the configuration.
-   * @returns {*} the group object found in the configuration.
+   * @returns {undefined|*} returns all menus within the 'menus' property of the dataset.
    */
-  getGroup(groupId) {
-    return this.getData(['groups', groupId]);
+  getMenus() {
+    return this.getData(['menus']);
   }
 
   /**
-   * Returns the first object within the given data that matches the given 'path' array (keyPath).
-   * By default the configurations data will be used, but you can pass subsets of the data to only earch these parts.
-   * A key within the path can be a simple string (refering to a property name) or a two strings delimited by '::'.
-   * This refers a menu/item (by id) within an array structure. e.g. ['groups', 'group1', 'items::menu3'] would find
-   * the first of match of a menu identified by id 'menu3' within the items property of the group identified by id
-   * 'group1' within the groups property.
+   * Returns the menu object identified by the given menuId.
+   *
+   * @param {string} menuId - a menuId of a menu found within the configuration.
+   * @returns {*} the menu object found in the configuration.
+   */
+  getMenu(menuId) {
+    return this.getData([`menus::${menuId}`]);
+  }
+
+  /**
+   * Returns the first object within the given data that matches the given array of keys (keyPath).
+   * By default the configurations data will be used, but you can pass subsets of the data to only search these parts.
+   * A key within the path can be a simple string (referring to a property name) or a two strings delimited by '::'.
+   * This refers to a menu/item (by id) within an array structure. e.g. ['menus::menu1', 'items::item3'] would find
+   * the first item with id 'menu3' (in array property named 'items') of menu with id 'menu1' (in array of property
+   * named 'menus').
    *
    * @param {string[]} keyPath - a path of property names describing the path to the object to be found.
-   * @param data the data set to be searched. the configurtions data set by default.
+   * @param data the data set to be searched. the configurations data set by default.
    * @returns {undefined|*} the first object matching the given path.
    */
   getData(keyPath, data = this.__data) {
@@ -99,31 +96,31 @@ export class Configuration {
   }
 
   /**
-   * Returns the id path to the first menu or item, whose url matches the given url.
+   * Returns the id path to the first item, whose url matches the given url.
    * If none can be found the process is repeated while the given url is "reduced" step by step by removing the last
    * part delimited with '/' until a match can be found. If still none can be found undefined is returned.
    *
-   * @param {string} url - the url of an menu or item within the data set.
-   * @returns {{itemId: (string), groupId: (string), menuId: (string|undefined)}|undefined}
+   * @param {string} url - the url of an item within the data set.
+   * @returns {IdPath}
    */
-  getPathFromUrl(url) {
+  getIdPathForUrl(url) {
     if (!url) {
       return undefined;
     }
-    const result = this.findFirstPath(element => element.url === url);
-    if (result) {
+    const result = this.getIdPathForSelection(object => object.url === url);
+    if (result && !result.isEmpty()) {
       return result;
     }
     const index = url.lastIndexOf('/');
     if (index > 0) {
-      return this.getPathFromUrl(url.substring(0, index));
+      return this.getIdPathForUrl(url.substring(0, index));
     }
     return undefined;
   }
 
   /**
    * @callback selector
-   * @param {*} menuOrItem - a menu or item object.
+   * @param {*} object - a menu or item object.
    * @return {boolean} - returns true if the menu or item should be selected.
    */
 
@@ -131,44 +128,46 @@ export class Configuration {
    * Returns an id path to the first menu or item that is selected by the given selector.
    *
    * @param {selector} selector
-   * @returns {{itemId: (string), groupId: (string), menuId: (string|undefined)}}
+   * @returns {IdPath}
    */
-  findFirstPath(selector) {
-    return Configuration.toPath(this.findFirstNodePath(selector));
+  getIdPathForSelection(selector) {
+    return this.getObjectPathForSelection(selector).toIdPath();
   }
 
   /**
-   * Returns a node path (full objects from data set, not just ids) to the first menu or item that is selected by the
+   * Returns an object path (full objects from data set, not just ids) to the first menu or item that is selected by the
    * given selector.
    *
    * @param {selector} selector
-   * @returns {{group: *, menu: *, item: *|undefined}|undefined}
+   * @returns {ObjectPath}
    */
-  findFirstNodePath(selector) {
+  getObjectPathForSelection(selector) {
     if (!this.__data || !selector) {
-      return undefined;
+      return new ObjectPath();
     }
 
-    const groupIds = this.getGroupIds();
-    for (let g = 0; g < groupIds.length; g += 1) {
-      const group = this.getGroup(groupIds[g]);
-      const { items } = group;
+    const menus = this.getMenus();
+    for (const menu of menus) {
+      const result = this.__getObjectPathForSelection([], menu, selector);
+      if (result) {
+        return new ObjectPath(...result);
+      }
+    }
 
-      if (items && items.length > 0) {
-        for (let m = 0; m < items.length; m += 1) {
-          const menu = items[m];
-          if (menu && selector(menu)) {
-            return { group, menu, item: undefined };
-          }
-          const { items: childItems } = menu;
-          if (childItems && childItems.length > 0) {
-            for (let i = 0; i < childItems.length; i += 1) {
-              const item = childItems[i];
-              if (item && selector(item)) {
-                return { group, menu, item };
-              }
-            }
-          }
+    return new ObjectPath();
+  }
+
+  __getObjectPathForSelection(visitedObjects, currentObject, selector) {
+    const newVisitedObjecte = visitedObjects.concat(currentObject);
+    if (currentObject && selector(currentObject)) {
+      return newVisitedObjecte;
+    }
+
+    if (currentObject.items && currentObject.items.length > 0) {
+      for (const childObject of currentObject.items) {
+        const result = this.__getObjectPathForSelection(newVisitedObjecte, childObject, selector);
+        if (result) {
+          return result;
         }
       }
     }
@@ -179,7 +178,7 @@ export class Configuration {
   /**
    * Returns the value of the property specified by the given key from the given data object. If the value of the
    * property is an array, you can specify which array element you want resolved by appending '::' with the id of
-   * the desired menu or item in the array. e.g.: items::idOfMenu4
+   * the desired menu or item in the array. e.g.: items::idOfItem4
    *
    * @param {string} key - a string that is either the name of a property or the name of a property, that's expected to
    * be an array, followed by '::' and an id of the menu or item within that array to tbe returned.
@@ -200,29 +199,12 @@ export class Configuration {
     }
 
     if (keyParts.length === 2) {
-      const values = data[keyParts[0]].filter(item => item.id === keyParts[1]);
+      const values = data[keyParts[0]].filter(object => object.id === keyParts[1]);
       if (values.length > 0) {
         return values[0];
       }
     }
 
     return undefined;
-  }
-
-  /**
-   * Returns a path just defined by ids (groupId, menuId, itemId) from a full node path (full object from the data set).
-   *
-   * @param {{group: *, menu: *, item: *|undefined}|undefined} nodePath
-   * @returns {{itemId: (string), groupId: (string), menuId: (string|undefined)}|undefined}
-   */
-  static toPath(nodePath /* {group, menu, item} */) {
-    if (!nodePath || !nodePath.group) {
-      return undefined;
-    }
-    return {
-      groupId: nodePath.group ? nodePath.group.id : undefined,
-      menuId: nodePath.menu ? nodePath.menu.id : undefined,
-      itemId: nodePath.item ? nodePath.item.id : undefined,
-    };
   }
 }

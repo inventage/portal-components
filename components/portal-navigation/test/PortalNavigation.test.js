@@ -28,46 +28,46 @@ describe('<portal-navigation>', () => {
     await expect(el).to.be.accessible();
   });
 
-  it('doesnt route internally when default item of menu has different application', async () => {
+  it('doesnt route internally when default item of parent item has different application', async () => {
     // given
     const el = await fixture(html`<portal-navigation currentApplication="app2" internalRouting></portal-navigation>`);
     el.__configuration = new Configuration(data);
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group1', `items::menu2`]);
-    const internal = el.__isInternalRouting(menu);
+    const item = el.__configuration.getData(['menus::menu1', `items::parent2`]);
+    const internal = el.__isInternalRouting(item);
 
     // then
     expect(internal).to.equal(false);
   });
 
-  it('does route internally when default item of menu has same application', async () => {
+  it('does route internally when default item of parent item has same application', async () => {
     // given
     const el = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
     el.__configuration = new Configuration(data);
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group1', `items::menu2`]);
-    const internal = el.__isInternalRouting(menu);
+    const parent = el.__configuration.getData(['menus::menu1', `items::parent2`]);
+    const internal = el.__isInternalRouting(parent);
 
     // then
     expect(internal).to.equal(true);
   });
 
-  it('does route externally when default item of menu has other application', async () => {
+  it('does route externally when default item of parent item has other application', async () => {
     // given
     const el = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
     el.__configuration = new Configuration(data);
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group2', `items::menu3`]);
-    const internal = el.__isInternalRouting(menu);
+    const parent = el.__configuration.getData(['menus::menu2', `items::parent3`]);
+    const internal = el.__isInternalRouting(parent);
 
     // then
     expect(internal).to.equal(false);
   });
 
-  it('does route externally when default item of menu has other application, and does not call e.preventDefault()', async () => {
+  it('does route externally when default item of parent item has other application, and does not call e.preventDefault()', async () => {
     // given
     const el = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
     el.__configuration = new Configuration(data);
@@ -75,17 +75,17 @@ describe('<portal-navigation>', () => {
     const e = new MockEvent();
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group2', `items::menu3`]);
-    el.__onLink(e, 'group2', menu);
+    const parent = el.__configuration.getData(['menus::menu2', `items::parent3`]);
+    el.__onLink(e, 'menu2', parent);
 
     // then
     expect(e.count).to.equal(0);
-    expect(el.activePath.groupId).to.equal('group2');
-    expect(el.activePath.menuId).to.equal('menu3');
-    expect(el.activePath.itemId).to.equal('item3.1');
+    expect(el.activePath.getMenuId()).to.equal('menu2');
+    expect(el.activePath.getFirstLevelItemId()).to.equal('parent3');
+    expect(el.activePath.getId(2)).to.equal('item3.1');
   });
 
-  it('does route internally when default item of menu has same application, and does call e.preventDefault()', async () => {
+  it('does route internally when default item of parent item has same application, and does call e.preventDefault()', async () => {
     // given
     const el = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
     el.__configuration = new Configuration(data);
@@ -96,14 +96,14 @@ describe('<portal-navigation>', () => {
     const e = new MockEvent();
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group1', `items::menu2`]);
-    el.__onLink(e, 'group1', menu);
+    const parent = el.__configuration.getData(['menus::menu1', `items::parent2`]);
+    el.__onLink(e, 'menu1', parent);
 
     // then
     expect(e.count).to.equal(1);
-    expect(el.activePath.groupId).to.equal('group1');
-    expect(el.activePath.menuId).to.equal('menu2');
-    expect(el.activePath.itemId).to.equal('item2.2');
+    expect(el.activePath.getMenuId()).to.equal('menu1');
+    expect(el.activePath.getFirstLevelItemId()).to.equal('parent2');
+    expect(el.activePath.getId(2)).to.equal('item2.2');
     expect(listener.count).to.equal(1);
     expect(listener.e.detail.url).to.equal('/some/path/item2.2');
   });
@@ -117,9 +117,9 @@ describe('<portal-navigation>', () => {
     el.activeUrl = '/some/path/item3.2';
 
     // then
-    expect(el.activePath.groupId).to.eq('group2');
-    expect(el.activePath.menuId).to.eq('menu3');
-    expect(el.activePath.itemId).to.eq('item3.2');
+    expect(el.activePath.getMenuId()).to.eq('menu2');
+    expect(el.activePath.getFirstLevelItemId()).to.eq('parent3');
+    expect(el.activePath.getId(2)).to.eq('item3.2');
   });
 
   it('does route externally when item overrides globally set internalRouting=true with false.', async () => {
@@ -128,7 +128,7 @@ describe('<portal-navigation>', () => {
     el.__configuration = new Configuration(data);
 
     // when
-    const item = el.__configuration.getData(['groups', 'group2', 'items::menu3', 'items::item3.2']);
+    const item = el.__configuration.getData(['menus::menu2', 'items::parent3', 'items::item3.2']);
     const internal = el.__isInternalRouting(item);
 
     // then
@@ -143,19 +143,19 @@ describe('<portal-navigation>', () => {
     const e = new MockEvent();
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group2', 'items::menu3']);
-    const item = el.__configuration.getData(['groups', 'group2', 'items::menu3', 'items::item3.2']);
-    el.__onLink(e, 'group2', menu, item);
+    const parent = el.__configuration.getData(['menus::menu2', 'items::parent3']);
+    const item = el.__configuration.getData(['menus::menu2', 'items::parent3', 'items::item3.2']);
+    el.__onLink(e, 'menu2', parent, item);
 
     // then
-    expect(menu).not.to.be.undefined;
+    expect(parent).not.to.be.undefined;
     expect(item).not.to.be.undefined;
-    expect(menu.id).to.equal('menu3');
+    expect(parent.id).to.equal('parent3');
     expect(item.id).to.equal('item3.2');
     expect(e.count).to.equal(0);
   });
 
-  it('does ignore default item when destination is "extern" on menu clicks, and does call e.preventDefault()', async () => {
+  it('does ignore default item when destination is "extern" on parent item clicks, and does call e.preventDefault()', async () => {
     // given
     const el = await fixture(html`<portal-navigation internalRouting></portal-navigation>`);
     el.__configuration = new Configuration(data);
@@ -166,15 +166,15 @@ describe('<portal-navigation>', () => {
     const e = new MockEvent();
 
     // when
-    const menu = el.__configuration.getData(['groups', 'group3', 'items::menu5']);
-    el.__onLink(e, 'group3', menu);
+    const parent = el.__configuration.getData(['menus::menu3', 'items::parent5']);
+    el.__onLink(e, 'menu3', parent);
 
     // then
-    expect(menu).not.to.be.undefined;
-    expect(menu.id).to.equal('menu5');
+    expect(parent).not.to.be.undefined;
+    expect(parent.id).to.equal('parent5');
     expect(e.count).to.equal(1);
-    expect(el.activePath.itemId).to.be.undefined;
-    expect(el.activePath.menuId).to.equal('menu5');
+    expect(el.activePath.getId(2)).to.be.undefined;
+    expect(el.activePath.getFirstLevelItemId()).to.equal('parent5');
     expect(listener.count).to.equal(0);
   });
 });

@@ -1,22 +1,23 @@
 export const data = {
-  groups: {
-    group1: {
+  menus: [
+    {
+      id: 'menu1',
       items: [
         {
-          id: 'menu1',
+          id: 'parent1',
           label: {
-            de: 'Menu1_de',
-            en: 'Menu1_en',
+            de: 'Parent1_de',
+            en: 'Parent1_en',
           },
-          url: '/some/path/menu1',
+          url: '/some/path/parent1',
           application: 'app1',
         },
         {
-          id: 'menu2',
+          id: 'parent2',
           defaultItem: 'item2.2',
           label: {
-            de: 'Menu2_de',
-            en: 'Menu2_en',
+            de: 'Parent2_de',
+            en: 'Parent2_en',
           },
           items: [
             {
@@ -41,7 +42,8 @@ export const data = {
         },
       ],
     },
-    group2: {
+    {
+      id: 'menu2',
       dropdown: true,
       icon: '/some/icon/url',
       label: {
@@ -50,12 +52,12 @@ export const data = {
       },
       items: [
         {
-          id: 'menu3',
+          id: 'parent3',
           label: {
-            de: 'Menu3_de',
-            en: 'Menu3_en',
+            de: 'Parent3_de',
+            en: 'Parent3_en',
           },
-          url: '/some/path/menu3',
+          url: '/some/path/parent3',
           items: [
             {
               id: 'item3.1',
@@ -85,21 +87,22 @@ export const data = {
           ],
         },
         {
-          id: 'menu4',
+          id: 'parent4',
           label: {
-            de: 'Menu4_de',
-            en: 'Menu4_en',
+            de: 'Parent4_de',
+            en: 'Parent4_en',
           },
-          url: '/some/path/menu4',
+          url: '/some/path/parent4',
         },
       ],
     },
-    group3: {
+    {
+      id: 'menu3',
       items: [
         {
-          id: 'menu5',
-          label: 'Menu5',
-          url: '/some/path/menu5',
+          id: 'parent5',
+          label: 'Parent5',
+          url: '/some/path/parent5',
           items: [
             {
               id: 'item5.1',
@@ -112,5 +115,5 @@ export const data = {
         },
       ],
     },
-  },
+  ],
 };

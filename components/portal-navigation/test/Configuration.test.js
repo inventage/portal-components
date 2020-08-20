@@ -4,70 +4,67 @@ import { Configuration } from '../src/Configuration.js';
 import { data } from './test-data-json.js';
 
 describe('Configuration', () => {
-  it('getGroupIds returns all groupIds found in groups property', () => {
+  it('getMenus returns all menus', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getGroupIds();
+    const result = configuration.getMenus();
 
     // then
     expect(result.length).to.equal(3);
-    expect(result[0]).to.equal('group1');
-    expect(result[1]).to.equal('group2');
-    expect(result[2]).to.equal('group3');
   });
 
-  it('getGroup returns group with items', () => {
+  it('getMenu returns menu with items', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getGroup('group1');
+    const result = configuration.getMenu('menu1');
 
     // then
     expect(result.items.length).to.equal(2);
-    expect(result.items[0].id).to.equal('menu1');
-    expect(result.items[1].id).to.equal('menu2');
+    expect(result.items[0].id).to.equal('parent1');
+    expect(result.items[1].id).to.equal('parent2');
   });
 
-  it('getPathFromUrl returns first item matching url', () => {
+  it('getIdPathForUrl returns first item matching url', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getPathFromUrl('/some/path/item2.2');
+    const result = configuration.getIdPathForUrl('/some/path/item2.2');
 
     // then
-    expect(result.groupId).to.equal('group1');
-    expect(result.menuId).to.equal('menu2');
-    expect(result.itemId).to.equal('item2.2');
+    expect(result.getMenuId()).to.equal('menu1');
+    expect(result.getFirstLevelItemId()).to.equal('parent2');
+    expect(result.getId(2)).to.equal('item2.2');
   });
 
-  it('getPathFromUrl returns first item matching url, and tries to match without trailing slash as a fallback', () => {
+  it('getIdPathForUrl returns first item matching url, and tries to match without trailing slash as a fallback', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getPathFromUrl('/some/path/item2.2/');
+    const result = configuration.getIdPathForUrl('/some/path/item2.2/');
 
     // then
-    expect(result.groupId).to.equal('group1');
-    expect(result.menuId).to.equal('menu2');
-    expect(result.itemId).to.equal('item2.2');
+    expect(result.getMenuId()).to.equal('menu1');
+    expect(result.getFirstLevelItemId()).to.equal('parent2');
+    expect(result.getId(2)).to.equal('item2.2');
   });
 
-  it('getPathFromUrl returns first item matching url, and tries to match subpath as a fallback', () => {
+  it('getIdPathForUrl returns first item matching url, and tries to match subpath as a fallback', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getPathFromUrl('/some/path/item2.2/unknown-subitem');
+    const result = configuration.getIdPathForUrl('/some/path/item2.2/unknown-subitem');
 
     // then
-    expect(result.groupId).to.equal('group1');
-    expect(result.menuId).to.equal('menu2');
-    expect(result.itemId).to.equal('item2.2');
+    expect(result.getMenuId()).to.equal('menu1');
+    expect(result.getFirstLevelItemId()).to.equal('parent2');
+    expect(result.getId(2)).to.equal('item2.2');
   });
 
   it('should generate missing ids on creation', () => {
@@ -75,16 +72,16 @@ describe('Configuration', () => {
     const configuration = new Configuration(data);
 
     // then
-    const group1 = configuration.getGroup('group1');
-    expect(group1.id).to.equal('group1');
+    const item = configuration.getObjectPathForSelection(object => object.url === '/some/path/generatedId');
+    expect(item.getLastItem().id).to.not.be.undefined;
   });
 
   it('should not generate ids on invalid data', () => {
     [undefined, null, 0].forEach(configData => {
       const configuration = new Configuration(configData);
 
-      expect(configuration.getGroup('group1')).to.equal(undefined);
-      expect(configuration.getGroup('group2')).to.equal(undefined);
+      expect(configuration.getMenu('menu1')).to.be.undefined;
+      expect(configuration.getMenu('menu2')).to.be.undefined;
     });
   });
 
@@ -93,17 +90,12 @@ describe('Configuration', () => {
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.findFirstNodePath(
-      element => {
-        return element.id === 'item2.2';
-      },
-      ['group1'],
-    );
+    const result = configuration.getObjectPathForSelection(object => object.id === 'item2.2');
 
     // then
-    expect(result.group.id).to.equal('group1');
-    expect(result.menu.id).to.equal('menu2');
-    expect(result.item.id).to.equal('item2.2');
+    expect(result.getObject(0).id).to.equal('menu1');
+    expect(result.getObject(1).id).to.equal('parent2');
+    expect(result.getObject(2).id).to.equal('item2.2');
   });
 
   it('getData returns nested first level items by path', () => {
@@ -111,36 +103,36 @@ describe('Configuration', () => {
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.getData(['groups', 'group2', `items::menu4`]);
+    const result = configuration.getData(['menus::menu2', `items::parent4`]);
 
     // then
-    expect(result.id).to.equal('menu4');
-    expect(result.url).to.equal('/some/path/menu4');
+    expect(result.id).to.equal('parent4');
+    expect(result.url).to.equal('/some/path/parent4');
   });
 
-  it('findFirstPath returns first menu matching id', () => {
+  it('getIdPathForSelection returns first parent item matching id', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.findFirstPath(element => element.id === 'menu2');
+    const result = configuration.getIdPathForSelection(element => element.id === 'parent2');
 
     // then
-    expect(result.groupId).to.equal('group1');
-    expect(result.menuId).to.equal('menu2');
-    expect(result.itemId).to.equal(undefined);
+    expect(result.getMenuId()).to.equal('menu1');
+    expect(result.getFirstLevelItemId()).to.equal('parent2');
+    expect(result.getId(2)).to.be.undefined;
   });
 
-  it('findFirstPathTo returns first item matching id', () => {
+  it('getIdPathForSelection returns first item matching id', () => {
     // given
     const configuration = new Configuration(data);
 
     // when
-    const result = configuration.findFirstPath(element => element.id === 'item2.2');
+    const result = configuration.getIdPathForSelection(element => element.id === 'item2.2');
 
     // then
-    expect(result.groupId).to.equal('group1');
-    expect(result.menuId).to.equal('menu2');
-    expect(result.itemId).to.equal('item2.2');
+    expect(result.getMenuId()).to.equal('menu1');
+    expect(result.getFirstLevelItemId()).to.equal('parent2');
+    expect(result.getId(2)).to.equal('item2.2');
   });
 });

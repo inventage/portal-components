@@ -5,30 +5,10 @@
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
-      "attributes": [
-        {
-          "name": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
-          "name": "back-side",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
       "properties": [
         {
-          "name": "title",
-          "attribute": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
           "name": "backSide",
-          "attribute": "back-side",
-          "type": "boolean",
-          "default": "false"
+          "type": "boolean"
         }
       ],
       "events": [
@@ -85,21 +65,11 @@
       "name": "portal-hamburger-menu",
       "path": "./components/portal-hamburger-menu/portal-hamburger-menu.js",
       "description": "A simple hamburger menu component.",
-      "attributes": [
-        {
-          "name": "toggled",
-          "description": "Reflects the toggled state.",
-          "type": "Boolean",
-          "default": "false"
-        }
-      ],
       "properties": [
         {
           "name": "toggled",
-          "attribute": "toggled",
           "description": "Reflects the toggled state.",
-          "type": "Boolean",
-          "default": "false"
+          "type": "boolean"
         }
       ],
       "events": [
@@ -164,67 +134,36 @@
     {
       "name": "portal-navigation",
       "path": "./components/portal-navigation/portal-navigation.js",
-      "attributes": [
-        {
-          "name": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "type": "string",
-          "default": "\"language\""
-        },
-        {
-          "name": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "internalRouting",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
       "properties": [
         {
-          "name": "src",
-          "attribute": "src",
-          "type": "string",
-          "default": "\"undefined\""
-        },
-        {
-          "name": "lang",
-          "attribute": "lang",
-          "type": "string",
-          "default": "\"language\""
+          "name": "src"
         },
         {
           "name": "activeUrl",
-          "attribute": "activeUrl",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
-          "name": "currentApplication",
-          "attribute": "currentApplication",
-          "type": "string",
-          "default": "\"undefined\""
+          "name": "currentApplication"
         },
         {
           "name": "internalRouting",
-          "attribute": "internalRouting",
-          "type": "boolean",
-          "default": "false"
+          "type": "boolean"
         },
         {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "type": "boolean"
+        },
+        {
+          "name": "activeDropdown"
+        },
+        {
+          "name": "activePath",
+          "description": "the current path of \"active\" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered \"active\".",
+          "type": "IdPath"
         }
       ]
     }
