@@ -29,23 +29,11 @@ export const portalNavigationStyles = css`
     padding-top: 0.5rem;
   }
 
-  .portal-navigation-logout {
-    display: flex;
-  }
-
-  .portal-navigation-logout .first-level {
-    margin: auto 0;
-  }
-
-  .first-level {
-    display: flex;
-  }
-
   .portal-navigation-slot-left {
     margin: 0 0 0 auto;
   }
 
-  .portal-navigation-group-main-menus {
+  .portal-navigation-menu-main-items {
     background: var(--portal-navigation-color-header-background);
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
@@ -104,13 +92,13 @@ export const portalNavigationStyles = css`
     width: 12px;
   }
 
-  .dropdown .first-level.-selected > link,
-  .dropdown .first-level:hover > link,
-  .dropdown .first-level:focus > link {
+  .dropdown .-selected > link,
+  .dropdown:hover > link,
+  .dropdown:focus > link {
     box-shadow: inset 4px 0 currentColor;
   }
 
-  .dropdown .first-level > .link {
+  .dropdown > .link {
     padding: 0.25rem 0.5rem;
   }
 
@@ -152,13 +140,13 @@ export const portalNavigationStyles = css`
     display: none;
   }
 
-  .portal-navigation-tree-menu {
+  .portal-navigation-tree-parent {
     padding: 0.5rem 0 0.5rem 0;
     border-bottom: solid 1px var(--portal-navigation-color-border);
     width: 100%;
   }
 
-  .portal-navigation-tree-menu .button {
+  .portal-navigation-tree-parent .button {
     margin-left: auto;
     margin-right: 0.5rem;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-down' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z'/%3E%3Cpolyline points='6 9 12 15 18 9' /%3E%3C/svg%3E");
@@ -167,25 +155,25 @@ export const portalNavigationStyles = css`
     height: 1.5rem;
   }
 
-  .portal-navigation-tree-menu.-selected .button {
+  .portal-navigation-tree-parent.-selected .button {
     transform: rotate(180deg);
     transition: transform 0.5s;
   }
 
-  .portal-navigation-tree-menu-items .link:first-child {
+  .portal-navigation-tree-items .link:first-child {
     margin-top: 0.5rem;
   }
 
-  .portal-navigation-tree-menu-items .link:last-child {
+  .portal-navigation-tree-items .link:last-child {
     margin-bottom: 1rem;
   }
 
-  .portal-navigation-tree-menu-items .link {
+  .portal-navigation-tree-items .link {
     font-size: var(--portal-navigation-font-size-tree-second-level);
     padding: 0.25rem 0;
   }
 
-  .portal-navigation-group {
+  .portal-navigation-menu {
     display: flex;
     position: relative;
   }
@@ -197,11 +185,11 @@ export const portalNavigationStyles = css`
     }
 
     .portal-navigation-slot-left,
-    .portal-navigation-group-meta,
-    .portal-navigation-group-profile,
-    .portal-navigation-logout,
+    .portal-navigation-menu-meta,
+    .portal-navigation-menu-profile,
+    .portal-navigation-menu-logout,
     .portal-navigation-slot-right,
-    .portal-navigation-group-main-menus,
+    .portal-navigation-menu-main-items,
     .portal-navigation-current {
       display: none;
     }
