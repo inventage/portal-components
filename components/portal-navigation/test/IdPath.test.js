@@ -46,4 +46,23 @@ describe('IdPath', () => {
     expect(idPath.contains('item')).to.be.true;
     expect(idPath.contains('other')).to.not.be.true;
   });
+
+  it('should concat additional ids and provide new id path', () => {
+    // given
+    const idPath = new IdPath('menu', 'parent', 'item');
+
+    // when
+    const idPath2 = idPath.concat('sub-item');
+
+    // then
+    expect(idPath.getMenuId()).to.equal('menu');
+    expect(idPath.getFirstLevelItemId()).to.equal('parent');
+    expect(idPath.getId(2)).to.equal('item');
+    expect(idPath.getId(3)).to.be.undefined;
+
+    expect(idPath2.getMenuId()).to.equal('menu');
+    expect(idPath2.getFirstLevelItemId()).to.equal('parent');
+    expect(idPath2.getId(2)).to.equal('item');
+    expect(idPath2.getId(3)).to.equal('sub-item');
+  });
 });

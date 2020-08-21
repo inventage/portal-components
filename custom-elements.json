@@ -136,20 +136,6 @@
       "path": "./components/portal-navigation/portal-navigation.js",
       "properties": [
         {
-          "name": "src"
-        },
-        {
-          "name": "activeUrl",
-          "type": "string"
-        },
-        {
-          "name": "currentApplication"
-        },
-        {
-          "name": "internalRouting",
-          "type": "boolean"
-        },
-        {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
         },
@@ -161,9 +147,98 @@
           "name": "activeDropdown"
         },
         {
+          "name": "configuration",
+          "type": "Configuration"
+        },
+        {
           "name": "activePath",
           "description": "the current path of \"active\" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered \"active\".",
           "type": "IdPath"
+        },
+        {
+          "name": "src",
+          "description": "location from where to fetch configuration data file.",
+          "type": "string"
+        },
+        {
+          "name": "lang",
+          "description": "the current language. e.g. 'en' or 'de'.",
+          "type": "string"
+        },
+        {
+          "name": "activeUrl",
+          "description": "you can use this to set the active path via the url of an item.",
+          "type": "string"
+        },
+        {
+          "name": "currentApplication",
+          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string"
+        },
+        {
+          "name": "internalRouting",
+          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "portal-navigation.routeTo",
+          "description": "Event fired when an item with a url is clicked and the routig is done internally."
+        },
+        {
+          "name": "portal-navigation.setLanguage",
+          "description": "Event fire when the 'lang' property changes."
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "2c3e50",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-secondary: rgb(66, 136, 245)",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-selected: var(--portal-navigation-color-secondary)",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-hover: var(--portal-navigation-color-secondary)",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-badge: white",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-badge-background: var(--portal-navigation-color-secondary)",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-dropdown-background: white",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-border: rgba(44, 62, 80, 0.1)",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-color-header-background: rgba(66, 135, 245, 0.1)",
+          "type": "color"
+        },
+        {
+          "name": "--portal-navigation-font-size: 1.25rem",
+          "type": "length"
+        },
+        {
+          "name": "--portal-navigation-font-size-badge: 1rem",
+          "type": "length"
+        },
+        {
+          "name": "--portal-navigation-font-size-tree-second-level: 1rem",
+          "type": "length"
         }
       ]
     }

@@ -32,6 +32,13 @@ export class Configuration {
     });
   }
 
+  /**
+   * Generates the missing ids for menu/items of the given object and its child items.
+   * @param object the "root" object of the tree structure that would be checked for missing ids.
+   * @param nextAvailableId the next available id.
+   * @returns {Number} the next available id.
+   * @private
+   */
   __generateMissingIds(object, nextAvailableId) {
     let id = nextAvailableId;
     if (!object.id) {
@@ -157,6 +164,16 @@ export class Configuration {
     return new ObjectPath();
   }
 
+  /**
+   * Returns an array of objects from the data set to the item selected by the selector, if it should exist. Otherwise,
+   * undefined is returned.
+   *
+   * @param visitedObjects the path of objects visited so far (will be prepended to the return value if a match is found)
+   * @param currentObject this object (and its children, if any) are checked next for selection
+   * @param selector a result will be returned if an item is found for which selector returns true.
+   * @returns {any[]|undefined} the object path (as an array) to the item selected by selector or undefined it none can be found.
+   * @private
+   */
   __getObjectPathForSelection(visitedObjects, currentObject, selector) {
     const newVisitedObjecte = visitedObjects.concat(currentObject);
     if (currentObject && selector(currentObject)) {
