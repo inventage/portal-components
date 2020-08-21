@@ -135,4 +135,15 @@ describe('Configuration', () => {
     expect(result.getFirstLevelItemId()).to.equal('parent2');
     expect(result.getId(2)).to.equal('item2.2');
   });
+
+  it('getObjectPathForSelection returns first-level item as lastItem', () => {
+    // given
+    const configuration = new Configuration(data);
+
+    // when
+    const objectPath = configuration.getObjectPathForSelection(object => object.id === 'parent3');
+
+    // then
+    expect(objectPath.getLastItem().id).to.equal('parent3');
+  });
 });
