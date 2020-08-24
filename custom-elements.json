@@ -5,10 +5,30 @@
       "name": "portal-card",
       "path": "./components/portal-card/portal-card.js",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
+      "attributes": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"I am a glorious title\""
+        },
+        {
+          "name": "back-side",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
       "properties": [
         {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "\"I am a glorious title\""
+        },
+        {
           "name": "backSide",
-          "type": "boolean"
+          "attribute": "back-side",
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "events": [
@@ -65,11 +85,21 @@
       "name": "portal-hamburger-menu",
       "path": "./components/portal-hamburger-menu/portal-hamburger-menu.js",
       "description": "A simple hamburger menu component.",
-      "properties": [
+      "attributes": [
         {
           "name": "toggled",
           "description": "Reflects the toggled state.",
-          "type": "boolean"
+          "type": "Boolean",
+          "default": "false"
+        }
+      ],
+      "properties": [
+        {
+          "name": "toggled",
+          "attribute": "toggled",
+          "description": "Reflects the toggled state.",
+          "type": "Boolean",
+          "default": "false"
         }
       ],
       "events": [
@@ -134,51 +164,81 @@
     {
       "name": "portal-navigation",
       "path": "./components/portal-navigation/portal-navigation.js",
+      "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
+      "attributes": [
+        {
+          "name": "src",
+          "description": "location from where to fetch configuration data file.",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "lang",
+          "description": "the current language. e.g. 'en' or 'de'.",
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activeUrl",
+          "description": "you can use this to set the active path via the url of an item.",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "internalRouting",
+          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
       "properties": [
+        {
+          "name": "src",
+          "attribute": "src",
+          "description": "location from where to fetch configuration data file.",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "lang",
+          "attribute": "lang",
+          "description": "the current language. e.g. 'en' or 'de'.",
+          "type": "string",
+          "default": "\"language\""
+        },
+        {
+          "name": "activeUrl",
+          "attribute": "activeUrl",
+          "description": "you can use this to set the active path via the url of an item.",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "currentApplication",
+          "attribute": "currentApplication",
+          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string",
+          "default": "\"undefined\""
+        },
+        {
+          "name": "internalRouting",
+          "attribute": "internalRouting",
+          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "type": "boolean",
+          "default": "false"
+        },
         {
           "name": "temporaryBadgeValues",
           "type": "Map<any, any>"
         },
         {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean"
-        },
-        {
-          "name": "activeDropdown"
-        },
-        {
-          "name": "configuration",
-          "type": "Configuration"
-        },
-        {
-          "name": "activePath",
-          "description": "the current path of \"active\" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered \"active\".",
-          "type": "IdPath"
-        },
-        {
-          "name": "src",
-          "description": "location from where to fetch configuration data file.",
-          "type": "string"
-        },
-        {
-          "name": "lang",
-          "description": "the current language. e.g. 'en' or 'de'.",
-          "type": "string"
-        },
-        {
-          "name": "activeUrl",
-          "description": "you can use this to set the active path via the url of an item.",
-          "type": "string"
-        },
-        {
-          "name": "currentApplication",
-          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string"
-        },
-        {
-          "name": "internalRouting",
-          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
-          "type": "boolean"
+          "name": "configuration"
         }
       ],
       "events": [
@@ -193,52 +253,64 @@
       ],
       "cssProperties": [
         {
-          "name": "2c3e50",
-          "type": "color"
+          "name": "--portal-navigation-color-primary",
+          "type": "color",
+          "default": "\"#2c3e50\""
         },
         {
-          "name": "--portal-navigation-color-secondary: rgb(66, 136, 245)",
-          "type": "color"
+          "name": "--portal-navigation-color-secondary",
+          "type": "color",
+          "default": "\"rgb(66, 136, 245)\""
         },
         {
-          "name": "--portal-navigation-color-selected: var(--portal-navigation-color-secondary)",
-          "type": "color"
+          "name": "--portal-navigation-color-selected",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
-          "name": "--portal-navigation-color-hover: var(--portal-navigation-color-secondary)",
-          "type": "color"
+          "name": "--portal-navigation-color-hover",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
-          "name": "--portal-navigation-color-badge: white",
-          "type": "color"
+          "name": "--portal-navigation-color-badge",
+          "type": "color",
+          "default": "\"white\""
         },
         {
-          "name": "--portal-navigation-color-badge-background: var(--portal-navigation-color-secondary)",
-          "type": "color"
+          "name": "--portal-navigation-color-badge-background",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
-          "name": "--portal-navigation-color-dropdown-background: white",
-          "type": "color"
+          "name": "--portal-navigation-color-dropdown-background",
+          "type": "color",
+          "default": "\"white\""
         },
         {
-          "name": "--portal-navigation-color-border: rgba(44, 62, 80, 0.1)",
-          "type": "color"
+          "name": "--portal-navigation-color-border",
+          "type": "color",
+          "default": "\"rgba(44, 62, 80, 0.1)\""
         },
         {
-          "name": "--portal-navigation-color-header-background: rgba(66, 135, 245, 0.1)",
-          "type": "color"
+          "name": "--portal-navigation-color-header-background",
+          "type": "color",
+          "default": "\"rgba(66, 135, 245, 0.1)\""
         },
         {
-          "name": "--portal-navigation-font-size: 1.25rem",
-          "type": "length"
+          "name": "--portal-navigation-font-size",
+          "type": "length",
+          "default": "\"1.25rem\""
         },
         {
-          "name": "--portal-navigation-font-size-badge: 1rem",
-          "type": "length"
+          "name": "--portal-navigation-font-size-badge",
+          "type": "length",
+          "default": "\"1rem\""
         },
         {
-          "name": "--portal-navigation-font-size-tree-second-level: 1rem",
-          "type": "length"
+          "name": "--portal-navigation-font-size-tree-second-level",
+          "type": "length",
+          "default": "\"1rem\""
         }
       ]
     }
