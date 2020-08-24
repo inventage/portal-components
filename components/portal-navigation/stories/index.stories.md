@@ -20,6 +20,10 @@ export const Basic = () =>
   html`<portal-navigation src="./data/data.json" internalRouting currentApplication="ebanking"></portal-navigation>`;
 ```
 
+## API
+
+<sb-props of="portal-navigation"></sb-props>
+
 ```js script
 window.addEventListener('load', () => {
   document.dispatchEvent(

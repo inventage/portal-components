@@ -12,6 +12,8 @@ import '../../portal-hamburger-menu/portal-hamburger-menu.js';
 import { IdPath } from './IdPath.js';
 
 /**
+ * A component implementing an opinionated (but generic and hence configurable) navigation pattern.
+ *
  * @fires 'portal-navigation.routeTo' - Event fired when an item with a url is clicked and the routig is done internally.
  * @fires 'portal-navigation.setLanguage' - Event fire when the 'lang' property changes.
  *
@@ -24,19 +26,18 @@ import { IdPath } from './IdPath.js';
  * @prop {string} currentApplication - the current application. Items change their routing behavior based on whether their application property matches this property or not.
  * @prop {boolean} internalRouting - true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.
  *
- * @cssprop {color} [--portal-navigation-color-primary: #2c3e50]
- * @cssprop {color} [--portal-navigation-color-secondary: rgb(66, 136, 245)]
- * @cssprop {color} [--portal-navigation-color-selected: var(--portal-navigation-color-secondary)]
- * @cssprop {color} [--portal-navigation-color-hover: var(--portal-navigation-color-secondary)]
- * @cssprop {color} [--portal-navigation-color-badge: white]
- * @cssprop {color} [--portal-navigation-color-badge-background: var(--portal-navigation-color-secondary)]
- * @cssprop {color} [--portal-navigation-color-dropdown-background: white]
- * @cssprop {color} [--portal-navigation-color-border: rgba(44, 62, 80, 0.1)]
- * @cssprop {color} [--portal-navigation-color-header-background: rgba(66, 135, 245, 0.1)]
-
- * @cssprop {length} [--portal-navigation-font-size: 1.25rem]
- * @cssprop {length} [--portal-navigation-font-size-badge: 1rem]
- * @cssprop {length} [--portal-navigation-font-size-tree-second-level: 1rem]
+ * @cssprop {color} [--portal-navigation-color-primary=#2c3e50]
+ * @cssprop {color} [--portal-navigation-color-secondary=rgb(66, 136, 245)]
+ * @cssprop {color} [--portal-navigation-color-selected=var(--portal-navigation-color-secondary)]
+ * @cssprop {color} [--portal-navigation-color-hover=var(--portal-navigation-color-secondary)]
+ * @cssprop {color} [--portal-navigation-color-badge=white]
+ * @cssprop {color} [--portal-navigation-color-badge-background=var(--portal-navigation-color-secondary)]
+ * @cssprop {color} [--portal-navigation-color-dropdown-background=white]
+ * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)]
+ * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)]
+ * @cssprop {length} [--portal-navigation-font-size=1.25rem]
+ * @cssprop {length} [--portal-navigation-font-size-badge=1rem]
+ * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem]
  */
 // @ts-ignore
 export class PortalNavigation extends LitElement {
@@ -130,7 +131,7 @@ export class PortalNavigation extends LitElement {
       /**
        * @private
        */
-      activePath: { attribute: false }, // {menuId: string, itemIds: [string]} - identifying the active item
+      activePath: { attribute: false },
 
       /**
        * @private
