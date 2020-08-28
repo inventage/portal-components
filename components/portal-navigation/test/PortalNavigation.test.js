@@ -35,7 +35,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const item = el.configuration.getData(['menus::menu1', `items::parent2`]);
-    const internal = el.__isInternalRouting(item);
+    const internal = el._isInternalRouting(item);
 
     // then
     expect(internal).to.equal(false);
@@ -48,7 +48,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const parent = el.configuration.getData(['menus::menu1', `items::parent2`]);
-    const internal = el.__isInternalRouting(parent);
+    const internal = el._isInternalRouting(parent);
 
     // then
     expect(internal).to.equal(true);
@@ -61,7 +61,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const parent = el.configuration.getData(['menus::menu2', `items::parent3`]);
-    const internal = el.__isInternalRouting(parent);
+    const internal = el._isInternalRouting(parent);
 
     // then
     expect(internal).to.equal(false);
@@ -76,7 +76,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const parent = el.configuration.getData(['menus::menu2', `items::parent3`]);
-    el.__onLink(e, parent);
+    el._onLink(e, parent);
 
     // then
     expect(e.count).to.equal(0);
@@ -97,7 +97,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const parent = el.configuration.getData(['menus::menu1', `items::parent2`]);
-    el.__onLink(e, parent);
+    el._onLink(e, parent);
 
     // then
     expect(e.count).to.equal(1);
@@ -129,7 +129,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const item = el.configuration.getData(['menus::menu2', 'items::parent3', 'items::item3.2']);
-    const internal = el.__isInternalRouting(item);
+    const internal = el._isInternalRouting(item);
 
     // then
     expect(internal).to.equal(false);
@@ -145,7 +145,7 @@ describe('<portal-navigation>', () => {
     // when
     const parent = el.configuration.getData(['menus::menu2', 'items::parent3']);
     const item = el.configuration.getData(['menus::menu2', 'items::parent3', 'items::item3.2']);
-    el.__onLink(e, item);
+    el._onLink(e, item);
 
     // then
     expect(parent).not.to.be.undefined;
@@ -167,7 +167,7 @@ describe('<portal-navigation>', () => {
 
     // when
     const parent = el.configuration.getData(['menus::menu3', 'items::parent5']);
-    el.__onLink(e, parent);
+    el._onLink(e, parent);
 
     // then
     expect(parent).not.to.be.undefined;
