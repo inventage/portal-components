@@ -15,7 +15,8 @@ import { IdPath } from './IdPath.js';
  * A component implementing an opinionated (but generic and hence configurable) navigation pattern.
  *
  * @fires 'portal-navigation.routeTo' - Event fired when an item with a url is clicked and the routig is done internally.
- * @fires 'portal-navigation.setLanguage' - Event fire when the 'lang' property changes.
+ * @fires 'portal-navigation.setLanguage' - Event fired when the 'lang' property changes.
+ * @fires 'portal-navigation.configured' - Event fired when the configuration has been successfully loaded.
  *
  * @listens 'portal-navigation.setBadgeValue' - Listens to event that change the badge value of an item or menu and sets that value accordingly.
  *
@@ -97,7 +98,7 @@ export class PortalNavigation extends LitElement {
   /**
    * A listing of events this components fires or listens to.
    *
-   * @returns {{routeTo: string, setBadgeValue: string, setLanguage: string}}
+   * @returns {{routeTo: string, setBadgeValue: string, setLanguage: string, configured: string}}
    */
   static get events() {
     const ns = 'portal-navigation';
@@ -106,6 +107,7 @@ export class PortalNavigation extends LitElement {
       routeTo: `${ns}.routeTo`,
       setLanguage: `${ns}.setLanguage`,
       setBadgeValue: `${ns}.setBadgeValue`,
+      configured: `${ns}.configured`,
     };
   }
 
@@ -236,6 +238,9 @@ export class PortalNavigation extends LitElement {
       .then(data => {
         try {
           this.configuration = new Configuration(data);
+          this.dispatchEvent(
+            new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration, bubbles: true }),
+          );
           this.__updateActivePathFromUrl();
           // @ts-ignore
           this.requestUpdate();
@@ -253,7 +258,7 @@ export class PortalNavigation extends LitElement {
    *
    * @param name
    * @param oldValue
-   * @private
+   * @protected
    */
   _requestUpdate(name, oldValue) {
     // @ts-ignore
@@ -337,18 +342,18 @@ export class PortalNavigation extends LitElement {
   render() {
     return html`<div class="portal-navigation-container">
       <header class="portal-navigation-header">
-        <div class="portal-navigation-logo"><slot name="logo"></slot></div>
-        <div class="portal-navigation-slot-left"><slot name="left"></slot></div>
+        <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
+        <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
         <div class="portal-navigation-menu-meta portal-navigation-menu">
-          ${this.__createMenuTemplate(PortalNavigation.menuIds.meta)}
+          ${this._createMenuTemplate(PortalNavigation.menuIds.meta)}
         </div>
         <div class="portal-navigation-menu-profile portal-navigation-menu">
-          ${this.__createMenuTemplate(PortalNavigation.menuIds.profile)}
+          ${this._createMenuTemplate(PortalNavigation.menuIds.profile)}
         </div>
         <div class="portal-navigation-menu-logout portal-navigation-menu">
-          ${this.__createMenuTemplate(PortalNavigation.menuIds.logout)}
+          ${this._createMenuTemplate(PortalNavigation.menuIds.logout)}
         </div>
-        <div class="portal-navigation-slot-right"><slot name="right"></slot></div>
+        <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
         <!-- Hamburger Menu Tree Elements -->
         <portal-hamburger-menu
           class="portal-navigation-header-toggle"
@@ -361,9 +366,9 @@ export class PortalNavigation extends LitElement {
 
       <main class="portal-navigation-menu-main">
         <div class="portal-navigation-menu-main-items portal-navigation-menu">
-          <div class="portal-navigation-content">${this.__createMenuTemplate(PortalNavigation.menuIds.main)}</div>
+          <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)}</div>
         </div>
-        ${this.__createCurrentItemsTemplate()}
+        ${this._createCurrentItemsTemplate()}
         <!-- Hamburger Menu Tree Elements -->
         ${this.hamburgerMenuExpanded
           ? html`<div class="portal-navigation-tree-container">
@@ -375,14 +380,44 @@ export class PortalNavigation extends LitElement {
   }
 
   /**
+   * Override to make use of the slot in extension.
+   * @returns {TemplateResult}
+   * @protected
+   */
+  // eslint-disable-next-line class-methods-use-this
+  _createLogoSlotTemplate() {
+    return html`<slot name="logo"></slot>`;
+  }
+
+  /**
+   * Override to make use of the slot in extension.
+   * @returns {TemplateResult}
+   * @protected
+   */
+  // eslint-disable-next-line class-methods-use-this
+  _createLeftSlotTemplate() {
+    return html`<slot name="left"></slot>`;
+  }
+
+  /**
+   * Override to make use of the slot in extension.
+   * @returns {TemplateResult}
+   * @protected
+   */
+  // eslint-disable-next-line class-methods-use-this
+  _createRightSlotTemplate() {
+    return html`<slot name="right"></slot>`;
+  }
+
+  /**
    * Creates the html template for a given menu id. This is basically providing a container which the menu's
    * items as first-level citizens in it or a dropdown link if the menu should be configured as a dropdown.
    *
    * @param menuId the menu id for which to build a menu html template.
    * @returns {TemplateResult}
-   * @private
+   * @protected
    */
-  __createMenuTemplate(menuId) {
+  _createMenuTemplate(menuId) {
     const menu = this.configuration.getMenu(menuId);
 
     if (!menu || !menu.items || menu.items.length <= 0) {
@@ -393,19 +428,20 @@ export class PortalNavigation extends LitElement {
       const badge = this.getBadgeValue(menu.id);
       const label = this._getLabel(menu);
       return html` <span
+          part="${menuId}"
           class="${classMap({
             link: true,
             'dropdown-link': true,
             [PortalNavigation.classes.selected]: this.activePath.contains(menuId),
           })}"
           @click="${e => this.__toggleDropdown(e, menuId)}"
-          >${this.__createLinkTemplate(label, menu.icon, badge)}</span
+          >${this._createLinkTemplate(menuId, label, menu.icon, badge)}</span
         >
         <div class="dropdown ${classMap({ '-show': this.activeDropdown === menuId })}">
-          ${menu.items.map(item => this.__createFirstLevelItemTemplate(menuId, item))}
+          ${menu.items.map(item => this._createFirstLevelItemTemplate(menuId, item))}
         </div>`;
     }
-    return html`${menu.items.map(item => this.__createFirstLevelItemTemplate(menuId, item))}`;
+    return html`${menu.items.map(item => this._createFirstLevelItemTemplate(menuId, item))}`;
   }
 
   /**
@@ -415,9 +451,9 @@ export class PortalNavigation extends LitElement {
    * @param item the item to be rendered.
    * @param isTreeMode whether this template should be provided for tree mode (hamburger menu) or default display purposes.
    * @returns {TemplateResult}
-   * @private
+   * @protected
    */
-  __createFirstLevelItemTemplate(menuId, item, isTreeMode = false) {
+  _createFirstLevelItemTemplate(menuId, item, isTreeMode = false) {
     const { id, icon, items } = item;
     const hasItems = items && items.length > 0;
     const badge = this.getBadgeValue(id);
@@ -426,27 +462,28 @@ export class PortalNavigation extends LitElement {
 
     let refItem = item;
     if (hasItems) {
-      refItem = this.__getDefaultItemOf(item) || item;
+      refItem = this._getDefaultItemOf(item) || item;
     }
 
     const { url, destination } = refItem;
 
     return html` <a
         href="${url}"
+        part="${refItem.id}"
         class="${classMap({
           link: true,
           'portal-navigation-tree-parent': isTreeMode,
           [PortalNavigation.classes.selected]: active,
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
-        @click="${e => this.__onLink(e, item)}"
-        >${this.__createLinkTemplate(label, icon, badge)}${isTreeMode && hasItems
+        @click="${e => this._onLink(e, item)}"
+        >${this._createLinkTemplate(refItem.id, label, icon, badge)}${isTreeMode && hasItems
           ? html`<span class="button"></span>`
           : html``}</a
       >
       ${isTreeMode && active && hasItems
         ? html`<div class="portal-navigation-tree-items">
-            ${item.items.map(childItem => this.__createSecondLevelItemTemplate(menuId, item, childItem))}
+            ${item.items.map(childItem => this._createSecondLevelItemTemplate(menuId, item, childItem))}
           </div>`
         : html``}`;
   }
@@ -456,9 +493,9 @@ export class PortalNavigation extends LitElement {
    * has a first-level item selection and that item has child items.
    *
    * @returns {TemplateResult}
-   * @private
+   * @protected
    */
-  __createCurrentItemsTemplate() {
+  _createCurrentItemsTemplate() {
     const parentItemId = this.activePath.getFirstLevelItemId();
     if (!parentItemId) {
       return html``;
@@ -471,7 +508,7 @@ export class PortalNavigation extends LitElement {
     if (hasCurrentItems) {
       return html`<div class="portal-navigation-current">
         <div class="portal-navigation-content">
-          ${activeParentItem.items.map(item => this.__createSecondLevelItemTemplate(menuId, activeParentItem, item))}
+          ${activeParentItem.items.map(item => this._createSecondLevelItemTemplate(menuId, activeParentItem, item))}
         </div>
       </div>`;
     }
@@ -486,9 +523,9 @@ export class PortalNavigation extends LitElement {
    * @param parentItem the parent item of the item.
    * @param item the item for which to create a html template.
    * @returns {TemplateResult}
-   * @private
+   * @protected
    */
-  __createSecondLevelItemTemplate(menuId, parentItem, item) {
+  _createSecondLevelItemTemplate(menuId, parentItem, item) {
     const { id, icon, url, destination } = item;
     const badge = this.getBadgeValue(id, url);
     const label = this._getLabel(item);
@@ -496,10 +533,11 @@ export class PortalNavigation extends LitElement {
 
     return html`<a
       href="${url}"
+      part="${id}"
       class="${classMap({ link: true, [PortalNavigation.classes.selected]: active })}"
-      @click="${e => this.__onLink(e, item)}"
+      @click="${e => this._onLink(e, item)}"
       target="${destination === 'extern' ? '_blank' : '_self'}"
-      >${this.__createLinkTemplate(label, icon, badge)}</a
+      >${this._createLinkTemplate(id, label, icon, badge)}</a
     >`;
   }
 
@@ -507,26 +545,27 @@ export class PortalNavigation extends LitElement {
    * Create a simple html template for a link. All menu and item templates use this template to display
    * the label, icon and badge value.
    *
+   * @param {string} id - the id of the link (used to create named css classes and parts).
    * @param {string} label - the label to be displayed. Either label or icon must be present (or both).
    * @param {string} icon - the icon to be displayed. Either label or icon must be present (or both).
    * @param {string} badge - the badge value to be displayed. If undefined, no badge will be displayed. If there is an icon,
    * the badge will be associated with the icon. Otherwise it will be associated with the label.
    * @returns {TemplateResult[]}
-   * @private
+   * @protected
    */
   // eslint-disable-next-line class-methods-use-this
-  __createLinkTemplate(label, icon, badge) {
+  _createLinkTemplate(id, label, icon, badge) {
     const result = [];
     if (icon) {
-      result.push(html`<img src="${icon}" alt="" class="portal-navigation-icon" />`);
+      result.push(html`<img src="${icon}" alt="" part="${`${id}-icon`}" class="portal-navigation-icon" />`);
       if (badge) {
-        result.push(html`<span class="badge">${badge}</span>`);
+        result.push(html`<span part="${`${id}-badge`}" class="badge">${badge}</span>`);
       }
     }
     if (label) {
-      result.push(html`${label}`);
+      result.push(html`<span part="${`${id}-label`}">${label}</span>`);
       if (!icon && badge) {
-        result.push(html`<span class="badge">${badge}</span>`);
+        result.push(html`<span part="${`${id}-badge`}" class="badge">${badge}</span>`);
       }
     }
     return result;
@@ -537,7 +576,7 @@ export class PortalNavigation extends LitElement {
    * You may override this to customize the order and elements of the tree structure for the hamburger menu.
    *
    * @returns {TemplateResult[]}
-   * @private
+   * @protected
    */
   _createTreeTemplate() {
     const templates = [];
@@ -545,7 +584,7 @@ export class PortalNavigation extends LitElement {
       const menu = this.configuration.getMenu(menuId);
       const hasItems = menu && menu.items && menu.items.length > 0;
       if (hasItems) {
-        templates.push(menu.items.map(item => this.__createFirstLevelItemTemplate(menuId, item, true)));
+        templates.push(menu.items.map(item => this._createFirstLevelItemTemplate(menuId, item, true)));
       }
     });
     return templates;
@@ -557,30 +596,30 @@ export class PortalNavigation extends LitElement {
    * @param {*} e - the click event.
    * @param {*} item - the item being clicked.
    * @returns {undefined}
-   * @private
+   * @protected
    */
-  __onLink(e, item) {
+  _onLink(e, item) {
     if (!item) {
       return undefined;
     }
 
     const hasItems = item.items && item.items.length > 0;
-    const internalRouting = this.__isInternalRouting(item);
+    const internalRouting = this._isInternalRouting(item);
 
     if (!hasItems) {
       if (internalRouting) {
         e.preventDefault();
-        this.__internalLinkSelected(item.id);
+        this._internalLinkSelected(item.id);
         return undefined;
       }
       return undefined;
     }
 
     // if the default item is external we don't want to honor this flag when clicking on a parent item
-    if (internalRouting || this.__getDefaultItemOf(item).destination === 'extern') {
+    if (internalRouting || this._getDefaultItemOf(item).destination === 'extern') {
       e.preventDefault();
     }
-    this.__internalLinkSelected(item.id);
+    this._internalLinkSelected(item.id);
     return undefined;
   }
 
@@ -589,12 +628,12 @@ export class PortalNavigation extends LitElement {
    *
    * @param item the item to check.
    * @returns {boolean} true if the item is internal.
-   * @private
+   * @protected
    */
-  __isInternalRouting(item) {
+  _isInternalRouting(item) {
     let refItem = item;
     if (item.items && item.items.length > 0) {
-      refItem = this.__getDefaultItemOf(item);
+      refItem = this._getDefaultItemOf(item);
     }
 
     // Allow global `internalRouting` to be overridden by the item specific `internalRouting` property
@@ -626,9 +665,9 @@ export class PortalNavigation extends LitElement {
    * Handles the behavior of an internal link being selected. Basically updates the active path.
    *
    * @param itemId the item being selected.
-   * @private
+   * @protected
    */
-  __internalLinkSelected(itemId) {
+  _internalLinkSelected(itemId) {
     const objectPath = this.configuration.getObjectPathForSelection(object => object.id === itemId);
     const selectedItem = objectPath.getLastItem();
     const hasItems = selectedItem.items && selectedItem.items.length > 0;
@@ -638,7 +677,7 @@ export class PortalNavigation extends LitElement {
     let refItem = selectedItem;
     let dispatchEvent = true;
     if (hasItems) {
-      refItem = this.__getDefaultItemOf(selectedItem);
+      refItem = this._getDefaultItemOf(selectedItem);
       dispatchEvent = refItem && refItem.destination !== 'extern';
       this.activePath = objectPath.toIdPath().concat(dispatchEvent ? refItem.id : undefined);
     } else {
@@ -664,10 +703,10 @@ export class PortalNavigation extends LitElement {
    *
    * @param item the item whose default item should be found.
    * @returns {undefined|*} the default item of the given item or undefined if no child items exist.
-   * @private
+   * @protected
    */
   // eslint-disable-next-line class-methods-use-this
-  __getDefaultItemOf(item) {
+  _getDefaultItemOf(item) {
     const { defaultItem, items } = item;
 
     // there are no items to choose from
@@ -687,7 +726,7 @@ export class PortalNavigation extends LitElement {
    * @param labelProvider the raw label (localized labels array) or simple label or an object containing this
    * information within a property 'label'.
    * @returns {string}
-   * @private
+   * @protected
    */
   _getLabel(labelProvider) {
     let labelObj = labelProvider;
