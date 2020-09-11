@@ -39,7 +39,7 @@ adhere to the following structure.
 
 | Attribute    | Type                                  | Mandatory | Default |
 | ------------ | ------------------------------------- | --------- | ------- |
-| items        | `Array<Menu|Item>`                    | x         |         |
+| items        | `Array<Menu                           | Item>`    | x       |  |
 | dropdown (1) | `boolean`                             |           | false   |
 | label (1)    | `String` or `Array<ISO-Code, String>` |           |         |
 | icon (1)     | `String`                              |           |         |

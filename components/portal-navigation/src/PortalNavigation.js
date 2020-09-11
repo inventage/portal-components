@@ -371,9 +371,7 @@ export class PortalNavigation extends LitElement {
         ${this._createCurrentItemsTemplate()}
         <!-- Hamburger Menu Tree Elements -->
         ${this.hamburgerMenuExpanded
-          ? html`<div class="portal-navigation-tree-container">
-              ${this._createTreeTemplate()}
-            </div>`
+          ? html`<div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>`
           : html``}
       </main>
     </div>`;
