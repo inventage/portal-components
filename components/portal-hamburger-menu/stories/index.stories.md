@@ -36,6 +36,5 @@ export const Toggled = () => html`<portal-hamburger-menu .toggled="${true}"></po
 Open your console. You should see a log statement each time you toggle the hamburger state.
 
 ```js preview-story
-export const StateChanged = () =>
-  html`<portal-hamburger-menu @state-changed="${e => console.log('state-changed', e)}"></portal-hamburger-menu>`;
+export const StateChanged = () => html`<portal-hamburger-menu @state-changed="${e => console.log('state-changed', e)}"></portal-hamburger-menu>`;
 ```

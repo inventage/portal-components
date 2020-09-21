@@ -11,10 +11,7 @@ A collection of webcomponents for enterprise portals.
 ### unpkg.com
 
 ```html
-<script
-  type="module"
-  src="https://unpkg.com/@inventage/portal-components/components/portal-card/portal-card.js?module"
-></script>
+<script type="module" src="https://unpkg.com/@inventage/portal-components/components/portal-card/portal-card.js?module"></script>
 
 <portal-card></portal-card>
 ```

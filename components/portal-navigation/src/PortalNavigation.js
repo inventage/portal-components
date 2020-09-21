@@ -217,15 +217,9 @@ export class PortalNavigation extends LitElement {
       <header class="portal-navigation-header">
         <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
         <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
-        <div class="portal-navigation-menu-meta portal-navigation-menu">
-          ${this._createMenuTemplate(PortalNavigation.menuIds.meta)}
-        </div>
-        <div class="portal-navigation-menu-profile portal-navigation-menu">
-          ${this._createMenuTemplate(PortalNavigation.menuIds.profile)}
-        </div>
-        <div class="portal-navigation-menu-logout portal-navigation-menu">
-          ${this._createMenuTemplate(PortalNavigation.menuIds.logout)}
-        </div>
+        <div class="portal-navigation-menu-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
+        <div class="portal-navigation-menu-profile portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
+        <div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>
         <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
         <!-- Hamburger Menu Tree Elements -->
         <portal-hamburger-menu
@@ -243,9 +237,7 @@ export class PortalNavigation extends LitElement {
         </div>
         ${this._createCurrentItemsTemplate()}
         <!-- Hamburger Menu Tree Elements -->
-        ${this.hamburgerMenuExpanded
-          ? html`<div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>`
-          : html``}
+        ${this.hamburgerMenuExpanded ? html`<div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>` : html``}
       </main>
     </div>`;
   }
@@ -292,9 +284,7 @@ export class PortalNavigation extends LitElement {
       .then(data => {
         try {
           this.configuration = new Configuration(data);
-          this.dispatchEvent(
-            new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration, bubbles: true }),
-          );
+          this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration, bubbles: true }));
           this.__updateActivePathFromUrl();
           this.requestUpdateInternal();
         } catch (e) {
@@ -423,9 +413,7 @@ export class PortalNavigation extends LitElement {
           @click="${e => this.__toggleDropdown(e, menuId)}"
           >${this._createLinkTemplate(menuId, label, menu.icon, badge)}</span
         >
-        <div class="dropdown ${classMap({ '-show': this.activeDropdown === menuId })}">
-          ${menu.items.map(item => this._createFirstLevelItemTemplate(menuId, item))}
-        </div>`;
+        <div class="dropdown ${classMap({ '-show': this.activeDropdown === menuId })}">${menu.items.map(item => this._createFirstLevelItemTemplate(menuId, item))}</div>`;
     }
     return html`${menu.items.map(item => this._createFirstLevelItemTemplate(menuId, item))}`;
   }
@@ -463,15 +451,9 @@ export class PortalNavigation extends LitElement {
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${e => this._onLink(e, item)}"
-        >${this._createLinkTemplate(refItem.id, label, icon, badge)}${isTreeMode && hasItems
-          ? html`<span class="button"></span>`
-          : html``}</a
+        >${this._createLinkTemplate(refItem.id, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : html``}</a
       >
-      ${isTreeMode && active && hasItems
-        ? html`<div class="portal-navigation-tree-items">
-            ${item.items.map(childItem => this._createSecondLevelItemTemplate(menuId, item, childItem))}
-          </div>`
-        : html``}`;
+      ${isTreeMode && active && hasItems ? html`<div class="portal-navigation-tree-items">${item.items.map(childItem => this._createSecondLevelItemTemplate(menuId, item, childItem))}</div>` : html``}`;
   }
 
   /**
@@ -493,9 +475,7 @@ export class PortalNavigation extends LitElement {
 
     if (hasCurrentItems) {
       return html`<div class="portal-navigation-current">
-        <div class="portal-navigation-content">
-          ${activeParentItem.items.map(item => this._createSecondLevelItemTemplate(menuId, activeParentItem, item))}
-        </div>
+        <div class="portal-navigation-content">${activeParentItem.items.map(item => this._createSecondLevelItemTemplate(menuId, activeParentItem, item))}</div>
       </div>`;
     }
     return html``;
@@ -517,12 +497,7 @@ export class PortalNavigation extends LitElement {
     const label = this._getLabel(item);
     const active = this.activePath.contains(id);
 
-    return html`<a
-      href="${url}"
-      part="${id}"
-      class="${classMap({ link: true, [PortalNavigation.classes.selected]: active })}"
-      @click="${e => this._onLink(e, item)}"
-      target="${destination === 'extern' ? '_blank' : '_self'}"
+    return html`<a href="${url}" part="${id}" class="${classMap({ link: true, [PortalNavigation.classes.selected]: active })}" @click="${e => this._onLink(e, item)}" target="${destination === 'extern' ? '_blank' : '_self'}"
       >${this._createLinkTemplate(id, label, icon, badge)}</a
     >`;
   }
@@ -638,10 +613,7 @@ export class PortalNavigation extends LitElement {
     // Current application was set, but item is not application specific…
     if (!('application' in refItem)) {
       // We check whether the current application is in the list of `internalRoutingApplications`
-      return (
-        'internalRoutingApplications' in refItem &&
-        Array.prototype.includes.call(refItem.internalRoutingApplications, this.currentApplication)
-      );
+      return 'internalRoutingApplications' in refItem && Array.prototype.includes.call(refItem.internalRoutingApplications, this.currentApplication);
     }
 
     return refItem.application === this.currentApplication;

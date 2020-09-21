@@ -107,7 +107,7 @@
   "prettier": {
     "singleQuote": true,
     "arrowParens": "avoid",
-    "printWidth": 120,
+    "printWidth": 240,
     "trailingComma": "all"
   },
   "husky": {

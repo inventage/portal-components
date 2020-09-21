@@ -16,8 +16,7 @@ export default {
 A component implementing an opinionated (but generic and hence configurable) navigation pattern.
 
 ```js preview-story
-export const Basic = () =>
-  html`<portal-navigation src="./data/data.json" internalRouting currentApplication="ebanking"></portal-navigation>`;
+export const Basic = () => html`<portal-navigation src="./data/data.json" internalRouting currentApplication="ebanking"></portal-navigation>`;
 ```
 
 ## API
