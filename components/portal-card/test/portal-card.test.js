@@ -35,7 +35,7 @@ describe('<portal-card>', () => {
 
   it('triggers "side-changed" event when sides change', async () => {
     const changedSpy = sinon.spy();
-    const el = await fixture(html`<portal-card @side-changed="${changedSpy}"></portal-card>`);
+    const el = await fixture(html`<portal-card @side-changed="${/** @type {function} */ (changedSpy)}"></portal-card>`);
 
     el.shadowRoot.querySelector('button').click();
     expect(changedSpy.callCount).to.equal(1);
