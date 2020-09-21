@@ -1,4 +1,5 @@
 import { html, fixture, expect, assert } from '@open-wc/testing';
+import sinon from 'sinon';
 
 // noinspection ES6PreferShortImport
 import { PortalHamburgerMenu } from '../index.js';
@@ -43,20 +44,14 @@ describe('<portal-hamburger-menu>', () => {
     });
 
     it('triggers "state-changed" event when clicked', async () => {
-      let counter = 0;
-      const el = await fixture(
-        html`<portal-hamburger-menu
-          @state-changed=${() => {
-            counter += 1;
-          }}
-        ></portal-hamburger-menu>`,
-      );
+      const changedSpy = sinon.spy();
+      const el = await fixture(html`<portal-hamburger-menu @state-changed=${changedSpy}></portal-hamburger-menu>`);
 
       el.shadowRoot.querySelector('button').click();
-      expect(counter).to.equal(1);
+      expect(changedSpy.callCount).to.equal(1);
 
       el.shadowRoot.querySelector('button').click();
-      expect(counter).to.equal(2);
+      expect(changedSpy.callCount).to.equal(2);
     });
   });
 

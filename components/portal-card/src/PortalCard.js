@@ -21,7 +21,7 @@ import { baseStyles } from '../../helpers/baseStyles.js';
  *
  * @slot - This is an unnamed slot (the default slot)
  *
- * @fires side-changed - Event fired when the card changes sides.
+ * @fires 'side-changed' - Event fired when the card changes sides.
  */
 // @ts-ignore
 export class PortalCard extends LitElement {
@@ -116,18 +116,8 @@ export class PortalCard extends LitElement {
     this.backSide = false;
   }
 
-  /**
-   * Workaround for listening on property changes…
-   *
-   * @see https://github.com/Polymer/lit-element/issues/643
-   *
-   * @param name
-   * @param oldValue
-   * @private
-   */
-  _requestUpdate(name, oldValue) {
-    // @ts-ignore
-    super._requestUpdate(name, oldValue);
+  requestUpdateInternal(name, oldValue, options) {
+    super.requestUpdateInternal(name, oldValue, options);
 
     if (name === 'backSide') {
       this.dispatchEvent(new Event('side-changed'));

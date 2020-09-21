@@ -42,20 +42,8 @@ export class PortalHamburgerMenu extends LitElement {
     this.toggled = false;
   }
 
-  // noinspection JSUnusedGlobalSymbols
-  /**
-   * Workaround for listening on property changes…
-   *
-   * @see https://github.com/Polymer/lit-element/issues/643
-   *
-   * @param name
-   * @param oldValue
-   * @private
-   */
-  _requestUpdate(name, oldValue) {
-    // @ts-ignore
-    // noinspection JSUnresolvedFunction
-    super._requestUpdate(name, oldValue);
+  requestUpdateInternal(name, oldValue, options) {
+    super.requestUpdateInternal(name, oldValue, options);
 
     if (name === 'toggled') {
       this.dispatchEvent(

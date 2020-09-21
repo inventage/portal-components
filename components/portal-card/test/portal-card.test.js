@@ -1,4 +1,5 @@
 import { html, fixture, expect } from '@open-wc/testing';
+import sinon from 'sinon';
 
 import '../portal-card.js';
 
@@ -33,20 +34,14 @@ describe('<portal-card>', () => {
   });
 
   it('triggers "side-changed" event when sides change', async () => {
-    let counter = 0;
-    const el = await fixture(
-      html`<portal-card
-        @side-changed=${() => {
-          counter += 1;
-        }}
-      ></portal-card>`,
-    );
+    const changedSpy = sinon.spy();
+    const el = await fixture(html`<portal-card @side-changed="${changedSpy}"></portal-card>`);
 
     el.shadowRoot.querySelector('button').click();
-    expect(counter).to.equal(1);
+    expect(changedSpy.callCount).to.equal(1);
 
     el.shadowRoot.querySelector('button').click();
-    expect(counter).to.equal(2);
+    expect(changedSpy.callCount).to.equal(2);
   });
 
   it('is displayed by default', async () => {
