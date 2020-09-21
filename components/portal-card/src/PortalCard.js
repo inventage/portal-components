@@ -116,6 +116,11 @@ export class PortalCard extends LitElement {
     this.backSide = false;
   }
 
+  /**
+   * @param {string | number | symbol | undefined} [name]
+   * @param {unknown} [oldValue]
+   * @param {import("lit-element").PropertyDeclaration<unknown, unknown> | undefined} [options]
+   */
   requestUpdateInternal(name, oldValue, options) {
     super.requestUpdateInternal(name, oldValue, options);
 

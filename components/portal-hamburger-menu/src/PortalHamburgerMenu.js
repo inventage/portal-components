@@ -42,6 +42,11 @@ export class PortalHamburgerMenu extends LitElement {
     this.toggled = false;
   }
 
+  /**
+   * @param {string | number | symbol | undefined} [name]
+   * @param {unknown} [oldValue]
+   * @param {import("lit-element").PropertyDeclaration<unknown, unknown> | undefined} [options]
+   */
   requestUpdateInternal(name, oldValue, options) {
     super.requestUpdateInternal(name, oldValue, options);
 
@@ -60,18 +65,22 @@ export class PortalHamburgerMenu extends LitElement {
 
   render() {
     return html`
-      <button
-        aria-label="Hamburger Toggle"
-        class="hamburger ${classMap({ '-toggled': this.toggled })}"
-        @click="${e => {
-          e.preventDefault();
-          this.toggle();
-        }}"
-      >
+      <button aria-label="Hamburger Toggle" class="hamburger ${classMap({ '-toggled': this.toggled })}" @click="${this.__onHamburgerClick}">
         <span class="hamburger-box">
           <span class="hamburger-inner"></span>
         </span>
       </button>
     `;
+  }
+
+  /**
+   * Hamburger click handler.
+   *
+   * @param {Event} e
+   * @private
+   */
+  __onHamburgerClick(e) {
+    e.preventDefault();
+    this.toggle();
   }
 }

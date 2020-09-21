@@ -43,7 +43,7 @@ import { IdPath } from './IdPath.js';
 // @ts-ignore
 export class PortalNavigation extends LitElement {
   /**
-   * @returns {CSSResult|CSSResultArray}
+   * @returns {CSSResult[]}
    */
   static get styles() {
     return [baseStyles, portalNavigationStyles];
@@ -167,6 +167,7 @@ export class PortalNavigation extends LitElement {
   }
 
   connectedCallback() {
+    // @ts-ignore
     if (super.connectedCallback) {
       super.connectedCallback();
     }
@@ -191,6 +192,7 @@ export class PortalNavigation extends LitElement {
     document.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
     document.removeEventListener('click', this.__globalClickListener);
 
+    // @ts-ignore
     if (super.disconnectedCallback) {
       super.disconnectedCallback();
     }
@@ -254,7 +256,7 @@ export class PortalNavigation extends LitElement {
     }
 
     // At this point, there should be an open dropdown
-    const activeDropdownElement = this.shadowRoot.querySelector('.dropdown.-show');
+    const activeDropdownElement = this.shadowRoot && this.shadowRoot.querySelector('.dropdown.-show');
     if (!activeDropdownElement) {
       return;
     }
@@ -336,7 +338,7 @@ export class PortalNavigation extends LitElement {
    * Checks for a badge for the given id. The url is only checked if no badge value was found for the id.
    *
    * @param {string} id - a menuId or itemId
-   * @param {string} url - a url of an item
+   * @param {string | undefined} url - a url of an item
    * @returns {string|any} the badge value associated with the id or url or undefined if none exists.
    */
   getBadgeValue(id, url = undefined) {
