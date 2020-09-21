@@ -1,7 +1,8 @@
 export class MockEventListener {
-  count = 0;
-
-  e = undefined;
+  constructor() {
+    this.count = 0;
+    this.e = undefined;
+  }
 
   create() {
     return e => {
