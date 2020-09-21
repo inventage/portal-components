@@ -186,33 +186,6 @@ export class PortalNavigation extends LitElement {
     document.addEventListener('click', this.__globalClickListener);
   }
 
-  /**
-   * Hides any active dropdowns when a click occurs outside of the dropdown or its menu.
-   *
-   * @param e
-   * @private
-   */
-  __globalClickListener(e) {
-    if (!this.activeDropdown || !e.composed) {
-      return;
-    }
-
-    // At this point, there should be an open dropdown
-    const activeDropdownElement = this.shadowRoot.querySelector('.dropdown.-show');
-    if (!activeDropdownElement) {
-      return;
-    }
-
-    // If the event path contains either the dropdown itself or its menu, let's bail…
-    const elementMenu = activeDropdownElement.closest('.portal-navigation-menu');
-    if (e.composedPath().includes(activeDropdownElement) || e.composedPath().includes(elementMenu)) {
-      return;
-    }
-
-    // Click was outside of target elements, let's hide the currently active dropdown
-    this.activeDropdown = undefined;
-  }
-
   disconnectedCallback() {
     // Remove existing global listeners
     document.removeEventListener(PortalNavigation.events.setBadgeValue, this.__setBadgeValueEventListener);
@@ -220,52 +193,6 @@ export class PortalNavigation extends LitElement {
 
     if (super.disconnectedCallback) {
       super.disconnectedCallback();
-    }
-  }
-
-  /**
-   * Fetches the configuration data from the source provided by 'src' and initializes the configuration.
-   *
-   * @private
-   */
-  __fetchRemoteData() {
-    this.configuration = new Configuration();
-
-    fetch(this.src)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        try {
-          this.configuration = new Configuration(data);
-          this.dispatchEvent(
-            new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration, bubbles: true }),
-          );
-          this.__updateActivePathFromUrl();
-          // @ts-ignore
-          this.requestUpdate();
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.warn(e);
-        }
-      });
-  }
-
-  /**
-   * Workaround for listening on property changes…
-   *
-   * @see https://github.com/Polymer/lit-element/issues/643
-   *
-   * @param name
-   * @param oldValue
-   * @protected
-   */
-  _requestUpdate(name, oldValue) {
-    // @ts-ignore
-    super._requestUpdate(name, oldValue);
-
-    if (name === 'activeUrl' && oldValue !== this.activeUrl) {
-      this.__updateActivePathFromUrl();
     }
   }
 
@@ -277,66 +204,12 @@ export class PortalNavigation extends LitElement {
     }
   }
 
-  /**
-   * Updates the active path from the current 'activeUrl'.
-   *
-   * @private
-   */
-  __updateActivePathFromUrl() {
-    const newPath = this.configuration.getIdPathForUrl(this.activeUrl);
-    if (newPath) {
-      this.activePath = newPath;
-    }
-  }
+  requestUpdateInternal(name, oldValue, options) {
+    super.requestUpdateInternal(name, oldValue, options);
 
-  /**
-   * Listener function that processes a setBadgeValue event.
-   *
-   * @param e
-   * @private
-   */
-  __setBadgeValueEventListener(e) {
-    const { detail } = e;
-    if (detail) {
-      this.setBadgeValue(detail.id || detail.url, detail.value);
+    if (name === 'activeUrl' && oldValue !== this.activeUrl) {
+      this.__updateActivePathFromUrl();
     }
-  }
-
-  /**
-   * Set a badge value for a specific key. Menus/items will automatically look up badge values by their id. Items will
-   * first check for badge values by using their id and then by using their url.
-   *
-   * @param {string} key - menuId or itemId or url
-   * @param {*} value - the badge value (could be a l11n label object)
-   */
-  setBadgeValue(key, value) {
-    // TODO: write to Store instead of temporary map
-    this.temporaryBadgeValues.set(key, value);
-    // @ts-ignore
-    this._requestUpdate();
-  }
-
-  /**
-   * Checks for a badge for the given id. The url is only checked if no badge value was found for the id.
-   *
-   * @param {string} id - a menuId or itemId
-   * @param {string} url - a url of an item
-   * @returns {string|any} the badge value associated with the id or url or undefined if none exists.
-   */
-  getBadgeValue(id, url = undefined) {
-    // TODO: read from Store instead of temporary map
-    let value = this.temporaryBadgeValues.get(id);
-    if (!value && url) {
-      value = this.temporaryBadgeValues.get(url);
-    }
-    if (value && typeof value === 'object' && value.constructor === Object) {
-      return this._getLabel(value);
-    }
-    return value;
-  }
-
-  __toggleDropdown(e, menuId) {
-    this.activeDropdown = this.activeDropdown ? undefined : menuId;
   }
 
   render() {
@@ -375,6 +248,121 @@ export class PortalNavigation extends LitElement {
           : html``}
       </main>
     </div>`;
+  }
+
+  /**
+   * Hides any active dropdowns when a click occurs outside of the dropdown or its menu.
+   *
+   * @param e
+   * @private
+   */
+  __globalClickListener(e) {
+    if (!this.activeDropdown || !e.composed) {
+      return;
+    }
+
+    // At this point, there should be an open dropdown
+    const activeDropdownElement = this.shadowRoot.querySelector('.dropdown.-show');
+    if (!activeDropdownElement) {
+      return;
+    }
+
+    // If the event path contains either the dropdown itself or its menu, let's bail…
+    const elementMenu = activeDropdownElement.closest('.portal-navigation-menu');
+    if (e.composedPath().includes(activeDropdownElement) || e.composedPath().includes(elementMenu)) {
+      return;
+    }
+
+    // Click was outside of target elements, let's hide the currently active dropdown
+    this.activeDropdown = undefined;
+  }
+
+  /**
+   * Fetches the configuration data from the source provided by 'src' and initializes the configuration.
+   *
+   * @private
+   */
+  __fetchRemoteData() {
+    this.configuration = new Configuration();
+
+    fetch(this.src)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        try {
+          this.configuration = new Configuration(data);
+          this.dispatchEvent(
+            new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration, bubbles: true }),
+          );
+          this.__updateActivePathFromUrl();
+          this.requestUpdateInternal();
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.warn(e);
+        }
+      });
+  }
+
+  /**
+   * Updates the active path from the current 'activeUrl'.
+   *
+   * @private
+   */
+  __updateActivePathFromUrl() {
+    const newPath = this.configuration.getIdPathForUrl(this.activeUrl);
+    if (newPath) {
+      this.activePath = newPath;
+    }
+  }
+
+  /**
+   * Listener function that processes a setBadgeValue event.
+   *
+   * @param e
+   * @private
+   */
+  __setBadgeValueEventListener(e) {
+    const { detail } = e;
+    if (detail) {
+      this.setBadgeValue(detail.id || detail.url, detail.value);
+    }
+  }
+
+  /**
+   * Set a badge value for a specific key. Menus/items will automatically look up badge values by their id. Items will
+   * first check for badge values by using their id and then by using their url.
+   *
+   * @param {string} key - menuId or itemId or url
+   * @param {*} value - the badge value (could be a l11n label object)
+   */
+  setBadgeValue(key, value) {
+    // TODO: write to Store instead of temporary map
+    this.temporaryBadgeValues.set(key, value);
+    this.requestUpdateInternal();
+  }
+
+  /**
+   * Checks for a badge for the given id. The url is only checked if no badge value was found for the id.
+   *
+   * @param {string} id - a menuId or itemId
+   * @param {string} url - a url of an item
+   * @returns {string|any} the badge value associated with the id or url or undefined if none exists.
+   */
+  getBadgeValue(id, url = undefined) {
+    // TODO: read from Store instead of temporary map
+    let value = this.temporaryBadgeValues.get(id);
+    if (!value && url) {
+      value = this.temporaryBadgeValues.get(url);
+    }
+    if (value && typeof value === 'object' && value.constructor === Object) {
+      return this._getLabel(value);
+    }
+    return value;
+  }
+
+  __toggleDropdown(e, menuId) {
+    this.activeDropdown = this.activeDropdown ? undefined : menuId;
   }
 
   /**
