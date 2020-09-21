@@ -2,11 +2,13 @@ module.exports = {
   nodeResolve: true,
   concurrency: 10,
   coverageConfig: {
+    report: true,
+    reportDir: 'coverage',
     threshold: {
-      statements: 50,
-      branches: 50,
-      functions: 50,
-      lines: 50,
+      statements: 90,
+      branches: 65,
+      functions: 80,
+      lines: 90,
     },
   },
 };
