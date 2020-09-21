@@ -22,6 +22,7 @@ describe('<portal-card>', () => {
     expect(el.title).to.equal('property title');
   });
 
+  // noinspection DuplicatedCode
   it('toggles side on button click', async () => {
     const el = await fixture(html`<portal-card></portal-card>`);
     expect(el.backSide).to.equal(false);
