@@ -107,7 +107,7 @@ export class Configuration {
    * If none can be found the process is repeated while the given url is "reduced" step by step by removing the last
    * part delimited with '/' until a match can be found. If still none can be found undefined is returned.
    *
-   * @param {string | undefined} url - the url of an item within the data set.
+   * @param url {string | undefined} - the url of an item within the data set.
    * @returns {IdPath | undefined}
    */
   getIdPathForUrl(url) {
