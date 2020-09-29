@@ -1,5 +1,6 @@
 module.exports = {
   nodeResolve: true,
+  concurrentBrowsers: 3,
   concurrency: 10,
   coverageConfig: {
     report: true,
