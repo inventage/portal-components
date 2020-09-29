@@ -244,11 +244,15 @@
       "events": [
         {
           "name": "portal-navigation.routeTo",
-          "description": "Event fired when an item with a url is clicked and the routig is done internally."
+          "description": "Event fired when an item with a url is clicked and the routing is done internally."
         },
         {
           "name": "portal-navigation.setLanguage",
-          "description": "Event fire when the 'lang' property changes."
+          "description": "Event fired when the 'lang' property changes."
+        },
+        {
+          "name": "portal-navigation.configured",
+          "description": "Event fired when the configuration has been successfully loaded."
         }
       ],
       "cssProperties": [
