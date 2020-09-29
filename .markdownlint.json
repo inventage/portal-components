@@ -2,6 +2,11 @@
   "line-length": {
     "line_length": -1
   },
+  "no-inline-html": {
+    "allowed_elements": [
+      "sb-props"
+    ]
+  },
   "no-trailing-punctuation": {
     "punctuation": ".,;:!。，；：！"
   }

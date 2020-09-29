@@ -2,9 +2,15 @@
 
 A collection of webcomponents for enterprise portals.
 
-[![made with open-wc](https://img.shields.io/badge/made%20with-open--wc-%23217ff9?style=flat-square)](https://open-wc.org)
-[![Main Workflow](https://img.shields.io/github/workflow/status/inventage/portal-components/Main%20Workflow?style=flat-square)](https://github.com/inventage/portal-components/actions?query=workflow%3A"Main+Workflow")
+[![made with open-wc](https://img.shields.io/badge/made%20with-open--wc-%23217ff9?style=flat-square)](https://open-wc.org) &nbsp;
+[![Main Workflow](https://img.shields.io/github/workflow/status/inventage/portal-components/Main%20Workflow?style=flat-square)](https://github.com/inventage/portal-components/actions?query=workflow%3A"Main+Workflow") &nbsp;
 [![npm version](https://img.shields.io/npm/v/@inventage/portal-components?style=flat-square)](https://www.npmjs.com/package/@inventage/portal-components)
+
+```js script
+export default {
+  title: 'Intro/Portal Components',
+};
+```
 
 ## Quick Start
 

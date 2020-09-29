@@ -1,14 +1,3 @@
-```js script
-import { html } from '@open-wc/demoing-storybook';
-import '../portal-hamburger-menu.js';
-
-export default {
-  title: 'Components/Hamburger Menu',
-  component: 'portal-hamburger-menu',
-  options: { selectedPanel: 'storybookjs/knobs/panel' },
-};
-```
-
 # Hamburger Menu
 
 A simple hamburger menu component.
@@ -16,6 +5,19 @@ A simple hamburger menu component.
 ## API
 
 <sb-props of="portal-hamburger-menu"></sb-props>
+
+```js script
+// @see https://github.com/open-wc/open-wc/blob/master/packages/demoing-storybook/demo/stories/withWebComponentsKnobs.stories.mdx
+import { html, withKnobs, withWebComponentsKnobs } from '@open-wc/demoing-storybook';
+import './portal-hamburger-menu.js';
+
+export default {
+  title: 'Components/Hamburger Menu',
+  component: 'portal-hamburger-menu',
+  decorators: [withKnobs, withWebComponentsKnobs],
+  parameters: { options: { selectedPanel: 'storybookjs/knobs/panel' } },
+};
+```
 
 ## Examples
 
