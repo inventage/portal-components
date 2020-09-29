@@ -232,13 +232,6 @@
           "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
           "type": "boolean",
           "default": "false"
-        },
-        {
-          "name": "temporaryBadgeValues",
-          "type": "Map<any, any>"
-        },
-        {
-          "name": "configuration"
         }
       ],
       "events": [

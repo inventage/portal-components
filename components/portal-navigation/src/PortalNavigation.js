@@ -151,13 +151,23 @@ export class PortalNavigation extends LitElement {
     super();
     this.src = undefined;
     this.lang = PortalNavigation.defaults.language;
-    this.activePath = new IdPath();
     this.activeUrl = undefined;
     this.currentApplication = undefined;
     this.internalRouting = false;
-    this.temporaryBadgeValues = new Map();
+
+    // Internal properties
+    this.activePath = new IdPath();
     this.hamburgerMenuExpanded = false;
     this.activeDropdown = undefined;
+
+    /**
+     * @private
+     */
+    this.temporaryBadgeValues = new Map();
+
+    /**
+     * @private
+     */
     this.configuration = new Configuration();
 
     // Make sure global (document / window) listeners are bound to `this`, otherwise we cannot properly remove them
