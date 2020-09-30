@@ -12,7 +12,7 @@ import './portal-navigation.js';
 import { PortalNavigation } from './src/PortalNavigation.js';
 
 export default {
-  title: 'Components/PortalNavigation',
+  title: 'Components/Portal Navigation',
   component: 'portal-navigation',
   decorators: [withKnobs, withWebComponentsKnobs],
   options: { selectedPanel: 'storybookjs/knobs/panel' },
