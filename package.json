@@ -17,7 +17,7 @@
     "docs"
   ],
   "scripts": {
-    "build": "npm run clean && run-s build:* && run-p copy:*",
+    "build": "npm run clean && tsc && run-s build:* && run-p copy:*",
     "build:analyze:custom-elements": "wca analyze 'components/**/*.js' --outFile custom-elements.json",
     "build:analyze:readme": "wca analyze 'components/**/*.js' --silent",
     "build:storybook": "npm run storybook:build",
@@ -37,7 +37,7 @@
     "lint:types": "tsc",
     "prepublishOnly": "npm run lint && npm run build:types",
     "postpublish": "npm run clean:types",
-    "start": "concurrently -n wca,storybook 'npm run watch:analyze:custom-elements' 'npm run storybook'",
+    "start": "concurrently -k -n wca,tsc,storybook 'npm run watch:analyze:custom-elements' 'npm run tsc:watch' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
@@ -47,6 +47,7 @@
     "test:browser:all": "wtr 'components/**/*/test/**/*.test.js' --playwright --browsers chromium firefox webkit --coverage",
     "test:browser:watch": "wtr 'components/**/*/test/**/*.test.js' --watch",
     "test:watch": "npm run test:browser:watch",
+    "tsc:watch": "tsc --watch",
     "watch:analyze:custom-elements": "onchange -i 'components/**/*.js' -- npm run build:analyze:custom-elements"
   },
   "types": "./types/index.d.ts",

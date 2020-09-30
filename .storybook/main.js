@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ['../README.md', '../components/*/README.md'],
+  stories: ['../README.md', '../components-ts/*/README.md'],
   // Storybook addons
   // @see https://storybook.js.org/addons/
   addons: [
