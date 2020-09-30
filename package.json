@@ -26,7 +26,6 @@
     "clean:storybook": "rimraf storybook-static",
     "clean:types": "rimraf '*.d.ts' 'components/**/*.d.ts'",
     "copy:data": "cp -Rpf data storybook-static/",
-    "copy:assets": "cp -Rpf media storybook-static/",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier '**/*.{js,md}' --write --ignore-path .gitignore",
