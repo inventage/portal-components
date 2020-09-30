@@ -24,7 +24,6 @@ import { baseStyles } from '../../helpers/baseStyles';
  * @fires 'side-changed' - Event fired when the card changes sides.
  */
 export class PortalCard extends LitElement {
-
   @property()
   title = 'I am a glorious title';
 
