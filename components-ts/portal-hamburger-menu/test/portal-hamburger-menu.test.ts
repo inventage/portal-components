@@ -1,8 +1,8 @@
 import { html, fixture, expect, assert } from '@open-wc/testing';
 import sinon from 'sinon';
 
-import { PortalHamburgerMenu } from '../index.js';
-import '../portal-hamburger-menu.js';
+import { PortalHamburgerMenu } from '..';
+import '../portal-hamburger-menu';
 
 describe('<portal-hamburger-menu>', () => {
   describe('Structure', () => {
@@ -14,42 +14,42 @@ describe('<portal-hamburger-menu>', () => {
 
   describe('Functionality', () => {
     it('has a default toggled state', async () => {
-      const el = await fixture(html`<portal-hamburger-menu></portal-hamburger-menu>`);
+      const el: PortalHamburgerMenu = await fixture(html`<portal-hamburger-menu></portal-hamburger-menu>`);
 
       expect(el.toggled).to.equal(false);
     });
 
     it('can override the "toggled" state via attribute', async () => {
-      const el = await fixture(html`<portal-hamburger-menu toggled></portal-hamburger-menu>`);
+      const el: PortalHamburgerMenu = await fixture(html`<portal-hamburger-menu toggled></portal-hamburger-menu>`);
 
       expect(el.toggled).to.equal(true);
     });
 
     it('can override the "toggled" state via property', async () => {
-      const el = await fixture(html`<portal-hamburger-menu .toggled="${true}"></portal-hamburger-menu>`);
+      const el: PortalHamburgerMenu = await fixture(html`<portal-hamburger-menu .toggled="${true}"></portal-hamburger-menu>`);
 
       expect(el.toggled).to.equal(true);
     });
 
     it('toggles state on button click', async () => {
-      const el = await fixture(html`<portal-hamburger-menu></portal-hamburger-menu>`);
+      const el: PortalHamburgerMenu = await fixture(html`<portal-hamburger-menu></portal-hamburger-menu>`);
       expect(el.toggled).to.equal(false);
 
-      el.shadowRoot.querySelector('button').click();
+      el.shadowRoot!.querySelector('button')!.click();
       expect(el.toggled).to.equal(true);
 
-      el.shadowRoot.querySelector('button').click();
+      el.shadowRoot!.querySelector('button')!.click();
       expect(el.toggled).to.equal(false);
     });
 
     it('triggers "state-changed" event when clicked', async () => {
       const changedSpy = sinon.spy();
-      const el = await fixture(html`<portal-hamburger-menu @state-changed=${/** @type {function} */ (changedSpy)}></portal-hamburger-menu>`);
+      const el = await fixture(html`<portal-hamburger-menu @state-changed=${changedSpy as EventListener}></portal-hamburger-menu>`);
 
-      el.shadowRoot.querySelector('button').click();
+      el.shadowRoot!.querySelector('button')!.click();
       expect(changedSpy.callCount).to.equal(1);
 
-      el.shadowRoot.querySelector('button').click();
+      el.shadowRoot!.querySelector('button')!.click();
       expect(changedSpy.callCount).to.equal(2);
     });
   });

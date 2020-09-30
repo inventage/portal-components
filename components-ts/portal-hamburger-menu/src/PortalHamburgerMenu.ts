@@ -1,7 +1,8 @@
-import { html, LitElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map.js';
-import { baseStyles } from '../../helpers/baseStyles.js';
-import { styles as hamburgerMenuStyles } from './portalHamburgerMenuStyles.js';
+import { CSSResultArray, html, LitElement, property, TemplateResult } from 'lit-element';
+import { baseStyles } from '../../helpers/baseStyles';
+import { styles as hamburgerMenuStyles } from './portalHamburgerMenuStyles';
+import { classMap } from 'lit-html/directives/class-map';
+import { PropertyDeclaration } from 'lit-element/lib/updating-element';
 
 /**
  * A simple hamburger menu component.
@@ -21,33 +22,18 @@ import { styles as hamburgerMenuStyles } from './portalHamburgerMenuStyles.js';
  * @cssprop {Length} [--hamburger-hover-transition-duration=0.15s]
  * @cssprop {Length} [--hamburger-hover-transition-timing-function=linear]
  */
-// @ts-ignore
 export class PortalHamburgerMenu extends LitElement {
-  static get styles() {
+  @property({
+    type: Boolean,
+    reflect: true,
+  })
+  toggled = false;
+
+  static get styles(): CSSResultArray {
     return [baseStyles, hamburgerMenuStyles];
   }
 
-  static get properties() {
-    return {
-      toggled: { type: Boolean, reflect: true },
-    };
-  }
-
-  constructor() {
-    super();
-
-    /**
-     * @type {boolean}
-     */
-    this.toggled = false;
-  }
-
-  /**
-   * @param {string | number | symbol | undefined} [name]
-   * @param {unknown} [oldValue]
-   * @param {import("lit-element").PropertyDeclaration<unknown, unknown> | undefined} [options]
-   */
-  requestUpdateInternal(name, oldValue, options) {
+  requestUpdateInternal(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
     super.requestUpdateInternal(name, oldValue, options);
 
     if (name === 'toggled') {
@@ -59,13 +45,13 @@ export class PortalHamburgerMenu extends LitElement {
     }
   }
 
-  toggle() {
+  toggle(): void {
     this.toggled = !this.toggled;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
-      <button aria-label="Hamburger Toggle" class="hamburger ${classMap({ '-toggled': this.toggled })}" @click="${this.__onHamburgerClick}">
+      <button aria-label="Hamburger Toggle" class="hamburger ${classMap({ '-toggled': this.toggled })}" @click="${this.onHamburgerClick}">
         <span class="hamburger-box">
           <span class="hamburger-inner"></span>
         </span>
@@ -73,13 +59,7 @@ export class PortalHamburgerMenu extends LitElement {
     `;
   }
 
-  /**
-   * Hamburger click handler.
-   *
-   * @param {Event} e
-   * @private
-   */
-  __onHamburgerClick(e) {
+  private onHamburgerClick(e: Event): void {
     e.preventDefault();
     this.toggle();
   }

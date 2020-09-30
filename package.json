@@ -30,6 +30,7 @@
     "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
     "lint:prettier": "prettier '**/*.{js,ts,md}' --check --ignore-path .gitignore",
+    "lint:tsc": "tsc",
     "prepublishOnly": "tsc",
     "start": "concurrently -k -n wca,tsc,storybook 'npm run watch:analyze:custom-elements' 'npm run tsc:watch' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
