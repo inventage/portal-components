@@ -9,12 +9,11 @@
     "url": "https://github.com/inventage/portal-components.git"
   },
   "version": "0.2.1",
-  "main": "index.js",
-  "module": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "files": [
-    "components",
-    "custom-elements.json",
-    "docs"
+    "dist",
+    "custom-elements.json"
   ],
   "scripts": {
     "build": "npm run clean && tsc && run-s build:* && run-p copy:*",
@@ -27,11 +26,11 @@
     "clean:types": "rimraf '*.d.ts' 'components/**/*.d.ts'",
     "copy:data": "cp -Rpf data storybook-static/",
     "format": "npm run format:eslint && npm run format:prettier",
-    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier '**/*.{js,md}' --write --ignore-path .gitignore",
     "lint": "run-p lint:*",
     "lint:analyze": "lit-analyzer 'components/**/*.js' --strict",
-    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
+    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
     "lint:prettier": "prettier '**/*.{js,md}' --check --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -43,9 +42,9 @@
     "storybook:build": "build-storybook",
     "storybook:build:start": "es-dev-server --root-dir storybook-static --open",
     "test": "npm run test:browser",
-    "test:browser": "wtr 'components/**/*/test/**/*.test.js' --coverage",
-    "test:browser:all": "wtr 'components/**/*/test/**/*.test.js' --playwright --browsers chromium firefox webkit --coverage",
-    "test:browser:watch": "wtr 'components/**/*/test/**/*.test.js' --watch",
+    "test:browser": "wtr 'components-ts/**/*/test/**/*.test.ts' --coverage",
+    "test:browser:all": "wtr 'components-ts/**/*/test/**/*.test.ts' --playwright --browsers chromium firefox webkit --coverage",
+    "test:browser:watch": "wtr 'components-ts/**/*/test/**/*.test.ts' --watch",
     "test:watch": "npm run test:browser:watch",
     "tsc:watch": "tsc --watch",
     "watch:analyze:custom-elements": "onchange -i 'components/**/*.js' -- npm run build:analyze:custom-elements"
@@ -62,6 +61,9 @@
     "@open-wc/testing": "^2.5.29",
     "@storybook/addon-a11y": "^6.0.27",
     "@storybook/addon-actions": "^6.0.27",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "@web/dev-server-esbuild": "^0.2.4",
     "@web/test-runner": "^0.9.6",
     "@web/test-runner-playwright": "^0.6.4",
     "concurrently": "^5.3.0",
@@ -92,19 +94,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "eslintConfig": {
-    "extends": [
-      "@open-wc/eslint-config",
-      "plugin:lit/recommended",
-      "eslint-config-prettier"
-    ],
-    "plugins": [
-      "lit"
-    ],
-    "ignorePatterns": [
-      "*.ts"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -118,7 +107,7 @@
     ],
     "*.md": [
       "prettier --write",
-      "markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'"
+      "markdownlint --ignore '**/CHANGELOG.md'"
     ]
   },
   "np": {

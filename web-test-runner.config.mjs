@@ -1,4 +1,6 @@
-module.exports = {
+import { esbuildPlugin } from '@web/dev-server-esbuild';
+
+export default {
   nodeResolve: true,
   concurrentBrowsers: 3,
   concurrency: 10,
@@ -12,4 +14,5 @@ module.exports = {
       lines: 90,
     },
   },
+  plugins: [esbuildPlugin({ ts: true })],
 };

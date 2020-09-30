@@ -1,6 +1,5 @@
-import { css, html, LitElement, property } from 'lit-element';
+import { css, CSSResultArray, html, LitElement, property, PropertyDeclaration, TemplateResult } from 'lit-element';
 import { baseStyles } from '../../helpers/baseStyles';
-import { PropertyDeclaration } from 'lit-element/lib/updating-element';
 
 /**
  * A test component to display what a component can consist of, how it is documented and how to properly test it.
@@ -32,11 +31,11 @@ export class PortalCard extends LitElement {
   @property({
     type: Boolean,
     attribute: 'back-side',
-    reflect: true
+    reflect: true,
   })
   backSide = false;
 
-  static get styles() {
+  static get styles(): CSSResultArray {
     return [
       baseStyles,
       css`
@@ -114,7 +113,7 @@ export class PortalCard extends LitElement {
     ];
   }
 
-  requestUpdateInternal(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration) {
+  requestUpdateInternal(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
     super.requestUpdateInternal(name, oldValue, options);
 
     if (name === 'backSide') {
@@ -122,11 +121,11 @@ export class PortalCard extends LitElement {
     }
   }
 
-  toggle() {
+  toggle(): void {
     this.backSide = !this.backSide;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div class="front">
         <span class="title">${this.title}</span>
