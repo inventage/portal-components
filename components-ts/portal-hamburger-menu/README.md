@@ -9,7 +9,7 @@ A simple hamburger menu component.
 ```js script
 // @see https://github.com/open-wc/open-wc/blob/master/packages/demoing-storybook/demo/stories/withWebComponentsKnobs.stories.mdx
 import { html, withKnobs, withWebComponentsKnobs } from '@open-wc/demoing-storybook';
-import './portal-hamburger-menu.js';
+import '../../dist/components-ts/portal-hamburger-menu/portal-hamburger-menu';
 
 export default {
   title: 'Components/Hamburger Menu',

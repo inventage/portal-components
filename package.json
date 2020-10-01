@@ -37,7 +37,7 @@
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
     "storybook:build:start": "es-dev-server --root-dir storybook-static --open",
-    "test": "npm run test:browser",
+    "test": "tsc && npm run test:browser",
     "test:browser": "wtr 'components-ts/**/*/test/**/*.test.ts' --coverage",
     "test:browser:all": "wtr 'components-ts/**/*/test/**/*.test.ts' --playwright --browsers chromium firefox webkit --coverage",
     "test:browser:watch": "wtr 'components-ts/**/*/test/**/*.test.ts' --watch",
