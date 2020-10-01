@@ -17,7 +17,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
-    "sourceMap": true,
     "plugins": [
       {
         "name": "ts-lit-plugin",

@@ -42,7 +42,7 @@
     "test:browser:all": "wtr 'components-ts/**/*/test/**/*.test.ts' --playwright --browsers chromium firefox webkit --coverage",
     "test:browser:watch": "wtr 'components-ts/**/*/test/**/*.test.ts' --watch",
     "test:watch": "npm run test:browser:watch",
-    "tsc:watch": "tsc --watch",
+    "tsc:watch": "tsc -p tsconfig.dev.json --watch",
     "watch:analyze:custom-elements": "onchange -i 'components-ts/**/*.ts' -- npm run build:analyze:custom-elements"
   },
   "dependencies": {
