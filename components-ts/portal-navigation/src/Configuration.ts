@@ -17,7 +17,7 @@ export interface MenuLabel {
 
 export interface MenuItem {
   id?: string;
-  label?: MenuLabel;
+  label?: MenuLabel | string;
   icon?: string;
   url?: string;
   destination?: string;

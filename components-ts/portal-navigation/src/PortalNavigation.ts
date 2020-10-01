@@ -41,7 +41,7 @@ type PortalNavigationMenus = {
  *
  * @prop {IdPath} activePath - the current path of "active" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered "active".
  * @prop {string} src - location from where to fetch configuration data file.
- * @prop {string} lang - the current language. e.g. 'en' or 'de'.
+ * @prop {string} language - the current language. e.g. 'en' or 'de'.
  * @prop {string} activeUrl - you can use this to set the active path via the url of an item.
  * @prop {string} currentApplication - the current application. Items change their routing behavior based on whether their application property matches this property or not.
  * @prop {boolean} internalRouting - true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.
@@ -120,7 +120,7 @@ export class PortalNavigation extends LitElement {
    *
    * @returns {{routeTo: string, setBadgeValue: string, setLanguage: string, configured: string}}
    */
-  static get events() {
+  static get events(): Record<string, string> {
     const ns = 'portal-navigation';
 
     return {
@@ -136,7 +136,7 @@ export class PortalNavigation extends LitElement {
    *
    * @returns {{selected: string}}
    */
-  static get classes() {
+  static get classes(): Record<string, string> {
     return {
       selected: '-selected',
     };
@@ -184,8 +184,8 @@ export class PortalNavigation extends LitElement {
   updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
 
-    if (changedProperties.has('lang')) {
-      this.dispatchEvent(new CustomEvent(PortalNavigation.events.setLanguage, { detail: this.lang, bubbles: true }));
+    if (changedProperties.has('language')) {
+      this.dispatchEvent(new CustomEvent(PortalNavigation.events.setLanguage, { detail: this.language, bubbles: true }));
     }
   }
 
@@ -339,31 +339,22 @@ export class PortalNavigation extends LitElement {
 
   /**
    * Override to make use of the slot in extension.
-   * @returns {TemplateResult}
-   * @protected
    */
-  // eslint-disable-next-line class-methods-use-this
-  _createLogoSlotTemplate() {
+  _createLogoSlotTemplate(): TemplateResult {
     return html`<slot name="logo"></slot>`;
   }
 
   /**
    * Override to make use of the slot in extension.
-   * @returns {TemplateResult}
-   * @protected
    */
-  // eslint-disable-next-line class-methods-use-this
-  _createLeftSlotTemplate() {
+  _createLeftSlotTemplate(): TemplateResult {
     return html`<slot name="left"></slot>`;
   }
 
   /**
    * Override to make use of the slot in extension.
-   * @returns {TemplateResult}
-   * @protected
    */
-  // eslint-disable-next-line class-methods-use-this
-  _createRightSlotTemplate() {
+  _createRightSlotTemplate(): TemplateResult {
     return html`<slot name="right"></slot>`;
   }
 
@@ -372,9 +363,8 @@ export class PortalNavigation extends LitElement {
    * items as first-level citizens in it or a dropdown link if the menu should be configured as a dropdown.
    *
    * @param menuId the menu id for which to build a menu html template.
-   * @protected
    */
-  protected _createMenuTemplate(menuId: string): TemplateResult {
+  _createMenuTemplate(menuId: string): TemplateResult {
     const menu = this.configuration.getMenu(menuId);
 
     if (!menu || !menu.items || menu.items.length <= 0) {
@@ -403,13 +393,10 @@ export class PortalNavigation extends LitElement {
   /**
    * Creates the html template for items residing at first-level. These can be items with or without children.
    *
-   * @param menuId the menuId associated with the given item.
    * @param item the item to be rendered.
    * @param isTreeMode whether this template should be provided for tree mode (hamburger menu) or default display purposes.
-   * @returns {TemplateResult}
-   * @protected
    */
-  protected _createFirstLevelItemTemplate(item: MenuItem, isTreeMode = false): TemplateResult {
+  _createFirstLevelItemTemplate(item: MenuItem, isTreeMode = false): TemplateResult {
     const { id, icon, items } = item;
     const hasItems = items && items.length > 0;
     const badge = this.getBadgeValue(id!);
@@ -442,7 +429,7 @@ export class PortalNavigation extends LitElement {
    * Creates the html template for the third row (second-level), which displays only if the active path
    * has a first-level item selection and that item has child items.
    */
-  protected _createCurrentItemsTemplate(): TemplateResult {
+  _createCurrentItemsTemplate(): TemplateResult {
     const parentItemId = this.activePath.getFirstLevelItemId();
     if (!parentItemId) {
       return html``;
@@ -465,8 +452,6 @@ export class PortalNavigation extends LitElement {
    * or second-level in tree mode (hamburger menu).
    *
    * @param item the item for which to create a html template.
-   * @returns {TemplateResult}
-   * @protected
    */
   _createSecondLevelItemTemplate(item: MenuItem): TemplateResult {
     const { id, icon, url, destination } = item;
@@ -497,7 +482,7 @@ export class PortalNavigation extends LitElement {
    * @param {string} badge - the badge value to be displayed. If undefined, no badge will be displayed. If there is an icon,
    * the badge will be associated with the icon. Otherwise it will be associated with the label.
    */
-  protected _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
+  _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
       result.push(html`<img src="${icon}" alt="" part="${`${id}-icon`}" class="portal-navigation-icon" />`);
@@ -520,7 +505,7 @@ export class PortalNavigation extends LitElement {
    * Creates the html template for tree mode (hamburger menu).
    * You may override this to customize the order and elements of the tree structure for the hamburger menu.
    */
-  protected _createTreeTemplate(): TemplateResult[] {
+  _createTreeTemplate(): TemplateResult[] {
     const templates: TemplateResult[] = [];
 
     PortalNavigation.menuIdsOrdered.forEach(menuId => {
@@ -605,9 +590,8 @@ export class PortalNavigation extends LitElement {
    * Handles the behavior of an internal link being selected. Basically updates the active path.
    *
    * @param itemId the item being selected.
-   * @protected
    */
-  protected _internalLinkSelected(itemId?: string): void {
+  _internalLinkSelected(itemId?: string): void {
     const objectPath = this.configuration.getObjectPathForSelection(object => object.id === itemId);
     const selectedItem = objectPath.getLastItem();
     const hasItems = selectedItem && selectedItem.items && selectedItem.items.length > 0;
@@ -642,10 +626,9 @@ export class PortalNavigation extends LitElement {
    * no child items exist.
    *
    * @param item the item whose default item should be found.
-   * @returns {undefined|*} the default item of the given item or undefined if no child items exist.
-   * @protected
+   * @returns the default item of the given item or undefined if no child items exist.
    */
-  protected _getDefaultItemOf(item: MenuItem): MenuItem | undefined {
+  _getDefaultItemOf(item: MenuItem): MenuItem | undefined {
     const { defaultItem, items } = item;
 
     // there are no items to choose from
@@ -664,25 +647,27 @@ export class PortalNavigation extends LitElement {
    *
    * @param labelProvider the raw label (localized labels array) or simple label or an object containing this
    * information within a property 'label'.
-   * @returns {string}
-   * @protected
    */
-  protected _getLabel(labelProvider: string | MenuItem): string {
+  _getLabel(labelProvider: string | MenuItem): string {
     if (typeof labelProvider === 'string') {
       return labelProvider;
     }
 
-    let labelObj: MenuLabel | undefined;
+    let labelObj: string | MenuLabel | undefined;
     if ('label' in labelProvider) {
       labelObj = (labelProvider as MenuItem).label;
     }
 
-    if (!labelObj || !this.lang) {
+    if (typeof labelObj === 'string') {
+      return labelObj;
+    }
+
+    if (!labelObj || !this.language) {
       return '';
     }
 
-    if (this.lang in labelObj) {
-      return labelObj[this.lang];
+    if (this.language in labelObj) {
+      return labelObj[this.language];
     }
 
     return '';
