@@ -77,33 +77,18 @@ export class PortalNavigation extends LitElement {
   })
   internalRouting = false;
 
-  /**
-   * @private
-   */
   @internalProperty()
-  activePath = new IdPath();
+  private activePath = new IdPath();
 
-  /**
-   * @private
-   */
   @internalProperty()
-  hamburgerMenuExpanded = false;
+  private hamburgerMenuExpanded = false;
 
-  /**
-   * @private
-   */
   @internalProperty()
-  activeDropdown: string | undefined;
+  private activeDropdown: string | undefined;
 
-  /**
-   * @private
-   */
-  temporaryBadgeValues = new Map();
+  private temporaryBadgeValues = new Map();
 
-  /**
-   * @private
-   */
-  configuration = new Configuration();
+  private configuration = new Configuration();
 
   static get styles(): CSSResultArray {
     return [baseStyles, portalNavigationStyles];
@@ -686,5 +671,29 @@ export class PortalNavigation extends LitElement {
     }
 
     return '';
+  }
+
+  /**
+   * Sets the internal configuration property to the given configuration.
+   *
+   * @param config
+   */
+  setConfiguration(config: Configuration): PortalNavigation {
+    this.configuration = config;
+    return this;
+  }
+
+  /**
+   * Returns the internal configuration property value.
+   */
+  getConfiguration(): Configuration {
+    return this.configuration;
+  }
+
+  /**
+   * Returns the internal activePath property value.
+   */
+  getActivePath(): IdPath {
+    return this.activePath;
   }
 }
