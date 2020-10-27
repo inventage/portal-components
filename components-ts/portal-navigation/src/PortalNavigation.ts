@@ -6,6 +6,7 @@ import { Configuration, MenuItem, MenuLabel } from './Configuration';
 import '../../portal-hamburger-menu/portal-hamburger-menu';
 import { IdPath } from './IdPath';
 import { PropertyDeclaration, PropertyValues } from 'lit-element/lib/updating-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 enum NavigationMenus {
   /**
@@ -411,8 +412,8 @@ export class PortalNavigation extends LitElement {
     const { url, destination } = refItem;
 
     return html` <a
-        href="${url}"
-        part="${refItem.id}"
+        href="${ifDefined(url)}"
+        part="${ifDefined(refItem.id)}"
         class="${classMap({
           link: true,
           'portal-navigation-tree-parent': isTreeMode,
@@ -460,8 +461,8 @@ export class PortalNavigation extends LitElement {
     const active = this.activePath.contains(id!);
 
     return html`<a
-      href="${url}"
-      part="${id}"
+      href="${ifDefined(url)}"
+      part="${ifDefined(id)}"
       class="${classMap({
         link: true,
         [PortalNavigation.classes.selected]: active,
