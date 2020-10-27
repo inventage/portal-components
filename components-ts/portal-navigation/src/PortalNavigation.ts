@@ -650,12 +650,8 @@ export class PortalNavigation extends LitElement {
    * information within a property 'label'.
    */
   _getLabel(labelProvider: string | MenuItem): string {
-    if (typeof labelProvider === 'string') {
-      return labelProvider;
-    }
-
     let labelObj: string | MenuLabel | undefined;
-    if ('label' in labelProvider) {
+    if ('label' in <never>labelProvider) {
       labelObj = (labelProvider as MenuItem).label;
     }
 
