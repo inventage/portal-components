@@ -1,6 +1,6 @@
-import { esbuildPlugin } from '@web/dev-server-esbuild';
+const { esbuildPlugin } = require('@web/dev-server-esbuild');
 
-export default {
+module.exports = {
   nodeResolve: true,
   concurrentBrowsers: 3,
   concurrency: 10,

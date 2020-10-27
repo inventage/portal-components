@@ -28,5 +28,11 @@ module.exports = {
         ],
       },
     },
+    {
+      files: ['web-test-runner.config.js'],
+      env: {
+        node: true,
+      },
+    },
   ],
 };
