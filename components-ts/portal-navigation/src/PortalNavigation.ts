@@ -649,8 +649,8 @@ export class PortalNavigation extends LitElement {
    * @param labelProvider the raw label (localized labels array) or simple label or an object containing this
    * information within a property 'label'.
    */
-  _getLabel(labelProvider: string | MenuItem): string {
-    let labelObj: string | MenuLabel | undefined;
+  _getLabel(labelProvider: string | MenuItem | MenuLabel): string {
+    let labelObj: string | MenuItem | MenuLabel | undefined = labelProvider;
     if ('label' in <never>labelProvider) {
       labelObj = (labelProvider as MenuItem).label;
     }
@@ -664,7 +664,7 @@ export class PortalNavigation extends LitElement {
     }
 
     if (this.language in labelObj) {
-      return labelObj[this.language];
+      return (labelObj as MenuLabel)[this.language];
     }
 
     return '';
