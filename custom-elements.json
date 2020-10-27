@@ -3,7 +3,7 @@
   "tags": [
     {
       "name": "portal-card",
-      "path": "./components-ts/portal-card/portal-card.ts",
+      "path": "./components/portal-card/portal-card.ts",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
       "attributes": [
         {
@@ -83,7 +83,7 @@
     },
     {
       "name": "portal-hamburger-menu",
-      "path": "./components-ts/portal-hamburger-menu/portal-hamburger-menu.ts",
+      "path": "./components/portal-hamburger-menu/portal-hamburger-menu.ts",
       "description": "A simple hamburger menu component.",
       "attributes": [
         {
@@ -163,7 +163,7 @@
     },
     {
       "name": "portal-navigation",
-      "path": "./components-ts/portal-navigation/portal-navigation.ts",
+      "path": "./components/portal-navigation/portal-navigation.ts",
       "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
       "attributes": [
         {

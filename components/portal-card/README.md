@@ -11,7 +11,7 @@ This component heavily borrows from the Open Web Components [demo card](https://
 ```js script
 import { html, withKnobs, withWebComponentsKnobs, text } from '@open-wc/demoing-storybook';
 
-import '../../dist/components-ts/portal-card/portal-card.js';
+import '../../dist/components/portal-card/portal-card.js';
 
 export default {
   title: 'Components/Card',

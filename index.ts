@@ -1,1 +1,3 @@
-export { PortalCard } from './components-ts/portal-card';
+export { PortalCard } from './components/portal-card';
+export { PortalHamburgerMenu } from './components/portal-hamburger-menu';
+export { PortalNavigation } from './components/portal-navigation';

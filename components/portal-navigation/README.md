@@ -8,8 +8,8 @@ A component implementing an opinionated (but generic and hence configurable) nav
 
 ```js script
 import { html, withKnobs, withWebComponentsKnobs } from '@open-wc/demoing-storybook';
-import './portal-navigation.js';
-import { PortalNavigation } from './src/PortalNavigation.js';
+import '../../dist/components/portal-navigation/portal-navigation.js';
+import { PortalNavigation } from '../../dist/components/portal-navigation/src/PortalNavigation.js';
 
 export default {
   title: 'Components/Portal Navigation',

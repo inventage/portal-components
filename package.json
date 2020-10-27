@@ -16,9 +16,9 @@
     "custom-elements.json"
   ],
   "scripts": {
-    "build": "npm run clean && tsc && run-s build:* && run-p copy:*",
-    "build:analyze:custom-elements": "wca analyze 'components-ts/**/*.ts' --outFile custom-elements.json",
-    "build:analyze:readme": "wca analyze 'components-ts/**/*.ts' --silent",
+    "build": "npm run clean && tsc && run-s build:* && npm run build:analyze:custom-elements && run-p copy:*",
+    "build:analyze:custom-elements": "wca analyze 'components/**/*.ts' --outFile custom-elements.json",
+    "build:analyze:readme": "wca analyze 'components/**/*.ts' --silent",
     "build:storybook": "npm run storybook:build",
     "clean": "rimraf storybook-static dist",
     "copy:data": "cp -Rpf data storybook-static/",
@@ -26,7 +26,7 @@
     "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier '**/*.{js,ts,md}' --write --ignore-path .gitignore",
     "lint": "run-p lint:*",
-    "lint:analyze": "lit-analyzer 'components-ts/**/*.ts' --strict --rules.no-noncallable-event-binding warn",
+    "lint:analyze": "lit-analyzer 'components/**/*.ts' --strict --rules.no-noncallable-event-binding warn",
     "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
     "lint:prettier": "prettier '**/*.{js,ts,md}' --check --ignore-path .gitignore",
@@ -38,12 +38,12 @@
     "storybook:build": "build-storybook",
     "storybook:build:start": "es-dev-server --root-dir storybook-static --open",
     "test": "tsc && npm run test:browser",
-    "test:browser": "wtr 'components-ts/**/*/test/**/*.test.ts' --coverage",
-    "test:browser:all": "wtr 'components-ts/**/*/test/**/*.test.ts' --playwright --browsers chromium firefox webkit --coverage",
-    "test:browser:watch": "wtr 'components-ts/**/*/test/**/*.test.ts' --watch",
+    "test:browser": "wtr 'components/**/*/test/**/*.test.ts' --coverage",
+    "test:browser:all": "wtr 'components/**/*/test/**/*.test.ts' --playwright --browsers chromium firefox webkit --coverage",
+    "test:browser:watch": "wtr 'components/**/*/test/**/*.test.ts' --watch",
     "test:watch": "npm run test:browser:watch",
     "tsc:watch": "tsc -p tsconfig.dev.json --watch",
-    "watch:analyze:custom-elements": "onchange -i 'components-ts/**/*.ts' -- npm run build:analyze:custom-elements"
+    "watch:analyze:custom-elements": "onchange -i 'components/**/*.ts' -- npm run build:analyze:custom-elements"
   },
   "dependencies": {
     "lit-element": "^2.4.0",
