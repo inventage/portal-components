@@ -77,17 +77,32 @@ export class PortalNavigation extends LitElement {
   })
   internalRouting = false;
 
+  /**
+   * @private
+   */
   @internalProperty()
   activePath = new IdPath();
 
+  /**
+   * @private
+   */
   @internalProperty()
   hamburgerMenuExpanded = false;
 
+  /**
+   * @private
+   */
   @internalProperty()
   activeDropdown: string | undefined;
 
+  /**
+   * @private
+   */
   temporaryBadgeValues = new Map();
 
+  /**
+   * @private
+   */
   configuration = new Configuration();
 
   static get styles(): CSSResultArray {

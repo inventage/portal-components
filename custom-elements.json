@@ -196,31 +196,6 @@
       ],
       "properties": [
         {
-          "name": "hamburgerMenuExpanded",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "activeDropdown",
-          "type": "string | undefined"
-        },
-        {
-          "name": "temporaryBadgeValues",
-          "type": "Map<any, any>",
-          "default": "\"new Map()\""
-        },
-        {
-          "name": "configuration",
-          "type": "Configuration",
-          "default": "\"new Configuration()\""
-        },
-        {
-          "name": "activePath",
-          "description": "the current path of \"active\" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered \"active\".",
-          "type": "IdPath",
-          "default": "\"new IdPath()\""
-        },
-        {
           "name": "src",
           "attribute": "src",
           "description": "location from where to fetch configuration data file.",
