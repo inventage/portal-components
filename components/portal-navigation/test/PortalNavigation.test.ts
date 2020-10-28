@@ -1,4 +1,4 @@
-import { expect, fixture, html, oneEvent } from '@open-wc/testing';
+import { aTimeout, expect, fixture, html, oneEvent } from '@open-wc/testing';
 
 import '../portal-navigation';
 import { PortalNavigation } from '../src/PortalNavigation';
@@ -7,11 +7,19 @@ import { data } from './test-data-json';
 import { MockEvent } from './MockEvent';
 import { MockEventListener } from './MockEventListener';
 import sinon from 'sinon';
+import { setViewport } from '@web/test-runner-commands';
 
 const configurationData = data as ConfigurationData;
 
 const TEST_DATA_JSON_PATH = '/components/portal-navigation/test/test-data.json';
 
+beforeEach(async () => {
+  await setViewport({ width: 1200, height: 800 });
+});
+
+/**
+ * @see https://open-wc.org/testing/testing-helpers.html
+ */
 describe('<portal-navigation>', () => {
   // it('is empty by default', async () => {
   //   const el: PortalNavigation = await fixture(html`<portal-navigation></portal-navigation>`);
@@ -30,8 +38,6 @@ describe('<portal-navigation>', () => {
 
   it('passes the a11y audit', async () => {
     const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
-    // TODO: Why is there nothing rendered here?!
-    console.log(el.shadowRoot!.innerHTML);
     await expect(el).to.be.accessible();
   });
 
@@ -241,7 +247,20 @@ describe('<portal-navigation>', () => {
     expect(detail).to.equal('en');
   });
 
-  it.skip('dispatches the "routeTo" event', async () => {
-    // TODO: Implement a test for the routeTo event…
+  it('dispatches the "routeTo" event', async () => {
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app1"></portal-navigation>`);
+    // This is needed for the component to render…
+    await aTimeout(100);
+
+    // @see https://open-wc.org/faq/unit-testing-custom-events.html
+    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item2.2"]')).click();
+    setTimeout(clickMenuItem);
+    const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
+
+    expect(detail.url).to.equal('/some/path/item2.2');
+    expect(detail.label).to.deep.equal({
+      de: 'Item 2.2_de',
+      en: 'Item 2.2_en',
+    });
   });
 });

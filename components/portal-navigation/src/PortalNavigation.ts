@@ -8,28 +8,50 @@ import { IdPath } from './IdPath';
 import { PropertyDeclaration, PropertyValues } from 'lit-element/lib/updating-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
-enum NavigationMenus {
+/**
+ * A listing of key menu ids that are handled specifically by the portal navigation component.
+ */
+const NavigationMenus = {
   /**
    * The 'main' menu's items will be displayed in the second row.
    */
-  main = 'main',
+  main: 'main',
+
   /**
    * The 'meta' menu's items will be displayed in the top row on the left of 'profile' menu.
    */
-  meta = 'meta',
+  meta: 'meta',
+
   /**
    * The 'profile' menu's items will be displayed in the top row on the left of 'logout' menu.
    */
-  profile = 'profile',
+  profile: 'profile',
+
   /**
    * The 'meta' menu's items will be displayed in the top row on the very right.
    */
-  logout = 'logout',
-}
+  logout: 'logout',
+} as const;
 
-type PortalNavigationMenus = {
-  [key in NavigationMenus]: string;
-};
+type NavigationMenus = typeof NavigationMenus;
+type NavigationMenuNames = keyof typeof NavigationMenus;
+
+const NavigationEventNamespace = 'portal-navigation';
+
+const NavigationEvents = {
+  routeTo: `${NavigationEventNamespace}.routeTo`,
+  setLanguage: `${NavigationEventNamespace}.setLanguage`,
+  setBadgeValue: `${NavigationEventNamespace}.setBadgeValue`,
+  configured: `${NavigationEventNamespace}.configured`,
+} as const;
+
+type NavigationEvents = typeof NavigationEvents;
+
+const NavigationCssClasses = {
+  selected: 'selected',
+} as const;
+
+type NavigationCssClasses = typeof NavigationCssClasses;
 
 /**
  * A component implementing an opinionated (but generic and hence configurable) navigation pattern.
@@ -97,50 +119,30 @@ export class PortalNavigation extends LitElement {
 
   /**
    * A listing of key menu ids that are handled specifically by the portal navigation component.
-   *
-   * @returns {{logout: string, meta: string, profile: string, main: string}}
    */
-  static get menuIds(): PortalNavigationMenus {
-    return {
-      main: 'main',
-      meta: 'meta',
-      profile: 'profile',
-      logout: 'logout',
-    };
+  static get menuIds(): NavigationMenus {
+    return NavigationMenus;
   }
 
   /**
    * A specifically handled menu ids in the order they will be displayed in the hamburger menu.
    */
-  static get menuIdsOrdered(): string[] {
+  static get menuIdsOrdered(): NavigationMenuNames[] {
     return Object.values(PortalNavigation.menuIds);
   }
 
   /**
    * A listing of events this components fires or listens to.
-   *
-   * @returns {{routeTo: string, setBadgeValue: string, setLanguage: string, configured: string}}
    */
-  static get events(): Record<string, string> {
-    const ns = 'portal-navigation';
-
-    return {
-      routeTo: `${ns}.routeTo`,
-      setLanguage: `${ns}.setLanguage`,
-      setBadgeValue: `${ns}.setBadgeValue`,
-      configured: `${ns}.configured`,
-    };
+  static get events(): NavigationEvents {
+    return NavigationEvents;
   }
 
   /**
    * A listing of css classes that are frequently used in a generic manner.
-   *
-   * @returns {{selected: string}}
    */
-  static get classes(): Record<string, string> {
-    return {
-      selected: '-selected',
-    };
+  static get classes(): NavigationCssClasses {
+    return NavigationCssClasses;
   }
 
   constructor() {
@@ -367,7 +369,6 @@ export class PortalNavigation extends LitElement {
    */
   _createMenuTemplate(menuId: string): TemplateResult {
     const menu = this.configuration.getMenu(menuId);
-
     if (!menu || !menu.items || menu.items.length <= 0) {
       return html``;
     }
@@ -417,7 +418,7 @@ export class PortalNavigation extends LitElement {
         class="${classMap({
           link: true,
           'portal-navigation-tree-parent': isTreeMode,
-          [PortalNavigation.classes.selected]: active,
+          [NavigationCssClasses.selected]: active,
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${(e: Event) => this._onLink(e, item)}"
@@ -465,7 +466,7 @@ export class PortalNavigation extends LitElement {
       part="${ifDefined(id)}"
       class="${classMap({
         link: true,
-        [PortalNavigation.classes.selected]: active,
+        [NavigationCssClasses.selected]: active,
       })}"
       @click="${(e: Event) => this._onLink(e, item)}"
       target="${destination === 'extern' ? '_blank' : '_self'}"
@@ -616,7 +617,6 @@ export class PortalNavigation extends LitElement {
             url: refItem!.url,
             label: refItem!.label,
           },
-          bubbles: true,
         }),
       );
     }
