@@ -1,4 +1,4 @@
-import { expect, fixture, html } from '@open-wc/testing';
+import { expect, fixture, html, oneEvent } from '@open-wc/testing';
 
 import '../portal-navigation';
 import { PortalNavigation } from '../src/PortalNavigation';
@@ -6,6 +6,7 @@ import { Configuration, ConfigurationData, MenuItem, MenuLabel } from '../src/Co
 import { data } from './test-data-json';
 import { MockEvent } from './MockEvent';
 import { MockEventListener } from './MockEventListener';
+import sinon from 'sinon';
 
 const configurationData = data as ConfigurationData;
 
@@ -205,5 +206,31 @@ describe('<portal-navigation>', () => {
     //const badge = el.shadowRoot!.querySelector('[part="parent2-badge"]');
     //console.log(el.shadowRoot!.innerHTML);
     //expect(badge).not.to.equal(null);
+  });
+
+  it('dispatches the "configured" event', async () => {
+    const eventSpy = sinon.spy();
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="/components/portal-navigation/test/test-data.json" @portal-navigation.configured="${eventSpy}"></portal-navigation>`);
+    await oneEvent(el, 'portal-navigation.configured');
+    expect(eventSpy.callCount).to.equal(1);
+  });
+
+  it('dispatches the "setLanguage" event', async () => {
+    const eventSpy = sinon.spy();
+    const el: PortalNavigation = await fixture(html`<portal-navigation language="de" @portal-navigation.setLanguage="${eventSpy}"></portal-navigation>`);
+
+    // Should trow an event initially…
+    expect(eventSpy.callCount).to.equal(1);
+
+    el.language = 'en';
+    const { detail } = await oneEvent(el, 'portal-navigation.setLanguage');
+
+    // After changing the language again, the callCount should be increased once more…
+    expect(eventSpy.callCount).to.equal(2);
+    expect(detail).to.equal('en');
+  });
+
+  it.skip('dispatches the "routeTo" event', async () => {
+    // TODO: Implement a test for the routeTo event…
   });
 });

@@ -269,7 +269,7 @@ export class PortalNavigation extends LitElement {
       .then(data => {
         try {
           this.configuration = new Configuration(data);
-          this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration, bubbles: true }));
+          this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
           this.__updateActivePathFromUrl();
           this.requestUpdateInternal();
         } catch (e) {
