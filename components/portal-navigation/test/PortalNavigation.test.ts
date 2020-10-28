@@ -10,6 +10,8 @@ import sinon from 'sinon';
 
 const configurationData = data as ConfigurationData;
 
+const TEST_DATA_JSON_PATH = '/components/portal-navigation/test/test-data.json';
+
 describe('<portal-navigation>', () => {
   // it('is empty by default', async () => {
   //   const el: PortalNavigation = await fixture(html`<portal-navigation></portal-navigation>`);
@@ -17,7 +19,7 @@ describe('<portal-navigation>', () => {
   // });
 
   it('is displayed by default', async () => {
-    const el: PortalNavigation = await fixture(html`<portal-navigation></portal-navigation>`);
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
     expect(el).to.be.displayed;
   });
 
@@ -27,8 +29,19 @@ describe('<portal-navigation>', () => {
   });
 
   it('passes the a11y audit', async () => {
-    const el: PortalNavigation = await fixture(html`<portal-navigation></portal-navigation>`);
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
+    // TODO: Why is there nothing rendered here?!
+    // console.log(el.shadowRoot!.innerHTML);
     await expect(el).to.be.accessible();
+  });
+
+  it('returns sorted array of known menu ids', () => {
+    expect(PortalNavigation.menuIdsOrdered).to.deep.equal(['main', 'meta', 'profile', 'logout']);
+  });
+
+  it.skip('sets activeUrl from current window location', async () => {
+    // TODO: mock window.location
+    // TOOO: Check activeUrl property…
   });
 
   it('doesnt route internally when default item of parent item has different application', async () => {
@@ -184,9 +197,7 @@ describe('<portal-navigation>', () => {
   });
 
   it('sets badge for a given menu item', async () => {
-    const el: PortalNavigation = await fixture(html`<portal-navigation></portal-navigation>`);
-    el.setConfiguration(new Configuration(configurationData));
-
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
     const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
 
     document.dispatchEvent(
@@ -210,7 +221,7 @@ describe('<portal-navigation>', () => {
 
   it('dispatches the "configured" event', async () => {
     const eventSpy = sinon.spy();
-    const el: PortalNavigation = await fixture(html`<portal-navigation src="/components/portal-navigation/test/test-data.json" @portal-navigation.configured="${eventSpy}"></portal-navigation>`);
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" @portal-navigation.configured="${eventSpy}"></portal-navigation>`);
     await oneEvent(el, 'portal-navigation.configured');
     expect(eventSpy.callCount).to.equal(1);
   });
