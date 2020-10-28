@@ -693,4 +693,8 @@ export class PortalNavigation extends LitElement {
   getActivePath(): IdPath {
     return this.activePath;
   }
+
+  getTemporaryBadgeValues(): Map<unknown, unknown> {
+    return this.temporaryBadgeValues;
+  }
 }

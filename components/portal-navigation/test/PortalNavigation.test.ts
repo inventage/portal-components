@@ -2,7 +2,7 @@ import { expect, fixture, html } from '@open-wc/testing';
 
 import '../portal-navigation';
 import { PortalNavigation } from '../src/PortalNavigation';
-import { Configuration, ConfigurationData, MenuItem } from '../src/Configuration';
+import { Configuration, ConfigurationData, MenuItem, MenuLabel } from '../src/Configuration';
 import { data } from './test-data-json';
 import { MockEvent } from './MockEvent';
 import { MockEventListener } from './MockEventListener';
@@ -180,5 +180,30 @@ describe('<portal-navigation>', () => {
     expect(el.getActivePath().getId(2)).to.be.undefined;
     expect(el.getActivePath().getFirstLevelItemId()).to.equal('parent5');
     expect(listener.count).to.equal(0);
+  });
+
+  it('sets badge for a given menu item', async () => {
+    const el: PortalNavigation = await fixture(html`<portal-navigation></portal-navigation>`);
+    el.setConfiguration(new Configuration(configurationData));
+
+    const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
+
+    document.dispatchEvent(
+      new CustomEvent(PortalNavigation.events.setBadgeValue, {
+        detail: {
+          id: 'parent2',
+          value: badgeLabel,
+        },
+      }),
+    );
+
+    expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
+
+    // TODO: Does not work since the component does not seem to be rendered properly…
+    // TODO: Adapt tests so we really test how the component works in the browser
+    //       - use attributes / public properties properly
+    //const badge = el.shadowRoot!.querySelector('[part="parent2-badge"]');
+    //console.log(el.shadowRoot!.innerHTML);
+    //expect(badge).not.to.equal(null);
   });
 });
