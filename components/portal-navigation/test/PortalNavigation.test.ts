@@ -24,14 +24,14 @@ describe('<portal-navigation>', () => {
   });
 
   it('is hidden when attribute hidden is true', async () => {
-    const el: PortalNavigation = await fixture(html`<portal-navigation hidden></portal-navigation>`);
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" hidden></portal-navigation>`);
     expect(el).not.to.be.displayed;
   });
 
   it('passes the a11y audit', async () => {
     const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
     // TODO: Why is there nothing rendered here?!
-    // console.log(el.shadowRoot!.innerHTML);
+    console.log(el.shadowRoot!.innerHTML);
     await expect(el).to.be.accessible();
   });
 
