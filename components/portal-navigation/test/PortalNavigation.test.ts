@@ -202,34 +202,40 @@ describe('<portal-navigation>', () => {
     expect(listener.count).to.equal(0);
   });
 
-  it('sets badge for a given menu item', async () => {
-    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
-    const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
-
-    document.dispatchEvent(
-      new CustomEvent(PortalNavigation.events.setBadgeValue, {
-        detail: {
-          id: 'parent2',
-          value: badgeLabel,
-        },
-      }),
-    );
-
-    expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
-
-    // TODO: Does not work since the component does not seem to be rendered properly…
-    // TODO: Adapt tests so we really test how the component works in the browser
-    //       - use attributes / public properties properly
-    //const badge = el.shadowRoot!.querySelector('[part="parent2-badge"]');
-    //console.log(el.shadowRoot!.innerHTML);
-    //expect(badge).not.to.equal(null);
-  });
-
   it('dispatches the "configured" event', async () => {
     const eventSpy = sinon.spy();
     const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" @portal-navigation.configured="${eventSpy}"></portal-navigation>`);
     await oneEvent(el, 'portal-navigation.configured');
     expect(eventSpy.callCount).to.equal(1);
+  });
+
+  it('sets badge for a given menu item', async () => {
+    const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
+    const el: PortalNavigation = await fixture(
+      html`<portal-navigation
+        src="${TEST_DATA_JSON_PATH}"
+        @portal-navigation.configured="${() => {
+          document.dispatchEvent(
+            new CustomEvent(PortalNavigation.events.setBadgeValue, {
+              detail: {
+                id: 'parent2',
+                value: badgeLabel,
+              },
+            }),
+          );
+        }}"
+      ></portal-navigation>`,
+    );
+
+    // This is needed for the component to render…
+    await aTimeout(100);
+
+    expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
+
+    // TODO: This should be 'part="parent2-badge"'? but then the test fails…
+    const badge = el.shadowRoot!.querySelector('[part="item2.2-badge"]');
+    // console.log(el.shadowRoot!.innerHTML);
+    expect(badge).not.to.equal(null);
   });
 
   it('dispatches the "setLanguage" event', async () => {
