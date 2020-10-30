@@ -204,7 +204,7 @@ describe('<portal-navigation>', () => {
 
   it('dispatches the "configured" event', async () => {
     const eventSpy = sinon.spy();
-    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" @portal-navigation.configured="${eventSpy}"></portal-navigation>`);
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" @portal-navigation.configured="${eventSpy as EventListener}"></portal-navigation>`);
     await oneEvent(el, 'portal-navigation.configured');
     expect(eventSpy.callCount).to.equal(1);
   });
@@ -251,7 +251,7 @@ describe('<portal-navigation>', () => {
 
   it('dispatches the "setLanguage" event', async () => {
     const eventSpy = sinon.spy();
-    const el: PortalNavigation = await fixture(html`<portal-navigation language="de" @portal-navigation.setLanguage="${eventSpy}"></portal-navigation>`);
+    const el: PortalNavigation = await fixture(html`<portal-navigation language="de" @portal-navigation.setLanguage="${eventSpy as EventListener}"></portal-navigation>`);
 
     // Should trow an event initially…
     expect(eventSpy.callCount).to.equal(1);
