@@ -414,7 +414,7 @@ export class PortalNavigation extends LitElement {
 
     return html` <a
         href="${ifDefined(url)}"
-        part="${ifDefined(refItem.id)}"
+        part="${ifDefined(id)}"
         class="${classMap({
           link: true,
           'portal-navigation-tree-parent': isTreeMode,
@@ -422,7 +422,7 @@ export class PortalNavigation extends LitElement {
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${(e: Event) => this._onLink(e, item)}"
-        >${this._createLinkTemplate(refItem.id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : html``}</a
+        >${this._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : html``}</a
       >
       ${isTreeMode && active && hasItems ? html`<div class="portal-navigation-tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : html``}`;
   }

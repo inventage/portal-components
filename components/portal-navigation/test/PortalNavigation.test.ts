@@ -209,6 +209,21 @@ describe('<portal-navigation>', () => {
     expect(eventSpy.callCount).to.equal(1);
   });
 
+  it('each item has a `part` attribute corresponding to its id', async () => {
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app1"></portal-navigation>`);
+    await aTimeout(100); // Let it render
+
+    // Set parent2 as "active" item (should default to its child…)
+    (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent2"]')!).click();
+    await aTimeout(100); // Let it re-render
+
+    // Assets part attributes
+    expect(el.shadowRoot!.querySelector('[part="parent1"]')).not.to.equal(null);
+    expect(el.shadowRoot!.querySelector('[part="parent2"]')).not.to.equal(null);
+    expect(el.shadowRoot!.querySelector('[part="item2.1"]')).not.to.equal(null);
+    expect(el.shadowRoot!.querySelector('[part="item2.2"]')).not.to.equal(null);
+  });
+
   it('sets badge for a given menu item', async () => {
     const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
     const el: PortalNavigation = await fixture(
@@ -231,11 +246,7 @@ describe('<portal-navigation>', () => {
     await aTimeout(100);
 
     expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
-
-    // TODO: This should be 'part="parent2-badge"'? but then the test fails…
-    const badge = el.shadowRoot!.querySelector('[part="item2.2-badge"]');
-    // console.log(el.shadowRoot!.innerHTML);
-    expect(badge).not.to.equal(null);
+    expect(el.shadowRoot!.querySelector('[part="parent2-badge"]')).not.to.equal(null);
   });
 
   it('dispatches the "setLanguage" event', async () => {
@@ -259,7 +270,7 @@ describe('<portal-navigation>', () => {
     await aTimeout(100);
 
     // @see https://open-wc.org/faq/unit-testing-custom-events.html
-    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item2.2"]')).click();
+    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent2"]')).click();
     setTimeout(clickMenuItem);
     const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
 
