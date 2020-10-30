@@ -1,4 +1,4 @@
-import { aTimeout, expect, fixture, html, oneEvent } from '@open-wc/testing';
+import { aTimeout, expect, fixture, fixtureCleanup, html, oneEvent } from '@open-wc/testing';
 
 import '../portal-navigation';
 import { PortalNavigation } from '../src/PortalNavigation';
@@ -15,6 +15,10 @@ const TEST_DATA_JSON_PATH = '/components/portal-navigation/test/test-data.json';
 
 beforeEach(async () => {
   await setViewport({ width: 1200, height: 800 });
+});
+
+afterEach(() => {
+  fixtureCleanup();
 });
 
 /**
@@ -56,7 +60,7 @@ describe('<portal-navigation>', () => {
     el.setConfiguration(new Configuration(configurationData));
 
     // when
-    const item = el.getConfiguration().getData(['menus::menu1', `items::parent2`]);
+    const item = el.getConfiguration().getData(['menus::menu1', 'items::parent2']);
     const internal = el.isInternalRouting(<MenuItem>item);
 
     // then
@@ -69,7 +73,7 @@ describe('<portal-navigation>', () => {
     el.setConfiguration(new Configuration(configurationData));
 
     // when
-    const parent = el.getConfiguration().getData(['menus::menu1', `items::parent2`]);
+    const parent = el.getConfiguration().getData(['menus::menu1', 'items::parent2']);
     const internal = el.isInternalRouting(<MenuItem>parent);
 
     // then
@@ -82,7 +86,7 @@ describe('<portal-navigation>', () => {
     el.setConfiguration(new Configuration(configurationData));
 
     // when
-    const parent = el.getConfiguration().getData(['menus::menu2', `items::parent3`]);
+    const parent = el.getConfiguration().getData(['menus::menu2', 'items::parent3']);
     const internal = el.isInternalRouting(<MenuItem>parent);
 
     // then
@@ -97,7 +101,7 @@ describe('<portal-navigation>', () => {
     const e = new MockEvent();
 
     // when
-    const parent = el.getConfiguration().getData(['menus::menu2', `items::parent3`]);
+    const parent = el.getConfiguration().getData(['menus::menu2', 'items::parent3']);
     el._onLink(<Event>(e as unknown), <MenuItem>parent);
 
     // then
@@ -118,7 +122,7 @@ describe('<portal-navigation>', () => {
     const e = new MockEvent();
 
     // when
-    const parent = el.getConfiguration().getData(['menus::menu1', `items::parent2`]);
+    const parent = el.getConfiguration().getData(['menus::menu1', 'items::parent2']);
     el._onLink(<Event>(e as unknown), <MenuItem>parent);
 
     // then
