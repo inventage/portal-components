@@ -112,28 +112,20 @@ describe('<portal-navigation>', () => {
   });
 
   it('does route internally when default item of parent item has same application, and does call e.preventDefault()', async () => {
-    // given
-    const el: PortalNavigation = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
-    el.setConfiguration(new Configuration(configurationData));
+    const eventSpy = sinon.spy();
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app2" internalRouting @portal-navigation.routeTo="${eventSpy as EventListener}"></portal-navigation>`);
+    await aTimeout(100); // This is needed for the component to render…
 
-    const listener = new MockEventListener();
-    el.addEventListener(PortalNavigation.events.routeTo, listener.create());
+    // @see https://open-wc.org/faq/unit-testing-custom-events.html
+    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent3"]')).click();
+    setTimeout(clickMenuItem);
+    const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
 
-    const e = new MockEvent();
-
-    // when
-    const parent = el.getConfiguration().getData(['menus::menu1', 'items::parent2']);
-    el._onLink(<Event>(e as unknown), <MenuItem>parent);
-
-    // then
-    expect(e.count).to.equal(1);
+    expect(eventSpy.callCount).to.equal(1);
+    expect(detail.url).to.equal('/some/path/item2.2');
     expect(el.getActivePath().getMenuId()).to.equal('menu1');
     expect(el.getActivePath().getFirstLevelItemId()).to.equal('parent2');
     expect(el.getActivePath().getId(2)).to.equal('item2.2');
-    expect(listener.count).to.equal(1);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(listener.e.detail.url).to.equal('/some/path/item2.2');
   });
 
   it('sets corresponding activePath when activeUrl is set', async () => {
