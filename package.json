@@ -108,11 +108,5 @@
   },
   "np": {
     "yarn": false
-  },
-  "prettier": {
-    "singleQuote": true,
-    "arrowParens": "avoid",
-    "printWidth": 240,
-    "trailingComma": "all"
   }
 }
