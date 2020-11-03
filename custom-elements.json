@@ -242,6 +242,20 @@
           "description": "Event fired when the configuration has been successfully loaded."
         }
       ],
+      "slots": [
+        {
+          "name": "logo",
+          "description": "The slot for the logo"
+        },
+        {
+          "name": "right",
+          "description": "The right slot"
+        },
+        {
+          "name": "left",
+          "description": "The left slot"
+        }
+      ],
       "cssProperties": [
         {
           "name": "--portal-navigation-color-primary",

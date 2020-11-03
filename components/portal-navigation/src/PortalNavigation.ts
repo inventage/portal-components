@@ -81,6 +81,10 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {length} [--portal-navigation-font-size=1.25rem]
  * @cssprop {length} [--portal-navigation-font-size-badge=1rem]
  * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem]
+ *
+ * @slot logo - The slot for the logo
+ * @slot right - The right slot
+ * @slot left - The left slot
  */
 export class PortalNavigation extends LitElement {
   @property()
@@ -340,21 +344,21 @@ export class PortalNavigation extends LitElement {
   /**
    * Override to make use of the slot in extension.
    */
-  _createLogoSlotTemplate(): TemplateResult {
+  protected _createLogoSlotTemplate(): TemplateResult {
     return html`<slot name="logo"></slot>`;
   }
 
   /**
    * Override to make use of the slot in extension.
    */
-  _createLeftSlotTemplate(): TemplateResult {
+  protected _createLeftSlotTemplate(): TemplateResult {
     return html`<slot name="left"></slot>`;
   }
 
   /**
    * Override to make use of the slot in extension.
    */
-  _createRightSlotTemplate(): TemplateResult {
+  protected _createRightSlotTemplate(): TemplateResult {
     return html`<slot name="right"></slot>`;
   }
 
