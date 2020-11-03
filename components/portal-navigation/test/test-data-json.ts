@@ -1,3 +1,6 @@
+/**
+ * @deprecated Use test-data.json instead
+ */
 export const data = {
   menus: [
     {

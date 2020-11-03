@@ -1,4 +1,4 @@
-import { aTimeout, expect, fixture, fixtureCleanup, html, oneEvent } from '@open-wc/testing';
+import { aTimeout, expect, fixture, fixtureCleanup, html, oneEvent, waitUntil } from '@open-wc/testing';
 
 import '../portal-navigation';
 import { PortalNavigation } from '../src/PortalNavigation';
@@ -9,6 +9,9 @@ import { MockEventListener } from './MockEventListener';
 import sinon from 'sinon';
 import { setViewport } from '@web/test-runner-commands';
 
+/**
+ * @deprecated Use test-data.json instead
+ */
 const configurationData = data as ConfigurationData;
 
 const TEST_DATA_JSON_PATH = '/components/portal-navigation/test/test-data.json';
@@ -93,37 +96,40 @@ describe('<portal-navigation>', () => {
     expect(internal).to.equal(false);
   });
 
-  it('does route externally when default item of parent item has other application, and does not call e.preventDefault()', async () => {
-    // given
-    const el: PortalNavigation = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
-    el.setConfiguration(new Configuration(configurationData));
+  it('does route externally when default item of parent item has other application', async () => {
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting></portal-navigation>`);
+    // Wait until component tree renders…
+    // @see https://open-wc.org/docs/testing/helpers/#waituntil
+    await waitUntil(() => !!el.shadowRoot!.querySelector('[part="parent3"]'));
 
     const e = new MockEvent();
 
     // when
-    const parent = el.getConfiguration().getData(['menus::menu2', 'items::parent3']);
+    const parent = el.getConfiguration().getData(['menus::meta', 'items::parent3']);
     el._onLink(<Event>(e as unknown), <MenuItem>parent);
 
     // then
     expect(e.count).to.equal(0);
-    expect(el.getActivePath().getMenuId()).to.equal('menu2');
+    expect(el.getActivePath().getMenuId()).to.equal('meta');
     expect(el.getActivePath().getFirstLevelItemId()).to.equal('parent3');
     expect(el.getActivePath().getId(2)).to.equal('item3.1');
   });
 
-  it('does route internally when default item of parent item has same application, and does call e.preventDefault()', async () => {
+  it('does route internally when default item of parent item has same application', async () => {
     const eventSpy = sinon.spy();
-    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app2" internalRouting @portal-navigation.routeTo="${eventSpy as EventListener}"></portal-navigation>`);
-    await aTimeout(100); // This is needed for the component to render…
+    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting @portal-navigation.routeTo="${eventSpy as EventListener}"></portal-navigation>`);
+    // Wait until component tree renders…
+    // @see https://open-wc.org/docs/testing/helpers/#waituntil
+    await waitUntil(() => !!el.shadowRoot!.querySelector('[part="parent2"]'));
 
     // @see https://open-wc.org/faq/unit-testing-custom-events.html
-    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent3"]')).click();
+    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent2"]')).click();
     setTimeout(clickMenuItem);
     const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
 
     expect(eventSpy.callCount).to.equal(1);
     expect(detail.url).to.equal('/some/path/item2.2');
-    expect(el.getActivePath().getMenuId()).to.equal('menu1');
+    expect(el.getActivePath().getMenuId()).to.equal('main');
     expect(el.getActivePath().getFirstLevelItemId()).to.equal('parent2');
     expect(el.getActivePath().getId(2)).to.equal('item2.2');
   });
@@ -262,8 +268,9 @@ describe('<portal-navigation>', () => {
 
   it('dispatches the "routeTo" event', async () => {
     const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app1"></portal-navigation>`);
-    // This is needed for the component to render…
-    await aTimeout(100);
+    // Wait until component tree renders…
+    // @see https://open-wc.org/docs/testing/helpers/#waituntil
+    await waitUntil(() => !!el.shadowRoot!.querySelector('[part="parent2"]'));
 
     // @see https://open-wc.org/faq/unit-testing-custom-events.html
     const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent2"]')).click();
