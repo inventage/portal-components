@@ -39,8 +39,8 @@ npm i @inventage/portal-components
 -->
 <script
   type="module"
-  src="/node_modules/@inventage/portal-components/dist/components/portal-navigation/portal-navigation.js"
+  src="/node_modules/@inventage/portal-components/dist/components/portal-card/portal-card.js"
 </script>
 
-<portal-navigation></portal-navigation>
+<portal-card></portal-card>
 ```
