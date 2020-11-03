@@ -526,10 +526,12 @@ export class PortalNavigation extends LitElement {
    *
    * @param e - the click event.
    * @param item - the item being clicked.
+   *
+   * TODO: Make this method protected / private, and we also need to adopt the tests…
    */
-  _onLink(e: Event, item: MenuItem): undefined {
+  _onLink(e: Event, item: MenuItem): void {
     if (!item) {
-      return undefined;
+      return;
     }
 
     const hasItems = item.items && item.items.length > 0;
@@ -539,9 +541,10 @@ export class PortalNavigation extends LitElement {
       if (internalRouting) {
         e.preventDefault();
         this._internalLinkSelected(item.id);
-        return undefined;
+        return;
       }
-      return undefined;
+
+      return;
     }
 
     // if the default item is external we don't want to honor this flag when clicking on a parent item
@@ -551,7 +554,7 @@ export class PortalNavigation extends LitElement {
 
     this._internalLinkSelected(item.id);
 
-    return undefined;
+    return;
   }
 
   /**
