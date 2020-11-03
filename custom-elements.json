@@ -3,7 +3,7 @@
   "tags": [
     {
       "name": "portal-card",
-      "path": "./components/portal-card/portal-card.js",
+      "path": "./components/portal-card/portal-card.ts",
       "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
       "attributes": [
         {
@@ -83,7 +83,7 @@
     },
     {
       "name": "portal-hamburger-menu",
-      "path": "./components/portal-hamburger-menu/portal-hamburger-menu.js",
+      "path": "./components/portal-hamburger-menu/portal-hamburger-menu.ts",
       "description": "A simple hamburger menu component.",
       "attributes": [
         {
@@ -163,32 +163,29 @@
     },
     {
       "name": "portal-navigation",
-      "path": "./components/portal-navigation/portal-navigation.js",
+      "path": "./components/portal-navigation/portal-navigation.ts",
       "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
       "attributes": [
         {
           "name": "src",
           "description": "location from where to fetch configuration data file.",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
-          "name": "lang",
+          "name": "language",
           "description": "the current language. e.g. 'en' or 'de'.",
           "type": "string",
-          "default": "\"language\""
+          "default": "\"en\""
         },
         {
           "name": "activeUrl",
           "description": "you can use this to set the active path via the url of an item.",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
           "name": "currentApplication",
           "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
           "name": "internalRouting",
@@ -202,29 +199,26 @@
           "name": "src",
           "attribute": "src",
           "description": "location from where to fetch configuration data file.",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
-          "name": "lang",
-          "attribute": "lang",
+          "name": "language",
+          "attribute": "language",
           "description": "the current language. e.g. 'en' or 'de'.",
           "type": "string",
-          "default": "\"language\""
+          "default": "\"en\""
         },
         {
           "name": "activeUrl",
           "attribute": "activeUrl",
           "description": "you can use this to set the active path via the url of an item.",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
           "name": "currentApplication",
           "attribute": "currentApplication",
           "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string",
-          "default": "\"undefined\""
+          "type": "string"
         },
         {
           "name": "internalRouting",
