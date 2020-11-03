@@ -17,7 +17,7 @@ export default {
 ### unpkg.com
 
 ```html
-<script type="module" src="https://unpkg.com/@inventage/portal-components/components/portal-card/portal-card.js?module"></script>
+<script type="module" src="https://unpkg.com/@inventage/portal-components/dist/components/portal-card/portal-card.js?module"></script>
 
 <portal-card></portal-card>
 ```
@@ -39,7 +39,7 @@ npm i @inventage/portal-components
 -->
 <script
   type="module"
-  src="/node_modules/@inventage/portal-components/components/portal-navigation/portal-navigation.js"
+  src="/node_modules/@inventage/portal-components/dist/components/portal-navigation/portal-navigation.js"
 </script>
 
 <portal-navigation></portal-navigation>
