@@ -257,28 +257,25 @@ export class PortalNavigation extends LitElement {
   /**
    * Fetches the configuration data from the source provided by 'src' and initializes the configuration.
    */
-  private __fetchRemoteData() {
+  private async __fetchRemoteData() {
     if (!this.src) {
       return;
     }
 
     this.configuration = new Configuration();
 
-    fetch(this.src)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        try {
-          this.configuration = new Configuration(data);
-          this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
-          this.__updateActivePathFromUrl();
-          this.requestUpdateInternal();
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.warn(e);
-        }
-      });
+    try {
+      const response = await fetch(this.src);
+      const data = await response.json();
+
+      this.configuration = new Configuration(data);
+      this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
+      this.__updateActivePathFromUrl();
+      this.requestUpdateInternal();
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn('An error occurred when fetching remote data…', e);
+    }
   }
 
   /**
