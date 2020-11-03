@@ -637,7 +637,7 @@ export class PortalNavigation extends LitElement {
 
     // there are no items to choose from
     if (!Array.isArray(items) || items.length < 1) {
-      return undefined;
+      return;
     }
 
     // if no defaultItem is defined or it can't be found use the first item.
