@@ -60,5 +60,9 @@ const dispatchBadgeEvents = () => {
 ## Examples
 
 ```js preview-story
-export const Basic = () => html`<portal-navigation src="./data/data.json" internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}"></portal-navigation>`;
+export const Basic = () => html` <portal-navigation src="./data/data.json" internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}">
+  <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
+  <span slot="left" style="font-size: 0.75rem; display: flex; align-items: center;">Left slot</span>
+  <span slot="right" style="font-size: 0.75rem; display: flex; align-items: center;">Right slot</span>
+</portal-navigation>`;
 ```

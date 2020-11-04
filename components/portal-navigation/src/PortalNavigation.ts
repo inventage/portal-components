@@ -69,8 +69,9 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @prop {string} currentApplication - the current application. Items change their routing behavior based on whether their application property matches this property or not.
  * @prop {boolean} internalRouting - true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.
  *
- * @cssprop {color} [--portal-navigation-color-primary=#2c3e50]
+ * @cssprop {color} [--portal-navigation-color-primary=#555]
  * @cssprop {color} [--portal-navigation-color-secondary=rgb(66, 136, 245)]
+ * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)]
  * @cssprop {color} [--portal-navigation-color-selected=var(--portal-navigation-color-secondary)]
  * @cssprop {color} [--portal-navigation-color-hover=var(--portal-navigation-color-secondary)]
  * @cssprop {color} [--portal-navigation-color-badge=white]

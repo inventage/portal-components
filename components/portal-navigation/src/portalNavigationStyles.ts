@@ -2,8 +2,9 @@ import { css } from 'lit-element';
 
 export const portalNavigationStyles = css`
   :host {
-    --portal-navigation-color-primary: #2c3e50;
+    --portal-navigation-color-primary: #555;
     --portal-navigation-color-secondary: rgb(66, 136, 245);
+    --portal-navigation-color-link: var(--portal-navigation-color-primary);
     --portal-navigation-color-selected: var(--portal-navigation-color-secondary);
     --portal-navigation-color-hover: var(--portal-navigation-color-secondary);
     --portal-navigation-color-badge: white;
@@ -21,6 +22,7 @@ export const portalNavigationStyles = css`
 
   .portal-navigation-container {
     margin: 0;
+    color: var(--portal-navigation-color-primary);
   }
 
   .portal-navigation-header {
@@ -53,7 +55,7 @@ export const portalNavigationStyles = css`
     margin: 0.25rem 0;
     display: flex;
     align-items: center;
-    color: darkslategray;
+    color: var(--portal-navigation-color-link);
   }
 
   .link.-selected {
