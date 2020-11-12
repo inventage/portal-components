@@ -2,25 +2,7 @@ import { css } from 'lit-element';
 
 export const portalNavigationStyles = css`
   :host {
-    --portal-navigation-color-primary: #555;
-    --portal-navigation-color-secondary: rgb(66, 136, 245);
-    --portal-navigation-color-link: var(--portal-navigation-color-primary);
-    --portal-navigation-color-selected: var(--portal-navigation-color-secondary);
-    --portal-navigation-color-hover: var(--portal-navigation-color-secondary);
-    --portal-navigation-color-badge: white;
-    --portal-navigation-color-badge-background: var(--portal-navigation-color-secondary);
-    --portal-navigation-color-dropdown-background: white;
-    --portal-navigation-color-border: rgba(44, 62, 80, 0.1);
-    --portal-navigation-color-header-background: rgba(66, 135, 245, 0.1);
-
-    --portal-navigation-font-size: 1.25rem;
-    --portal-navigation-font-size-badge: 1rem;
-    --portal-navigation-font-size-tree-second-level: 1rem;
-
-    --portal-navigation-horizontal-base: 1rem;
-    --portal-navigation-vertical-base: 0.5rem;
-
-    font-family: Helvetica, sans-serif;
+    font-family: var(--portal-navigation-font-family, sans-serif);
     box-sizing: border-box;
   }
 
@@ -32,15 +14,15 @@ export const portalNavigationStyles = css`
 
   .portal-navigation-container {
     margin: 0;
-    color: var(--portal-navigation-color-primary);
+    color: var(--portal-navigation-color-primary, #555);
   }
 
   .portal-navigation-header {
     display: flex;
-    background: var(--portal-navigation-color-header-background);
-    padding-top: var(--portal-navigation-vertical-base);
-    padding-right: var(--portal-navigation-horizontal-base);
-    padding-left: var(--portal-navigation-horizontal-base);
+    background: var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1));
+    padding-top: var(--portal-navigation-vertical-base, 0.5rem);
+    padding-right: var(--portal-navigation-horizontal-base, 1rem);
+    padding-left: var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .portal-navigation-slot-left {
@@ -48,8 +30,8 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-menu-main-items {
-    background: var(--portal-navigation-color-header-background);
-    padding: var(--portal-navigation-vertical-base) var(--portal-navigation-horizontal-base);
+    background: var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1));
+    padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
     justify-content: flex-end;
   }
 
@@ -60,27 +42,27 @@ export const portalNavigationStyles = css`
 
   .link {
     text-decoration: none;
-    font-size: var(--portal-navigation-font-size);
+    font-size: var(--portal-navigation-font-size, 1.25rem);
     margin: 0.25rem 0;
     display: flex;
     align-items: center;
-    color: var(--portal-navigation-color-link);
+    color: var(--portal-navigation-color-link, var(--portal-navigation-color-primary));
   }
 
   .link.-selected {
-    color: var(--portal-navigation-color-selected);
+    color: var(--portal-navigation-color-selected, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
   }
 
   .link:hover {
-    color: var(--portal-navigation-color-hover);
+    color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
   }
 
   .portal-navigation-menu > .link:not(:last-child) {
-    margin-right: var(--portal-navigation-horizontal-base);
+    margin-right: var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .portal-navigation-content > .link:not(:last-child) {
-    margin-right: var(--portal-navigation-horizontal-base);
+    margin-right: var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .dropdown-link {
@@ -90,7 +72,7 @@ export const portalNavigationStyles = css`
   .dropdown {
     display: none;
 
-    background-color: var(--portal-navigation-color-dropdown-background);
+    background-color: var(--portal-navigation-color-dropdown-background, white);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     margin: 0;
     min-width: 260px;
@@ -101,7 +83,7 @@ export const portalNavigationStyles = css`
   }
 
   .dropdown::before {
-    background-color: var(--portal-navigation-color-dropdown-background);
+    background-color: var(--portal-navigation-color-dropdown-background, white);
     box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.25);
     content: '';
     height: 12px;
@@ -119,7 +101,7 @@ export const portalNavigationStyles = css`
   }
 
   .dropdown > .link {
-    padding: calc(0.75 * var(--portal-navigation-vertical-base)) var(--portal-navigation-horizontal-base);
+    padding: calc(0.75 * var(--portal-navigation-vertical-base)) var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .dropdown.-show {
@@ -128,18 +110,18 @@ export const portalNavigationStyles = css`
 
   .portal-navigation-tree-container .link {
     text-transform: none;
-    padding-left: var(--portal-navigation-horizontal-base);
-    padding-right: var(--portal-navigation-horizontal-base);
-    padding-right: var(--portal-navigation-horizontal-base);
+    padding-left: var(--portal-navigation-horizontal-base, 1rem);
+    padding-right: var(--portal-navigation-horizontal-base, 1rem);
+    padding-right: var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .badge:not(:empty) {
-    background-color: var(--portal-navigation-color-badge-background);
+    background-color: var(--portal-navigation-color-badge-background, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
     border-radius: 1em;
-    font-size: var(--portal-navigation-font-size-badge);
+    font-size: var(--portal-navigation-font-size-badge, 1rem);
     padding: 2px 8px 0px 8px;
     text-align: center;
-    color: var(--portal-navigation-color-badge);
+    color: var(--portal-navigation-color-badge, white);
     font-family: Helvetica, sans-serif;
     transform: translate(5%, -30%);
   }
@@ -163,8 +145,8 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-tree-parent {
-    padding: var(--portal-navigation-vertical-base) 0;
-    border-bottom: solid 1px var(--portal-navigation-color-border);
+    padding: var(--portal-navigation-vertical-base, 0.5rem) 0;
+    border-bottom: solid 1px var(--portal-navigation-color-border, rgba(44, 62, 80, 0.1));
     width: 100%;
   }
 
@@ -182,7 +164,7 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-tree-items .link:first-child {
-    margin-top: var(--portal-navigation-vertical-base);
+    margin-top: var(--portal-navigation-vertical-base, 0.5rem);
   }
 
   .portal-navigation-tree-items .link:last-child {
@@ -190,8 +172,8 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-tree-items .link {
-    font-size: var(--portal-navigation-font-size-tree-second-level);
-    padding: 0.25rem var(--portal-navigation-horizontal-base);
+    font-size: var(--portal-navigation-font-size-tree-second-level, 1rem);
+    padding: 0.25rem var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .portal-navigation-menu {
@@ -211,7 +193,7 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-current {
-    padding: var(--portal-navigation-vertical-base) var(--portal-navigation-horizontal-base);
+    padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
   }
 
   @media screen and (max-width: 800px) {
@@ -231,7 +213,7 @@ export const portalNavigationStyles = css`
     }
 
     .portal-navigation-header {
-      padding-bottom: var(--portal-navigation-vertical-base);
+      padding-bottom: var(--portal-navigation-vertical-base, 0.5rem);
     }
   }
 `;

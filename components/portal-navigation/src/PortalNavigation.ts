@@ -87,6 +87,8 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {length} [--portal-navigation-horizontal-base=1rem]
  * @cssprop {length} [--portal-navigation-vertical-base=0.5rem]
  *
+ * @cssprop [--portal-navigation-font-family=sans-serif]
+ *
  * @slot logo - The slot for the logo
  * @slot right - The right slot
  * @slot left - The left slot
