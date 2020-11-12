@@ -321,6 +321,16 @@
           "name": "--portal-navigation-font-size-tree-second-level",
           "type": "length",
           "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-horizontal-base",
+          "type": "length",
+          "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-vertical-base",
+          "type": "length",
+          "default": "\"0.5rem\""
         }
       ]
     }
