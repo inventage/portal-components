@@ -79,9 +79,13 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {color} [--portal-navigation-color-dropdown-background=white]
  * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)]
  * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)]
+ *
  * @cssprop {length} [--portal-navigation-font-size=1.25rem]
  * @cssprop {length} [--portal-navigation-font-size-badge=1rem]
  * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem]
+ *
+ * @cssprop {length} [--portal-navigation-horizontal-base=1rem]
+ * @cssprop {length} [--portal-navigation-vertical-base=0.5rem]
  *
  * @slot logo - The slot for the logo
  * @slot right - The right slot

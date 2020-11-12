@@ -17,7 +17,17 @@ export const portalNavigationStyles = css`
     --portal-navigation-font-size-badge: 1rem;
     --portal-navigation-font-size-tree-second-level: 1rem;
 
+    --portal-navigation-horizontal-base: 1rem;
+    --portal-navigation-vertical-base: 0.5rem;
+
     font-family: Helvetica, sans-serif;
+    box-sizing: border-box;
+  }
+
+  :host *,
+  :host *:before,
+  :host *:after {
+    box-sizing: inherit;
   }
 
   .portal-navigation-container {
@@ -28,9 +38,9 @@ export const portalNavigationStyles = css`
   .portal-navigation-header {
     display: flex;
     background: var(--portal-navigation-color-header-background);
-    padding-top: 0.5rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
+    padding-top: var(--portal-navigation-vertical-base);
+    padding-right: var(--portal-navigation-horizontal-base);
+    padding-left: var(--portal-navigation-horizontal-base);
   }
 
   .portal-navigation-slot-left {
@@ -39,8 +49,7 @@ export const portalNavigationStyles = css`
 
   .portal-navigation-menu-main-items {
     background: var(--portal-navigation-color-header-background);
-    padding: 0.5rem 1rem;
-    margin-bottom: 0.5rem;
+    padding: var(--portal-navigation-vertical-base) var(--portal-navigation-horizontal-base);
     justify-content: flex-end;
   }
 
@@ -67,11 +76,11 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-menu > .link:not(:last-child) {
-    margin-right: 1rem;
+    margin-right: var(--portal-navigation-horizontal-base);
   }
 
   .portal-navigation-content > .link:not(:last-child) {
-    margin-right: 1rem;
+    margin-right: var(--portal-navigation-horizontal-base);
   }
 
   .dropdown-link {
@@ -89,7 +98,6 @@ export const portalNavigationStyles = css`
     right: 20px;
     top: calc(100% + 6px);
     z-index: 99;
-    padding: 0.5rem 0;
   }
 
   .dropdown::before {
@@ -111,7 +119,7 @@ export const portalNavigationStyles = css`
   }
 
   .dropdown > .link {
-    padding: 0.25rem 0.5rem;
+    padding: calc(0.75 * var(--portal-navigation-vertical-base)) var(--portal-navigation-horizontal-base);
   }
 
   .dropdown.-show {
@@ -120,6 +128,9 @@ export const portalNavigationStyles = css`
 
   .portal-navigation-tree-container .link {
     text-transform: none;
+    padding-left: var(--portal-navigation-horizontal-base);
+    padding-right: var(--portal-navigation-horizontal-base);
+    padding-right: var(--portal-navigation-horizontal-base);
   }
 
   .badge:not(:empty) {
@@ -145,7 +156,6 @@ export const portalNavigationStyles = css`
   .portal-navigation-header-toggle {
     display: none;
     margin-left: auto;
-    margin-right: 0.5rem;
   }
 
   .portal-navigation-tree-container {
@@ -153,14 +163,13 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-tree-parent {
-    padding: 0.5rem 0 0.5rem 0;
+    padding: var(--portal-navigation-vertical-base) 0;
     border-bottom: solid 1px var(--portal-navigation-color-border);
     width: 100%;
   }
 
   .portal-navigation-tree-parent .button {
     margin-left: auto;
-    margin-right: 0.5rem;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-down' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z'/%3E%3Cpolyline points='6 9 12 15 18 9' /%3E%3C/svg%3E");
     background-repeat: no-repeat;
     width: 1.5rem;
@@ -173,7 +182,7 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-tree-items .link:first-child {
-    margin-top: 0.5rem;
+    margin-top: var(--portal-navigation-vertical-base);
   }
 
   .portal-navigation-tree-items .link:last-child {
@@ -182,7 +191,7 @@ export const portalNavigationStyles = css`
 
   .portal-navigation-tree-items .link {
     font-size: var(--portal-navigation-font-size-tree-second-level);
-    padding: 0.25rem 0;
+    padding: 0.25rem var(--portal-navigation-horizontal-base);
   }
 
   .portal-navigation-menu {
@@ -202,7 +211,7 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-current {
-    margin-right: 1rem;
+    padding: var(--portal-navigation-vertical-base) var(--portal-navigation-horizontal-base);
   }
 
   @media screen and (max-width: 800px) {
@@ -222,7 +231,7 @@ export const portalNavigationStyles = css`
     }
 
     .portal-navigation-header {
-      padding-bottom: 0.5rem;
+      padding-bottom: var(--portal-navigation-vertical-base);
     }
   }
 `;
