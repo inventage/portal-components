@@ -36,8 +36,8 @@ export interface CustomElement extends HTMLElement {
 /**
  * Pending container mixin (pattern).
  *
- * @param base
- * @param promiseDelay
+ * @param base The base class to extend
+ * @param promiseDelay An optional delay (in ms) to wait after the pending state promise has been resolved
  */
 // We cannot use a named export here since Typescript seems to have trouble with mixins
 // @see https://github.com/microsoft/TypeScript/issues/30355#issuecomment-671095933
