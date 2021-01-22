@@ -337,6 +337,281 @@
           "default": "\"sans-serif\""
         }
       ]
+    },
+    {
+      "name": "portal-card",
+      "path": "./dist/components/portal-card/portal-card.d.ts",
+      "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
+      "properties": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "backSide",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "side-changed",
+          "description": "Event fired when the card changes sides."
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "This is an unnamed slot (the default slot)"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--portal-card-width",
+          "description": "Width",
+          "type": "Length"
+        },
+        {
+          "name": "--portal-card-height",
+          "description": "Height",
+          "type": "Length"
+        },
+        {
+          "name": "--portal-card-text-color",
+          "description": "Text Color",
+          "type": "Color"
+        },
+        {
+          "name": "--portal-card-padding",
+          "description": "Padding",
+          "type": "Length"
+        },
+        {
+          "name": "--portal-card-border",
+          "description": "Border",
+          "type": "String"
+        },
+        {
+          "name": "--portal-card-border-radius",
+          "description": "Border Radius",
+          "type": "String"
+        },
+        {
+          "name": "--portal-card-margin",
+          "description": "Margin",
+          "type": "Length"
+        }
+      ]
+    },
+    {
+      "name": "portal-hamburger-menu",
+      "path": "./dist/components/portal-hamburger-menu/portal-hamburger-menu.d.ts",
+      "description": "A simple hamburger menu component.",
+      "properties": [
+        {
+          "name": "toggled",
+          "description": "Reflects the toggled state.",
+          "type": "Boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "state-changed",
+          "description": "Event fired when the hamburger menu state changes."
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--hamburger-padding-x",
+          "type": "Length",
+          "default": "\"3px\""
+        },
+        {
+          "name": "--hamburger-padding-y",
+          "type": "Length",
+          "default": "\"10px\""
+        },
+        {
+          "name": "--hamburger-layer-width",
+          "type": "Length",
+          "default": "\"26px\""
+        },
+        {
+          "name": "--hamburger-layer-height",
+          "type": "Length",
+          "default": "\"2px\""
+        },
+        {
+          "name": "--hamburger-layer-spacing",
+          "type": "Length",
+          "default": "\"4px\""
+        },
+        {
+          "name": "--hamburger-layer-color",
+          "type": "Color",
+          "default": "\"black\""
+        },
+        {
+          "name": "--hamburger-layer-border-radius",
+          "type": "Length",
+          "default": "0"
+        },
+        {
+          "name": "--hamburger-hover-opacity",
+          "type": "Length",
+          "default": "1"
+        },
+        {
+          "name": "--hamburger-hover-transition-duration",
+          "type": "Length",
+          "default": "\"0.15s\""
+        },
+        {
+          "name": "--hamburger-hover-transition-timing-function",
+          "type": "Length",
+          "default": "\"linear\""
+        }
+      ]
+    },
+    {
+      "name": "portal-navigation",
+      "path": "./dist/components/portal-navigation/portal-navigation.d.ts",
+      "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
+      "properties": [
+        {
+          "name": "src",
+          "description": "location from where to fetch configuration data file.",
+          "type": "string"
+        },
+        {
+          "name": "language",
+          "description": "the current language. e.g. 'en' or 'de'.",
+          "type": "string"
+        },
+        {
+          "name": "activeUrl",
+          "description": "you can use this to set the active path via the url of an item.",
+          "type": "string"
+        },
+        {
+          "name": "currentApplication",
+          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string"
+        },
+        {
+          "name": "internalRouting",
+          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "portal-navigation.routeTo",
+          "description": "Event fired when an item with a url is clicked and the routing is done internally."
+        },
+        {
+          "name": "portal-navigation.setLanguage",
+          "description": "Event fired when the 'lang' property changes."
+        },
+        {
+          "name": "portal-navigation.configured",
+          "description": "Event fired when the configuration has been successfully loaded."
+        }
+      ],
+      "slots": [
+        {
+          "name": "logo",
+          "description": "The slot for the logo"
+        },
+        {
+          "name": "right",
+          "description": "The right slot"
+        },
+        {
+          "name": "left",
+          "description": "The left slot"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--portal-navigation-color-primary",
+          "type": "color",
+          "default": "\"#555\""
+        },
+        {
+          "name": "--portal-navigation-color-secondary",
+          "type": "color",
+          "default": "\"rgb(66, 136, 245)\""
+        },
+        {
+          "name": "--portal-navigation-color-link",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-primary)\""
+        },
+        {
+          "name": "--portal-navigation-color-selected",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-secondary)\""
+        },
+        {
+          "name": "--portal-navigation-color-hover",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-secondary)\""
+        },
+        {
+          "name": "--portal-navigation-color-badge",
+          "type": "color",
+          "default": "\"white\""
+        },
+        {
+          "name": "--portal-navigation-color-badge-background",
+          "type": "color",
+          "default": "\"var(--portal-navigation-color-secondary)\""
+        },
+        {
+          "name": "--portal-navigation-color-dropdown-background",
+          "type": "color",
+          "default": "\"white\""
+        },
+        {
+          "name": "--portal-navigation-color-border",
+          "type": "color",
+          "default": "\"rgba(44, 62, 80, 0.1)\""
+        },
+        {
+          "name": "--portal-navigation-color-header-background",
+          "type": "color",
+          "default": "\"rgba(66, 135, 245, 0.1)\""
+        },
+        {
+          "name": "--portal-navigation-font-size",
+          "type": "length",
+          "default": "\"1.25rem\""
+        },
+        {
+          "name": "--portal-navigation-font-size-badge",
+          "type": "length",
+          "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-font-size-tree-second-level",
+          "type": "length",
+          "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-horizontal-base",
+          "type": "length",
+          "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-vertical-base",
+          "type": "length",
+          "default": "\"0.5rem\""
+        },
+        {
+          "name": "--portal-navigation-font-family",
+          "default": "\"sans-serif\""
+        }
+      ]
     }
   ]
 }
