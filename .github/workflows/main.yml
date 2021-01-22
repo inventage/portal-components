@@ -16,10 +16,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Use Node.js 12.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: Cache Node.js modules
         uses: actions/cache@v1
@@ -83,10 +83,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Use Node.js 12.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: Cache Node.js modules
         uses: actions/cache@v1
