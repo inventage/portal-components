@@ -1,5 +1,5 @@
 import { CSSResultArray, html, LitElement, property, TemplateResult } from 'lit-element';
-import { baseStyles } from '../../helpers/baseStyles';
+import { baseStyles } from '../../../common/baseStyles';
 import { styles as hamburgerMenuStyles } from './portalHamburgerMenuStyles';
 import { classMap } from 'lit-html/directives/class-map';
 import { PropertyDeclaration } from 'lit-element/lib/updating-element';

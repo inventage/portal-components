@@ -1,6 +1,6 @@
 import { CSSResultArray, html, internalProperty, LitElement, property, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { baseStyles } from '../../helpers/baseStyles';
+import { baseStyles } from '../../../common/baseStyles';
 import { portalNavigationStyles } from './portalNavigationStyles';
 import { Configuration, MenuItem, MenuLabel } from './Configuration';
 import '../../portal-hamburger-menu/portal-hamburger-menu';

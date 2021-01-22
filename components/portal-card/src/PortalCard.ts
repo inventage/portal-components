@@ -1,5 +1,5 @@
 import { css, CSSResultArray, html, LitElement, property, PropertyDeclaration, TemplateResult } from 'lit-element';
-import { baseStyles } from '../../helpers/baseStyles';
+import { baseStyles } from '../../../common/baseStyles';
 
 /**
  * A test component to display what a component can consist of, how it is documented and how to properly test it.
