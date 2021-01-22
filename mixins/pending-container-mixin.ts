@@ -10,13 +10,18 @@ declare type PendingStateErrorEventData = {
   error: Error;
 };
 
+export enum PendingStateEvents {
+  state = 'pending-state',
+  error = 'pending-state-error',
+}
+
 export declare type PendingStateEvent = CustomEvent<PendingStateEventData>;
 export declare type PendingStateErrorEvent = CustomEvent<PendingStateErrorEventData>;
 
 declare global {
   interface HTMLElementEventMap {
-    'pending-state': PendingStateEvent;
-    'pending-state-error': PendingStateErrorEvent;
+    [PendingStateEvents.state]: PendingStateEvent;
+    [PendingStateEvents.error]: PendingStateErrorEvent;
   }
 }
 
@@ -36,7 +41,8 @@ export interface CustomElement extends HTMLElement {
  */
 // We cannot use a named export here since Typescript seems to have trouble with mixins
 // @see https://github.com/microsoft/TypeScript/issues/30355#issuecomment-671095933
-export default <C extends Constructor<CustomElement>>(base: C, promiseDelay = 0): Constructor<CustomElement> => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default <C extends Constructor<CustomElement>>(base: C, promiseDelay = 0) => {
   class PendingContainerMixin extends base {
     @internalProperty()
     private _hasPendingChildren = false;
@@ -56,12 +62,12 @@ export default <C extends Constructor<CustomElement>>(base: C, promiseDelay = 0)
     }
 
     connectedCallback() {
-      this.addEventListener('pending-state', this.onPendingState);
+      this.addEventListener(PendingStateEvents.state, this.onPendingState);
       super.connectedCallback();
     }
 
     disconnectedCallback() {
-      this.removeEventListener('pending-state', this.onPendingState);
+      this.removeEventListener(PendingStateEvents.state, this.onPendingState);
       super.disconnectedCallback();
     }
 
@@ -75,7 +81,7 @@ export default <C extends Constructor<CustomElement>>(base: C, promiseDelay = 0)
           await delay(promiseDelay);
         } catch (error) {
           this.dispatchEvent(
-            new CustomEvent('pending-state-error', {
+            new CustomEvent(PendingStateEvents.error, {
               composed: true,
               bubbles: true,
               detail: {
