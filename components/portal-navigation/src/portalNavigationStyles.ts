@@ -101,7 +101,7 @@ export const portalNavigationStyles = css`
   }
 
   .dropdown > .link {
-    padding: calc(0.75 * var(--portal-navigation-vertical-base)) var(--portal-navigation-horizontal-base, 1rem);
+    padding: calc(0.75 * var(--portal-navigation-vertical-base, 0.5rem)) var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .dropdown.-show {
