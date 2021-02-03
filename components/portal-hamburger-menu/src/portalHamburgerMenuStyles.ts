@@ -1,28 +1,15 @@
 import { css } from 'lit-element';
 
 export const styles = css`
-  :host {
-    --hamburger-padding-x: 3px;
-    --hamburger-padding-y: 10px;
-    --hamburger-layer-width: 26px;
-    --hamburger-layer-height: 2px;
-    --hamburger-layer-spacing: 4px;
-    --hamburger-layer-color: black;
-    --hamburger-layer-border-radius: 0;
-    --hamburger-hover-opacity: 1;
-    --hamburger-hover-transition-duration: 0.15s;
-    --hamburger-hover-transition-timing-function: linear;
-  }
-
   .hamburger {
-    padding: var(--hamburger-padding-y) var(--hamburger-padding-x);
+    padding: var(--hamburger-padding-y, 10px) var(--hamburger-padding-x, 3px);
     display: inline-block;
     cursor: pointer;
     outline: 0;
 
     transition-property: opacity;
-    transition-duration: var(--hamburger-hover-transition-duration);
-    transition-timing-function: var(--hamburger-hover-transition-timing-function);
+    transition-duration: var(--hamburger-hover-transition-duration, 0.15s);
+    transition-timing-function: var(--hamburger-hover-transition-timing-function, linear);
 
     font: inherit;
     color: inherit;
@@ -35,12 +22,12 @@ export const styles = css`
   }
 
   .hamburger:hover {
-    opacity: var(--hamburger-hover-opacity);
+    opacity: var(--hamburger-hover-opacity, 1);
   }
 
   .hamburger-box {
-    width: var(--hamburger-layer-width);
-    height: calc(var(--hamburger-layer-height) * 3 + var(--hamburger-layer-spacing) * 2);
+    width: var(--hamburger-layer-width, 26px);
+    height: calc(var(--hamburger-layer-height, 2px) * 3 + var(--hamburger-layer-spacing, 4px) * 2);
     display: inline-block;
     position: relative;
   }
@@ -48,16 +35,16 @@ export const styles = css`
   .hamburger-inner {
     display: block;
     top: 50%;
-    margin-top: calc(var(--hamburger-layer-height) / -2);
+    margin-top: calc(var(--hamburger-layer-height, 2px) / -2);
   }
 
   .hamburger-inner,
   .hamburger-inner::before,
   .hamburger-inner::after {
-    width: var(--hamburger-layer-width);
-    height: var(--hamburger-layer-height);
-    background-color: var(--hamburger-layer-color);
-    border-radius: var(--hamburger-layer-border-radius);
+    width: var(--hamburger-layer-width, 26px);
+    height: var(--hamburger-layer-height, 2px);
+    background-color: var(--hamburger-layer-color, black);
+    border-radius: var(--hamburger-layer-border-radius, 0);
     position: absolute;
     transition-property: transform;
     transition-duration: 0.15s;
@@ -71,11 +58,11 @@ export const styles = css`
   }
 
   .hamburger-inner::before {
-    top: calc((var(--hamburger-layer-spacing) + var(--hamburger-layer-height)) * -1);
+    top: calc((var(--hamburger-layer-spacing, 4px) + var(--hamburger-layer-height, 2px)) * -1);
   }
 
   .hamburger-inner::after {
-    bottom: calc((var(--hamburger-layer-spacing) + var(--hamburger-layer-height)) * -1);
+    bottom: calc((var(--hamburger-layer-spacing, 4px) + var(--hamburger-layer-height, 2px)) * -1);
   }
 
   .hamburger--spin .hamburger-inner {
