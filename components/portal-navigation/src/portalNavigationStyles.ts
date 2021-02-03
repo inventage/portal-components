@@ -101,7 +101,12 @@ export const portalNavigationStyles = css`
   }
 
   .dropdown > .link {
+    color: var(--portal-navigation-color-link-dropdown, var(--portal-navigation-color-primary));
     padding: calc(0.75 * var(--portal-navigation-vertical-base, 0.5rem)) var(--portal-navigation-horizontal-base, 1rem);
+  }
+
+  .dropdown > .link:hover {
+    color: var(--portal-navigation-color-hover-dropdown, var(--portal-navigation-color-hover));
   }
 
   .dropdown.-show {
@@ -196,7 +201,19 @@ export const portalNavigationStyles = css`
     padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
   }
 
+  .portal-navigation-current > .portal-navigation-content > .link {
+    color: var(--portal-navigation-color-link-current, var(--portal-navigation-color-link));
+  }
+
+  .portal-navigation-current > .portal-navigation-content > .link:hover {
+    color: var(--portal-navigation-color-hover-current, var(--portal-navigation-color-hover));
+  }
+
   @media screen and (max-width: 800px) {
+    .link {
+      color: var(--portal-navigation-color-link-breakpoint, var(--portal-navigation-color-link));
+    }
+
     .portal-navigation-header-toggle,
     .portal-navigation-tree-container {
       display: block;
