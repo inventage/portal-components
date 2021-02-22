@@ -3,7 +3,7 @@ import { classMap } from 'lit-html/directives/class-map';
 import { baseStyles } from '../../../common/baseStyles';
 import { portalNavigationStyles } from './portalNavigationStyles';
 import { Configuration, MenuItem, MenuLabel } from './Configuration';
-import { ScopedElementsMixin } from '@open-wc/scoped-elements';
+import { ScopedElementsMap, ScopedElementsMixin } from '@open-wc/scoped-elements';
 import { PortalHamburgerMenu } from '../../portal-hamburger-menu';
 import { IdPath } from './IdPath';
 import { PropertyDeclaration, PropertyValues } from 'lit-element/lib/updating-element';
@@ -99,8 +99,6 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @slot right - The right slot
  * @slot left - The left slot
  */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   @property()
   src: string | undefined;
@@ -132,7 +130,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   private configuration = new Configuration();
 
-  static get scopedElements(): Record<string, unknown> {
+  static get scopedElements(): ScopedElementsMap {
     return {
       'portal-hamburger-menu': PortalHamburgerMenu,
     };
