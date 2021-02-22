@@ -13,7 +13,7 @@ module.exports = {
   ],
   esDevServer: {
     // custom es-dev-server options
-    // @see https://open-wc.org/developing/es-dev-server.html#configuration-files
+    // @see https://modern-web.dev/docs/dev-server/cli-and-configuration/#configuration-file
     nodeResolve: true,
     watch: true,
     open: false,
