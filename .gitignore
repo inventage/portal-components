@@ -27,15 +27,14 @@ components/**/*.d.ts
 /_site/
 /dist/
 
-# IDEA resources
-# @see https://intellij-support.jetbrains.com/hc/en-us/articles/206544839-How-to-manage-projects-under-Version-Control-Systems
-# @see https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
-# User-specific stuff
-/.idea/**/workspace.xml
-/.idea/**/tasks.xml
-/.idea/**/usage.statistics.xml
-/.idea/**/dictionaries
-/.idea/**/shelf
+# Ignore all IntelliJ stuff and include the important things
+# @see https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+/.idea/*
+!/.idea/codeStyles/
+!/.idea/jsLinters/
+!/.idea/runConfigurations/
+!/.idea/codeStyleSettings.xml
+!/.idea/encodings.xml
+!/.idea/prettier.xml
+*.iml
 
-# Ignore project name, everybody can set this for themselves…
-.idea/.name
