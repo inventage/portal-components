@@ -12,8 +12,8 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
-    "dist",
-    "custom-elements.json"
+    "custom-elements.json",
+    "dist"
   ],
   "scripts": {
     "build": "npm run clean && tsc && run-s build:* && npm run build:analyze:custom-elements && run-p copy:*",
