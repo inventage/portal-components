@@ -2,10 +2,22 @@
 
 A component implementing an opinionated (but generic and hence configurable) navigation pattern.
 
-## Example
+## Examples
+
+### Basic
 
 ```js preview-story
 export const Basic = () => html` <portal-navigation src="./data/data.json" internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}">
+  <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
+  <span slot="left" style="font-size: 0.75rem; display: flex; align-items: center;">Left slot</span>
+  <span slot="right" style="font-size: 0.75rem; display: flex; align-items: center;">Right slot</span>
+</portal-navigation>`;
+```
+
+### Settings
+
+```js preview-story
+export const Settings = () => html` <portal-navigation src="./data/data-settings.json" internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}">
   <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
   <span slot="left" style="font-size: 0.75rem; display: flex; align-items: center;">Left slot</span>
   <span slot="right" style="font-size: 0.75rem; display: flex; align-items: center;">Right slot</span>
