@@ -19,6 +19,11 @@ const NavigationMenus = {
   main: 'main',
 
   /**
+   * The 'settings' menu's items will be displayed next to the 'main' menu's items (to the right).
+   */
+  settings: 'settings',
+
+  /**
    * The 'meta' menu's items will be displayed in the top row on the left of 'profile' menu.
    */
   meta: 'meta',
@@ -29,7 +34,7 @@ const NavigationMenus = {
   profile: 'profile',
 
   /**
-   * The 'meta' menu's items will be displayed in the top row on the very right.
+   * The 'logout' menu's items will be displayed in the top row on the very right.
    */
   logout: 'logout',
 } as const;
@@ -244,7 +249,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
       <main class="portal-navigation-menu-main">
         <div class="portal-navigation-menu-main-items portal-navigation-menu" part="menu-main-items">
-          <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)}</div>
+          <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
         </div>
         ${this._createCurrentItemsTemplate()}
         <!-- Hamburger Menu Tree Elements -->
