@@ -243,7 +243,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       </header>
 
       <main class="portal-navigation-menu-main">
-        <div class="portal-navigation-menu-main-items portal-navigation-menu">
+        <div class="portal-navigation-menu-main-items portal-navigation-menu" part="menu-main-items">
           <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)}</div>
         </div>
         ${this._createCurrentItemsTemplate()}
@@ -463,7 +463,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     if (hasCurrentItems) {
       return html`<div class="portal-navigation-current">
-        <div class="portal-navigation-content">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
+        <div class="portal-navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
       </div>`;
     }
     return html``;
