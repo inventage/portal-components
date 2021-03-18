@@ -167,6 +167,11 @@
       "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
       "attributes": [
         {
+          "name": "logoutMenuInMetaBar",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
           "name": "src",
           "description": "location from where to fetch configuration data file.",
           "type": "string"
@@ -195,6 +200,12 @@
         }
       ],
       "properties": [
+        {
+          "name": "logoutMenuInMetaBar",
+          "attribute": "logoutMenuInMetaBar",
+          "type": "boolean",
+          "default": "false"
+        },
         {
           "name": "src",
           "attribute": "src",
@@ -331,6 +342,11 @@
           "name": "--portal-navigation-color-header-background",
           "type": "color",
           "default": "\"rgba(66, 135, 245, 0.1)\""
+        },
+        {
+          "name": "--portal-navigation-color-meta-bar-background",
+          "type": "color",
+          "default": "\"rgba(66, 135, 245, 0.2)\""
         },
         {
           "name": "--portal-navigation-font-size",

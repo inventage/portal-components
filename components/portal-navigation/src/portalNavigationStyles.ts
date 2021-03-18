@@ -12,9 +12,24 @@ export const portalNavigationStyles = css`
     box-sizing: inherit;
   }
 
+  :host *:not(slot):empty {
+    display: none;
+  }
+
   .portal-navigation-container {
     margin: 0;
     color: var(--portal-navigation-color-primary, #555);
+  }
+
+  .portal-navigation-meta-bar {
+    background: var(--portal-navigation-color-meta-bar-background, rgba(66, 135, 245, 0.2));
+  }
+
+  .portal-navigation-meta-bar > .inner {
+    display: flex;
+    padding-top: var(--portal-navigation-vertical-base, 0.5rem);
+    padding-right: var(--portal-navigation-horizontal-base, 1rem);
+    padding-left: var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .portal-navigation-header {
@@ -45,6 +60,10 @@ export const portalNavigationStyles = css`
     display: flex;
   }
 
+  .portal-navigation-menu-logout-meta {
+    margin: 0 0 0 auto;
+  }
+
   .portal-navigation-slot-left {
     margin: 0 0 0 auto;
   }
@@ -73,10 +92,6 @@ export const portalNavigationStyles = css`
 
   .link:hover {
     color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
-  }
-
-  .portal-navigation-menu:empty {
-    display: none;
   }
 
   .portal-navigation-menu > .link:not(:last-of-type) {

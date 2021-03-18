@@ -8,6 +8,8 @@ import { PortalHamburgerMenu } from '../../portal-hamburger-menu';
 import { IdPath } from './IdPath';
 import { PropertyDeclaration, PropertyValues } from 'lit-element/lib/updating-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { nothing } from 'lit-html';
+import { Nothing } from '../../../common/utils';
 
 /**
  * A listing of key menu ids that are handled specifically by the portal navigation component.
@@ -90,6 +92,7 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {color} [--portal-navigation-color-dropdown-background=white]
  * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)]
  * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)]
+ * @cssprop {color} [--portal-navigation-color-meta-bar-background=rgba(66, 135, 245, 0.2)]
  *
  * @cssprop {length} [--portal-navigation-font-size=1.25rem]
  * @cssprop {length} [--portal-navigation-font-size-badge=1rem]
@@ -123,6 +126,11 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     type: Boolean,
   })
   internalRouting = false;
+
+  @property({
+    type: Boolean,
+  })
+  logoutMenuInMetaBar = false;
 
   @internalProperty()
   private activePath = new IdPath();
@@ -231,7 +239,16 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   }
 
   render(): TemplateResult {
-    return html`<div class="portal-navigation-container">
+    console.log('logoutMenuInMetaBar', this.logoutMenuInMetaBar);
+
+    return html` <div class="portal-navigation-container">
+      <div class="portal-navigation-meta-bar">
+        <div class="portal-navigation-container-inner inner">
+          <div class="portal-navigation-slot-meta-left"><slot name="meta-left"></slot></div>
+          ${this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu-logout-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          <div class="portal-navigation-slot-meta-right"><slot name="meta-right"></slot></div>
+        </div>
+      </div>
       <header class="portal-navigation-header">
         <div class="portal-navigation-container-inner inner">
           <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
@@ -239,7 +256,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           <div class="portal-navigation-meta-menus">
             <div class="portal-navigation-menu-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
             <div class="portal-navigation-menu-profile portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
-            <div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>
+            ${!this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>` : nothing}
           </div>
           <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
         </div>
@@ -260,7 +277,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           </div>
           ${this._createCurrentItemsTemplate()}
           <!-- Hamburger Menu Tree Elements -->
-          ${this.hamburgerMenuExpanded ? html`<div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>` : html``}
+          ${this.hamburgerMenuExpanded ? html` <div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>` : html``}
         </div>
       </main>
     </div>`;
@@ -377,21 +394,21 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * Override to make use of the slot in extension.
    */
   protected _createLogoSlotTemplate(): TemplateResult {
-    return html`<slot name="logo"></slot>`;
+    return html` <slot name="logo"></slot>`;
   }
 
   /**
    * Override to make use of the slot in extension.
    */
   protected _createLeftSlotTemplate(): TemplateResult {
-    return html`<slot name="left"></slot>`;
+    return html` <slot name="left"></slot>`;
   }
 
   /**
    * Override to make use of the slot in extension.
    */
   protected _createRightSlotTemplate(): TemplateResult {
-    return html`<slot name="right"></slot>`;
+    return html` <slot name="right"></slot>`;
   }
 
   /**
@@ -400,10 +417,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    *
    * @param menuId the menu id for which to build a menu html template.
    */
-  _createMenuTemplate(menuId: string): TemplateResult {
+  _createMenuTemplate(menuId: string): TemplateResult | Nothing {
     const menu = this.configuration.getMenu(menuId);
     if (!menu || !menu.items || menu.items.length <= 0) {
-      return html``;
+      return nothing;
     }
 
     if (menu && menu.dropdown) {
@@ -457,7 +474,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         @click="${(e: Event) => this._onLink(e, item)}"
         >${this._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : html``}</a
       >
-      ${isTreeMode && active && hasItems ? html`<div class="portal-navigation-tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : html``}`;
+      ${isTreeMode && active && hasItems ? html` <div class="portal-navigation-tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : html``}`;
   }
 
   /**
@@ -475,7 +492,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     const hasCurrentItems = activeParentItem && !Array.isArray(activeParentItem) && activeParentItem.items && activeParentItem.items.length > 0;
 
     if (hasCurrentItems) {
-      return html`<div class="portal-navigation-current">
+      return html` <div class="portal-navigation-current">
         <div class="portal-navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
       </div>`;
     }
