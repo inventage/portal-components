@@ -98,6 +98,8 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {length} [--portal-navigation-horizontal-base=1rem]
  * @cssprop {length} [--portal-navigation-vertical-base=0.5rem]
  *
+ * @cssprop {length} [--portal-navigation-max-width=1200px]
+ *
  * @cssprop [--portal-navigation-font-family=sans-serif]
  *
  * @slot logo - The slot for the logo
@@ -231,12 +233,16 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   render(): TemplateResult {
     return html`<div class="portal-navigation-container">
       <header class="portal-navigation-header">
-        <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
-        <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
-        <div class="portal-navigation-menu-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
-        <div class="portal-navigation-menu-profile portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
-        <div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>
-        <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
+        <div class="portal-navigation-container-inner inner">
+          <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
+          <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
+          <div class="portal-navigation-meta-menus">
+            <div class="portal-navigation-menu-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
+            <div class="portal-navigation-menu-profile portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
+            <div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>
+          </div>
+          <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
+        </div>
         <!-- Hamburger Menu Tree Elements -->
         <portal-hamburger-menu
           class="portal-navigation-header-toggle"
@@ -248,12 +254,14 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       </header>
 
       <main class="portal-navigation-menu-main">
-        <div class="portal-navigation-menu-main-items portal-navigation-menu" part="menu-main-items">
-          <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
+        <div class="portal-navigation-container-inner inner">
+          <div class="portal-navigation-menu-main-items portal-navigation-menu" part="menu-main-items">
+            <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
+          </div>
+          ${this._createCurrentItemsTemplate()}
+          <!-- Hamburger Menu Tree Elements -->
+          ${this.hamburgerMenuExpanded ? html`<div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>` : html``}
         </div>
-        ${this._createCurrentItemsTemplate()}
-        <!-- Hamburger Menu Tree Elements -->
-        ${this.hamburgerMenuExpanded ? html`<div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>` : html``}
       </main>
     </div>`;
   }
