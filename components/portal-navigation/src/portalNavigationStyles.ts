@@ -18,11 +18,31 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-header {
-    display: flex;
     background: var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1));
+  }
+
+  .portal-navigation-header > .inner {
+    display: flex;
     padding-top: var(--portal-navigation-vertical-base, 0.5rem);
     padding-right: var(--portal-navigation-horizontal-base, 1rem);
     padding-left: var(--portal-navigation-horizontal-base, 1rem);
+  }
+
+  .portal-navigation-menu-main {
+    background: var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1));
+  }
+
+  .portal-navigation-menu-main > .inner {
+    padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
+  }
+
+  .portal-navigation-container-inner {
+    max-width: var(--portal-navigation-max-width, 1200px);
+    margin: 0 auto;
+  }
+
+  .portal-navigation-meta-menus {
+    display: flex;
   }
 
   .portal-navigation-slot-left {
@@ -30,8 +50,6 @@ export const portalNavigationStyles = css`
   }
 
   .portal-navigation-menu-main-items {
-    background: var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1));
-    padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
     justify-content: flex-end;
   }
 

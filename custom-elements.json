@@ -358,6 +358,11 @@
           "default": "\"0.5rem\""
         },
         {
+          "name": "--portal-navigation-max-width",
+          "type": "length",
+          "default": "\"1200px\""
+        },
+        {
           "name": "--portal-navigation-font-family",
           "default": "\"sans-serif\""
         }
