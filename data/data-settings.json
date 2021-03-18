@@ -379,7 +379,6 @@
     },
     {
       "id": "logout",
-      "dropdown": true,
       "label": "Logout",
       "items": [
         {

@@ -17,10 +17,9 @@ export const Basic = () => html` <portal-navigation src="./data/data.json" inter
 ### Settings
 
 ```js preview-story
-export const Settings = () => html` <portal-navigation src="./data/data-settings.json" internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}">
+export const Settings = () => html` <portal-navigation src="./data/data-settings.json" logoutMenuInMetaBar internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}">
   <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
-  <span slot="left" style="font-size: 0.75rem; display: flex; align-items: center;">Left slot</span>
-  <span slot="right" style="font-size: 0.75rem; display: flex; align-items: center;">Right slot</span>
+  <span slot="meta-left" style="font-size: 0.75rem; display: flex; align-items: center;">Meta Left slot</span>
 </portal-navigation>`;
 ```
 
