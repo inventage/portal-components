@@ -57,11 +57,15 @@ export const portalNavigationStyles = css`
     color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
   }
 
+  .portal-navigation-menu:empty {
+    display: none;
+  }
+
   .portal-navigation-menu > .link:not(:last-of-type) {
     margin-right: var(--portal-navigation-horizontal-base, 1rem);
   }
 
-  .portal-navigation-content > .link:not(:last-type) {
+  .portal-navigation-content > .link:not(:last-child) {
     margin-right: var(--portal-navigation-horizontal-base, 1rem);
   }
 
