@@ -67,7 +67,7 @@ export class Configuration {
   private generateMissingIds(menu: MenuItem, nextAvailableId: number): number {
     let id = nextAvailableId;
     if (!menu.id) {
-      menu.id = `(${id})`;
+      menu.id = `${id}`;
       id += 1;
     }
 
@@ -221,7 +221,7 @@ export class Configuration {
    * the desired menu or item in the array. e.g.: items::idOfItem4
    *
    * @param key - a string that is either the name of a property or the name of a property, that's expected to
-   * be an array, followed by '::' and an id of the menu or item within that array to tbe returned.
+   * be an array, followed by '::' and an id of the menu or item within that array to be returned.
    * @param data - a object from the data set.
    * @returns the object found in data based on the given key, which is either the value of the property or a specific array element if the property's value is an array.
    */
