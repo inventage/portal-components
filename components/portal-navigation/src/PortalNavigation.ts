@@ -117,26 +117,25 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  */
 export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   @property()
-  src: string | undefined;
+  src?: string;
 
   @property()
   language = 'en';
 
   @property()
-  activeUrl: string | undefined;
+  activeUrl?: string;
 
   @property()
-  currentApplication: string | undefined;
+  currentApplication?: string;
 
-  @property({
-    type: Boolean,
-  })
+  @property({ type: Boolean })
   internalRouting = false;
 
-  @property({
-    type: Boolean,
-  })
+  @property({ type: Boolean })
   logoutMenuInMetaBar = false;
+
+  @property({ type: Number })
+  mobileBreakpoint = 800;
 
   @internalProperty()
   private activePath = new IdPath();
@@ -145,7 +144,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   private hamburgerMenuExpanded = false;
 
   @internalProperty()
-  private activeDropdown: string | undefined;
+  private activeDropdown?: string;
+
+  @internalProperty()
+  private isMobileBreakpoint = false;
 
   private temporaryBadgeValues = new Map();
 
@@ -234,6 +236,12 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     if (changedProperties.has('language')) {
       this.dispatchEvent(new CustomEvent(PortalNavigation.events.setLanguage, { detail: this.language, bubbles: true }));
     }
+
+    if (changedProperties.has('mobileBreakpoint')) {
+      window.matchMedia(`screen and (max-width: ${this.mobileBreakpoint}px)`).addEventListener('change', e => {
+        this.isMobileBreakpoint = e.matches;
+      });
+    }
   }
 
   requestUpdateInternal(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
@@ -245,7 +253,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   }
 
   render(): TemplateResult {
-    return html` <div class="portal-navigation-container">
+    return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint })}">
       <div class="meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
         <div class="container-max-width inner">
           <div class="slot-meta-left"><slot name="meta-left"></slot></div>
@@ -314,25 +322,27 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   /**
    * Fetches the configuration data from the source provided by 'src' and initializes the configuration.
    */
-  private async __fetchRemoteData() {
+  private __fetchRemoteData() {
     if (!this.src) {
       return;
     }
 
-    this.configuration = new Configuration();
+    (async () => {
+      this.configuration = new Configuration();
 
-    try {
-      const response = await fetch(this.src);
-      const data = await response.json();
+      try {
+        const response = await fetch(this.src!);
+        const data = await response.json();
 
-      this.configuration = new Configuration(data);
-      this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
-      this.__updateActivePathFromUrl();
-      this.requestUpdateInternal();
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn('An error occurred when fetching remote data…', e);
-    }
+        this.configuration = new Configuration(data);
+        this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
+        this.__updateActivePathFromUrl();
+        this.requestUpdateInternal();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('An error occurred when fetching remote data…', e);
+      }
+    })();
   }
 
   /**
@@ -340,9 +350,11 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    */
   private __updateActivePathFromUrl() {
     const newPath = this.configuration.getIdPathForUrl(this.activeUrl);
-    if (newPath) {
-      this.activePath = newPath;
+    if (!newPath) {
+      return;
     }
+
+    this.activePath = newPath;
   }
 
   /**
@@ -384,13 +396,13 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     }
 
     if (value && typeof value === 'object' && value.constructor === Object) {
-      return this._getLabel(value);
+      return this.__getLabel(value);
     }
 
     return value;
   }
 
-  __toggleDropdown(menuId: string): void {
+  private __toggleDropdown(menuId: string): void {
     this.activeDropdown = this.activeDropdown ? undefined : menuId;
   }
 
@@ -428,7 +440,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    *
    * @param menuId the menu id for which to build a menu html template.
    */
-  _createMenuTemplate(menuId: string): TemplateResult | Nothing {
+  private _createMenuTemplate(menuId: string): TemplateResult | Nothing {
     const menu = this.configuration.getMenu(menuId);
     if (!menu || !menu.items || menu.items.length <= 0) {
       return nothing;
@@ -436,7 +448,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     if (menu && menu.dropdown) {
       const badge = this.getBadgeValue(menu.id!);
-      const label = this._getLabel(menu);
+      const label = this.__getLabel(menu);
       return html` <span
           part="${menuId}"
           class="${classMap({
@@ -459,16 +471,16 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * @param item the item to be rendered.
    * @param isTreeMode whether this template should be provided for tree mode (hamburger menu) or default display purposes.
    */
-  _createFirstLevelItemTemplate(item: MenuItem, isTreeMode = false): TemplateResult {
+  private _createFirstLevelItemTemplate(item: MenuItem, isTreeMode = false): TemplateResult {
     const { id, icon, items } = item;
     const hasItems = items && items.length > 0;
     const badge = this.getBadgeValue(id!);
-    const label = this._getLabel(item);
+    const label = this.__getLabel(item);
     const active = this.activePath.contains(id!);
 
     let refItem = item;
     if (hasItems) {
-      refItem = this._getDefaultItemOf(item) || item;
+      refItem = this.__getDefaultItemOf(item) || item;
     }
 
     const { url, destination } = refItem;
@@ -492,7 +504,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * Creates the html template for the third row (second-level), which displays only if the active path
    * has a first-level item selection and that item has child items.
    */
-  _createCurrentItemsTemplate(): TemplateResult {
+  private _createCurrentItemsTemplate(): TemplateResult {
     const parentItemId = this.activePath.getFirstLevelItemId();
     if (!parentItemId) {
       return html``;
@@ -516,10 +528,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    *
    * @param item the item for which to create a html template.
    */
-  _createSecondLevelItemTemplate(item: MenuItem): TemplateResult {
+  private _createSecondLevelItemTemplate(item: MenuItem): TemplateResult {
     const { id, icon, url, destination } = item;
     const badge = this.getBadgeValue(id!, url);
-    const label = this._getLabel(item);
+    const label = this.__getLabel(item);
     const active = this.activePath.contains(id!);
 
     return html`<a
@@ -545,7 +557,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * @param {string} badge - the badge value to be displayed. If undefined, no badge will be displayed. If there is an icon,
    * the badge will be associated with the icon. Otherwise it will be associated with the label.
    */
-  _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
+  private _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
       result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="portal-navigation-icon" />`);
@@ -568,7 +580,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * Creates the html template for tree mode (hamburger menu).
    * You may override this to customize the order and elements of the tree structure for the hamburger menu.
    */
-  _createTreeTemplate(): TemplateResult[] {
+  private _createTreeTemplate(): TemplateResult[] {
     const templates: TemplateResult[] = [];
 
     PortalNavigation.menuIdsOrdered.forEach(menuId => {
@@ -601,7 +613,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     if (!hasItems) {
       if (internalRouting) {
         e.preventDefault();
-        this._internalLinkSelected(item.id);
+        this.__internalLinkSelected(item.id);
         return;
       }
 
@@ -609,11 +621,11 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     }
 
     // if the default item is external we don't want to honor this flag when clicking on a parent item
-    if (internalRouting || this._getDefaultItemOf(item)!.destination === 'extern') {
+    if (internalRouting || this.__getDefaultItemOf(item)!.destination === 'extern') {
       e.preventDefault();
     }
 
-    this._internalLinkSelected(item.id);
+    this.__internalLinkSelected(item.id);
 
     return;
   }
@@ -623,11 +635,13 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    *
    * @param item the item to check.
    * @returns true if the item is internal.
+   *
+   * TODO: Make this method protected / private, and we also need to adopt the tests…
    */
   isInternalRouting(item?: MenuItem): boolean {
     let refItem: MenuItem | undefined = item;
     if (item && item.items && item.items.length > 0) {
-      refItem = this._getDefaultItemOf(item);
+      refItem = this.__getDefaultItemOf(item);
     }
 
     // Allow global `internalRouting` to be overridden by the item specific `internalRouting` property
@@ -657,7 +671,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    *
    * @param itemId the item being selected.
    */
-  _internalLinkSelected(itemId?: string): void {
+  private __internalLinkSelected(itemId?: string): void {
     const objectPath = this.configuration.getObjectPathForSelection(object => object.id === itemId);
     const selectedItem = objectPath.getLastItem();
     const hasItems = selectedItem && selectedItem.items && selectedItem.items.length > 0;
@@ -667,7 +681,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     let refItem = selectedItem;
     let dispatchEvent = true;
     if (hasItems) {
-      refItem = this._getDefaultItemOf(selectedItem!);
+      refItem = this.__getDefaultItemOf(selectedItem!);
       dispatchEvent = !!refItem && refItem.destination !== 'extern';
       this.activePath = objectPath.toIdPath().concat(dispatchEvent ? refItem!.id : undefined);
     } else {
@@ -695,7 +709,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * @param item the item whose default item should be found.
    * @returns the default item of the given item or undefined if no child items exist.
    */
-  _getDefaultItemOf(item: MenuItem): MenuItem | undefined {
+  private __getDefaultItemOf(item: MenuItem): MenuItem | undefined {
     const { defaultItem, items } = item;
 
     // there are no items to choose from
@@ -715,7 +729,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * @param labelProvider the raw label (localized labels array) or simple label or an object containing this
    * information within a property 'label'.
    */
-  _getLabel(labelProvider: string | MenuItem | MenuLabel): string {
+  private __getLabel(labelProvider: string | MenuItem | MenuLabel): string {
     let labelObj: string | MenuItem | MenuLabel | undefined = labelProvider;
     if ('label' in <never>labelProvider) {
       labelObj = (labelProvider as MenuItem).label;

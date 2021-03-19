@@ -243,56 +243,57 @@
   color: var(--portal-navigation-color-hover-current, var(--portal-navigation-color-hover));
 }
 
-/* TODO: Make these 800px configurable */
-@media screen and (min-width: 801px) {
-  .slot-header-mobile {
-    display: none;
-  }
+/**
+ * Not-mobile styles
+ */
+.container:not(.-mobile) .slot-header-mobile {
+  display: none;
 }
 
-@media screen and (max-width: 800px) {
-  .link {
-    color: var(--portal-navigation-color-link-breakpoint, var(--portal-navigation-color-link));
-  }
+/**
+ * Mobile breakpoint styles
+ */
+.container.-mobile {
+  display: flex;
+  flex-direction: column;
+}
 
-  .portal-navigation-header-toggle,
-  .portal-navigation-tree-container,
-  .slot-header-mobile {
-    display: block;
-  }
+.container.-mobile .link {
+  color: var(--portal-navigation-color-link-breakpoint, var(--portal-navigation-color-link));
+}
 
-  .portal-navigation-container {
-    display: flex;
-    flex-direction: column;
-  }
+.container.-mobile .portal-navigation-header {
+  order: 1;
+}
 
-  .portal-navigation-header {
-    order: 1;
-  }
+.container.-mobile .meta-bar {
+  order: 2;
+}
 
-  .meta-bar {
-    order: 2;
-  }
+.container.-mobile .meta-bar.hidden {
+  display: none;
+}
 
-  .meta-bar.hidden {
-    display: none;
-  }
+.container.-mobile .menu-main {
+  order: 3;
+}
 
-  .menu-main {
-    order: 3;
-  }
+.container.-mobile .portal-navigation-header-toggle,
+.container.-mobile .portal-navigation-tree-container,
+.container.-mobile .slot-header-mobile {
+  display: block;
+}
 
-  .slot-left,
-  .menu-meta,
-  .menu-profile,
-  .menu-logout,
-  .slot-right,
-  .menu-main-items,
-  .portal-navigation-current {
-    display: none;
-  }
+.container.-mobile .slot-left,
+.container.-mobile .menu-meta,
+.container.-mobile .menu-profile,
+.container.-mobile .menu-logout,
+.container.-mobile .slot-right,
+.container.-mobile .menu-main-items,
+.container.-mobile .portal-navigation-current {
+  display: none;
+}
 
-  .portal-navigation-header {
-    padding: var(--portal-navigation-vertical-base, 0.5rem) calc(var(--portal-navigation-horizontal-base, 1rem) - var(--hamburger-padding-x, 3px)) var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
-  }
+.container.-mobile .portal-navigation-header {
+  padding: var(--portal-navigation-vertical-base, 0.5rem) calc(var(--portal-navigation-horizontal-base, 1rem) - var(--hamburger-padding-x, 3px)) var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
 }

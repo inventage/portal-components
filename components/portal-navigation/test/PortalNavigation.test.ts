@@ -49,7 +49,7 @@ describe('<portal-navigation>', () => {
   });
 
   it('returns sorted array of known menu ids', () => {
-    expect(PortalNavigation.menuIdsOrdered).to.deep.equal(['main', 'meta', 'profile', 'logout']);
+    expect(PortalNavigation.menuIdsOrdered).to.deep.equal(['main', 'settings', 'meta', 'profile', 'logout']);
   });
 
   it.skip('sets activeUrl from current window location', async () => {
@@ -245,7 +245,7 @@ describe('<portal-navigation>', () => {
     );
 
     // This is needed for the component to render…
-    await aTimeout(100);
+    await aTimeout(2000);
 
     expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
     expect(el.shadowRoot!.querySelector('[part="parent2-badge"]')).not.to.equal(null);
