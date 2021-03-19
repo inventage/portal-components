@@ -14,15 +14,33 @@
   color: var(--portal-navigation-color-primary, #555);
 }
 
+/*
+ * Max-width, centered containers
+*/
+.container-max-width {
+  max-width: var(--portal-navigation-max-width, 1200px);
+  margin: 0 auto;
+}
+
 .portal-navigation-meta-bar {
   background: var(--portal-navigation-color-meta-bar-background, rgba(66, 135, 245, 0.2));
 }
 
 .portal-navigation-meta-bar > .inner {
   display: flex;
-  padding-top: var(--portal-navigation-vertical-base, 0.5rem);
-  padding-right: var(--portal-navigation-horizontal-base, 1rem);
-  padding-left: var(--portal-navigation-horizontal-base, 1rem);
+}
+
+.portal-navigation-meta-bar:empty {
+  border: 1px solid red;
+}
+
+.portal-navigation-meta-bar:empty,
+.portal-navigation-meta-bar > .inner:empty {
+  display: none;
+}
+
+.slot-meta-left:empty {
+  display: none;
 }
 
 .portal-navigation-header {
@@ -31,23 +49,15 @@
 
 .portal-navigation-header > .inner {
   display: flex;
-  padding-top: var(--portal-navigation-vertical-base, 0.5rem);
-  padding-right: var(--portal-navigation-horizontal-base, 1rem);
-  padding-left: var(--portal-navigation-horizontal-base, 1rem);
 }
 
 .portal-navigation-menu-main {
   background: var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1));
 }
 
-.portal-navigation-menu-main > .inner {
-  padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);
-}
-
-.portal-navigation-container-inner {
-  max-width: var(--portal-navigation-max-width, 1200px);
-  margin: 0 auto;
-}
+/*.portal-navigation-menu-main > .inner {*/
+/*  padding: var(--portal-navigation-vertical-base, 0.5rem) var(--portal-navigation-horizontal-base, 1rem);*/
+/*}*/
 
 .portal-navigation-meta-menus {
   display: flex;
@@ -238,11 +248,13 @@
   color: var(--portal-navigation-color-hover-current, var(--portal-navigation-color-hover));
 }
 
-.slot-header-mobile {
-  display: none;
+/* TODO: Make these 800px configurable */
+@media screen and (min-width: 801px) {
+  .slot-header-mobile {
+    display: none;
+  }
 }
 
-/* TODO: Make these 800px configurable */
 @media screen and (max-width: 800px) {
   .link {
     color: var(--portal-navigation-color-link-breakpoint, var(--portal-navigation-color-link));
@@ -252,6 +264,27 @@
   .portal-navigation-tree-container,
   .slot-header-mobile {
     display: block;
+  }
+
+  .portal-navigation-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .portal-navigation-header {
+    order: 1;
+  }
+
+  .portal-navigation-meta-bar {
+    order: 2;
+  }
+
+  .portal-navigation-meta-bar.hidden {
+    display: none;
+  }
+
+  .portal-navigation-menu-main {
+    order: 3;
   }
 
   .portal-navigation-slot-left,

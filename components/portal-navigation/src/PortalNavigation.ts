@@ -112,6 +112,8 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @slot logo - The slot for the logo
  * @slot right - The right slot
  * @slot left - The left slot
+ * @slot meta-left - The left slot inside the meta bar
+ * @slot meta-right - The right slot inside the meta bar
  */
 export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   @property()
@@ -244,15 +246,15 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   render(): TemplateResult {
     return html` <div class="portal-navigation-container">
-      <div class="portal-navigation-meta-bar">
-        <div class="portal-navigation-container-inner inner">
-          <div class="portal-navigation-slot-meta-left"><slot name="meta-left"></slot></div>
+      <div class="portal-navigation-meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
+        <div class="container-max-width inner">
+          <div class="slot-meta-left"><slot name="meta-left"></slot></div>
           ${this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu-logout-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
           <div class="portal-navigation-slot-meta-right"><slot name="meta-right"></slot></div>
         </div>
       </div>
       <header class="portal-navigation-header">
-        <div class="portal-navigation-container-inner inner">
+        <div class="container-max-width inner">
           <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
           <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
           <div class="slot-header-mobile" part="slot-header-mobile">${this._createMobileHeaderSlotTemplate()}</div>
@@ -275,7 +277,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       </header>
 
       <main class="portal-navigation-menu-main">
-        <div class="portal-navigation-container-inner inner">
+        <div class="container-max-width inner">
           <div class="portal-navigation-menu-main-items portal-navigation-menu" part="menu-main-items">
             <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
           </div>
@@ -475,7 +477,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     return html` <a
         href="${ifDefined(url)}"
-        part="${ifDefined(id)}"
+        part="item-${ifDefined(id)}"
         class="${classMap({
           link: true,
           'portal-navigation-tree-parent': isTreeMode,
@@ -548,16 +550,16 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
-      result.push(html`<img src="${icon}" alt="" part="${`${id}-icon`}" class="portal-navigation-icon" />`);
+      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="portal-navigation-icon" />`);
       if (badge) {
-        result.push(html`<span part="${`${id}-badge`}" class="badge">${badge}</span>`);
+        result.push(html`<span part="${`badge-${id}`}" class="badge">${badge}</span>`);
       }
     }
 
     if (label) {
-      result.push(html`<span part="${`${id}-label`}">${label}</span>`);
+      result.push(html`<span part="${`label-${id}`}">${label}</span>`);
       if (!icon && badge) {
-        result.push(html`<span part="${`${id}-badge`}" class="badge">${badge}</span>`);
+        result.push(html`<span part="${`badge-${id}`}" class="badge">${badge}</span>`);
       }
     }
 
