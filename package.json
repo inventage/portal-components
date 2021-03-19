@@ -19,20 +19,21 @@
     "build": "npm run clean && tsc && run-s build:* && npm run build:analyze:custom-elements && run-p copy:*",
     "build:analyze:custom-elements": "wca analyze '{common,components,mixins}/**/*.ts' --outFile custom-elements.json",
     "build:analyze:readme": "wca analyze '{common,components,mixins}/**/*.ts' --silent",
+    "build:css": "./scripts/build-styles.sh",
     "build:storybook": "npm run storybook:build",
     "clean": "rimraf storybook-static dist",
     "copy:data": "cp -Rpf data storybook-static/",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
-    "format:prettier": "prettier '**/*.{js,ts,md}' --write --ignore-path .gitignore",
+    "format:prettier": "prettier '**/*.{js,ts,md,css}' --write --ignore-path .gitignore",
     "lint": "run-p -l lint:*",
     "lint:analyze": "lit-analyzer '{common,components,mixins}/**/*.ts' --strict --rules.no-noncallable-event-binding warn",
     "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
-    "lint:prettier": "prettier '**/*.{js,ts,md}' --check --ignore-path .gitignore",
+    "lint:prettier": "prettier '**/*.{js,ts,md,css}' --check --ignore-path .gitignore",
     "lint:tsc": "tsc",
     "prepublishOnly": "tsc",
-    "start": "concurrently -k -n wca,tsc,storybook 'npm run watch:analyze:custom-elements' 'npm run tsc:watch' 'npm run storybook'",
+    "start": "concurrently -k -n styles,tsc,storybook 'npm run watch:build-css' 'npm run tsc:watch' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
@@ -43,7 +44,8 @@
     "test:browser:watch": "wtr '{common,components,mixins}/**/*/test/**/*.test.ts' --watch",
     "test:watch": "npm run test:browser:watch",
     "tsc:watch": "tsc -p tsconfig.dev.json --watch",
-    "watch:analyze:custom-elements": "onchange -i '**/*.ts' -- npm run build:analyze:custom-elements"
+    "watch:analyze:custom-elements": "onchange -i '{common,components,mixins}/**/*.ts' -- npm run build:analyze:custom-elements",
+    "watch:build-css": "onchange -i '{common,components,mixins}/**/*.css' -- npm run build:css"
   },
   "dependencies": {
     "@open-wc/scoped-elements": "^1.3.3",
@@ -79,6 +81,7 @@
     "prettier": "^2.1.2",
     "sinon": "^9.2.0",
     "typescript": "^4.0.5",
+    "typescript-plugin-css-modules": "^3.2.0",
     "web-component-analyzer": "^1.1.6",
     "webpack-merge": "^5.2.0"
   },
@@ -99,7 +102,9 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "eslint --fix",
+      "eslint --fix"
+    ],
+    "*.{js,ts,css}": [
       "prettier --write"
     ],
     "*.md": [

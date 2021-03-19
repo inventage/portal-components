@@ -17,10 +17,21 @@ export const Basic = () => html` <portal-navigation src="./data/data.json" inter
 ### Settings
 
 ```js preview-story
-export const Settings = () => html` <portal-navigation src="./data/data-settings.json" logoutMenuInMetaBar internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}">
-  <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
-  <span slot="meta-left" style="font-size: 0.75rem; display: flex; align-items: center;">Meta Left slot</span>
-</portal-navigation>`;
+export const Settings = () => html` <style>
+    portal-navigation.settings::part(slot-header-mobile) {
+      display: flex;
+      margin-left: auto;
+    }
+
+    portal-navigation.settings::part(hamburger-menu) {
+      margin-left: 0;
+    }
+  </style>
+  <portal-navigation src="./data/data-settings.json" logoutMenuInMetaBar internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}" class="settings">
+    <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
+    <span slot="meta-left" style="font-size: 0.75rem; display: flex; align-items: center;">Meta Left slot</span>
+    <span slot="mobile-header" style="font-size: 0.75rem; display: flex; align-items: center;">Mobile Header slot</span>
+  </portal-navigation>`;
 ```
 
 ## API
