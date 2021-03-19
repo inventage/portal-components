@@ -1,7 +1,7 @@
 import { CSSResultArray, html, internalProperty, LitElement, property, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { baseStyles } from '../../../common/baseStyles';
-import { portalNavigationStyles } from './portalNavigationStyles';
+import { styles } from './styles-css';
 import { Configuration, MenuItem, MenuLabel } from './Configuration';
 import { ScopedElementsMap, ScopedElementsMixin } from '@open-wc/scoped-elements';
 import { PortalHamburgerMenu } from '../../portal-hamburger-menu';
@@ -105,6 +105,10 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  *
  * @cssprop [--portal-navigation-font-family=sans-serif]
  *
+ * @csspart hamburger-menu - The hamburger menu element (shown in mobile breakpoint)
+ * @csspart slot-header-mobile - Slot element wrapper between the hamburger menu element and the logo slot
+ * @csspart menu-main-items - Element wrapper for the main menu items (1st level)
+ *
  * @slot logo - The slot for the logo
  * @slot right - The right slot
  * @slot left - The left slot
@@ -152,7 +156,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   }
 
   static get styles(): CSSResultArray {
-    return [baseStyles, portalNavigationStyles];
+    return [baseStyles, styles];
   }
 
   /**
@@ -239,8 +243,6 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   }
 
   render(): TemplateResult {
-    console.log('logoutMenuInMetaBar', this.logoutMenuInMetaBar);
-
     return html` <div class="portal-navigation-container">
       <div class="portal-navigation-meta-bar">
         <div class="portal-navigation-container-inner inner">
@@ -253,21 +255,23 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         <div class="portal-navigation-container-inner inner">
           <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
           <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
+          <div class="slot-header-mobile" part="slot-header-mobile">${this._createMobileHeaderSlotTemplate()}</div>
           <div class="portal-navigation-meta-menus">
             <div class="portal-navigation-menu-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
             <div class="portal-navigation-menu-profile portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
-            ${!this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>` : nothing}
+            ${!this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
           </div>
           <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
+          <!-- Hamburger Menu Tree Elements -->
+          <portal-hamburger-menu
+            class="portal-navigation-header-toggle"
+            part="hamburger-menu"
+            .toggled="${this.hamburgerMenuExpanded}"
+            @state-changed="${(e: CustomEvent) => {
+              this.hamburgerMenuExpanded = e.detail;
+            }}"
+          ></portal-hamburger-menu>
         </div>
-        <!-- Hamburger Menu Tree Elements -->
-        <portal-hamburger-menu
-          class="portal-navigation-header-toggle"
-          .toggled="${this.hamburgerMenuExpanded}"
-          @state-changed="${(e: CustomEvent) => {
-            this.hamburgerMenuExpanded = e.detail;
-          }}"
-        ></portal-hamburger-menu>
       </header>
 
       <main class="portal-navigation-menu-main">
@@ -402,6 +406,13 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    */
   protected _createLeftSlotTemplate(): TemplateResult {
     return html` <slot name="left"></slot>`;
+  }
+
+  /**
+   * Override to make use of the slot in extension.
+   */
+  protected _createMobileHeaderSlotTemplate(): TemplateResult {
+    return html` <slot name="mobile-header"></slot>`;
   }
 
   /**

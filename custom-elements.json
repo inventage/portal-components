@@ -382,6 +382,12 @@
           "name": "--portal-navigation-font-family",
           "default": "\"sans-serif\""
         }
+      ],
+      "cssParts": [
+        {
+          "name": "hamburger-menu",
+          "description": "A part representing a switch track"
+        }
       ]
     }
   ]

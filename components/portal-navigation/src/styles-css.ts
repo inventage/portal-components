@@ -1,6 +1,6 @@
 import { css } from 'lit-element';
 
-export const portalNavigationStyles = css`
+export const styles = css`
   :host {
     font-family: var(--portal-navigation-font-family, sans-serif);
     box-sizing: border-box;
@@ -10,10 +10,6 @@ export const portalNavigationStyles = css`
   :host *:before,
   :host *:after {
     box-sizing: inherit;
-  }
-
-  :host *:not(slot):empty {
-    display: none;
   }
 
   .portal-navigation-container {
@@ -154,14 +150,13 @@ export const portalNavigationStyles = css`
     text-transform: none;
     padding-left: var(--portal-navigation-horizontal-base, 1rem);
     padding-right: var(--portal-navigation-horizontal-base, 1rem);
-    padding-right: var(--portal-navigation-horizontal-base, 1rem);
   }
 
   .badge:not(:empty) {
     background-color: var(--portal-navigation-color-badge-background, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
     border-radius: 1em;
     font-size: var(--portal-navigation-font-size-badge, 1rem);
-    padding: 2px 8px 0px 8px;
+    padding: 2px 8px 0 8px;
     text-align: center;
     color: var(--portal-navigation-color-badge, white);
     font-family: Helvetica, sans-serif;
@@ -246,13 +241,19 @@ export const portalNavigationStyles = css`
     color: var(--portal-navigation-color-hover-current, var(--portal-navigation-color-hover));
   }
 
+  .slot-header-mobile {
+    display: none;
+  }
+
+  /* TODO: Make these 800px configurable */
   @media screen and (max-width: 800px) {
     .link {
       color: var(--portal-navigation-color-link-breakpoint, var(--portal-navigation-color-link));
     }
 
     .portal-navigation-header-toggle,
-    .portal-navigation-tree-container {
+    .portal-navigation-tree-container,
+    .slot-header-mobile {
       display: block;
     }
 
