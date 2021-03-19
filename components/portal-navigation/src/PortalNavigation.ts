@@ -246,24 +246,22 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   render(): TemplateResult {
     return html` <div class="portal-navigation-container">
-      <div class="portal-navigation-meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
+      <div class="meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
         <div class="container-max-width inner">
           <div class="slot-meta-left"><slot name="meta-left"></slot></div>
-          ${this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu-logout-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
-          <div class="portal-navigation-slot-meta-right"><slot name="meta-right"></slot></div>
+          ${this.logoutMenuInMetaBar ? html`<div class="menu-logout menu-logout-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          <div class="slot-meta-right"><slot name="meta-right"></slot></div>
         </div>
       </div>
       <header class="portal-navigation-header">
         <div class="container-max-width inner">
-          <div class="portal-navigation-slot-logo">${this._createLogoSlotTemplate()}</div>
-          <div class="portal-navigation-slot-left">${this._createLeftSlotTemplate()}</div>
+          <div class="slot-logo">${this._createLogoSlotTemplate()}</div>
+          <div class="slot-left">${this._createLeftSlotTemplate()}</div>
           <div class="slot-header-mobile" part="slot-header-mobile">${this._createMobileHeaderSlotTemplate()}</div>
-          <div class="portal-navigation-meta-menus">
-            <div class="portal-navigation-menu-meta portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
-            <div class="portal-navigation-menu-profile portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
-            ${!this.logoutMenuInMetaBar ? html`<div class="portal-navigation-menu-logout portal-navigation-menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
-          </div>
-          <div class="portal-navigation-slot-right">${this._createRightSlotTemplate()}</div>
+          <div class="menu-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
+          <div class="menu-profile menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
+          ${!this.logoutMenuInMetaBar ? html`<div class="menu-logout menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          <div class="slot-right">${this._createRightSlotTemplate()}</div>
           <!-- Hamburger Menu Tree Elements -->
           <portal-hamburger-menu
             class="portal-navigation-header-toggle"
@@ -276,9 +274,9 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         </div>
       </header>
 
-      <main class="portal-navigation-menu-main">
+      <main class="menu-main">
         <div class="container-max-width inner">
-          <div class="portal-navigation-menu-main-items portal-navigation-menu" part="menu-main-items">
+          <div class="menu-main-items menu" part="menu-main-items">
             <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
           </div>
           ${this._createCurrentItemsTemplate()}
@@ -304,7 +302,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     }
 
     // If the event path contains either the dropdown itself or its menu, let's bail…
-    const elementMenu = activeDropdownElement.closest('.portal-navigation-menu');
+    const elementMenu = activeDropdownElement.closest('.menu');
     if (e.composedPath().includes(activeDropdownElement) || e.composedPath().includes(elementMenu!)) {
       return;
     }

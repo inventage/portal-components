@@ -19,7 +19,6 @@ export const Basic = () => html` <portal-navigation src="./data/data.json" inter
 ```js preview-story
 export const Settings = () => html` <style>
     portal-navigation.settings::part(slot-header-mobile) {
-      display: flex;
       margin-left: auto;
     }
 
