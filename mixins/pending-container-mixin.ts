@@ -45,13 +45,13 @@ export interface CustomElement extends HTMLElement {
 export default <C extends Constructor<CustomElement>>(base: C, promiseDelay = 0) => {
   class PendingContainerMixin extends base {
     @internalProperty()
-    private _hasPendingChildren = false;
+    _hasPendingChildren = false;
 
     @internalProperty()
-    private pendingCount = 0;
+    pendingCount = 0;
 
     @internalProperty()
-    private resolvedCount = 0;
+    resolvedCount = 0;
 
     get progress() {
       return this.resolvedCount / this.pendingCount;
