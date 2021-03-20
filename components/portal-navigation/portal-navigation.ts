@@ -1,5 +1,6 @@
 import { PortalNavigation } from './src/PortalNavigation';
 
+// Test
 customElements.define('portal-navigation', PortalNavigation);
 
 declare global {
