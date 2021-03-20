@@ -114,6 +114,8 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @slot left - The left slot
  * @slot meta-left - The left slot inside the meta bar
  * @slot meta-right - The right slot inside the meta bar
+ *
+ * TODO: kebap-cased attributes
  */
 export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   @property()
@@ -263,13 +265,13 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       </div>
       <header class="portal-navigation-header">
         <div class="container-max-width inner">
-          <div class="slot-logo">${this._createLogoSlotTemplate()}</div>
-          <div class="slot-left">${this._createLeftSlotTemplate()}</div>
-          <div class="slot-header-mobile" part="slot-header-mobile">${this._createMobileHeaderSlotTemplate()}</div>
+          <div class="slot-logo"><slot name="logo"></slot></div>
+          <div class="slot-left"><slot name="left"></slot></div>
+          <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
           <div class="menu-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
           <div class="menu-profile menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
           ${!this.logoutMenuInMetaBar ? html`<div class="menu-logout menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
-          <div class="slot-right">${this._createRightSlotTemplate()}</div>
+          <div class="slot-right"><slot name="right"></slot></div>
           <!-- Hamburger Menu Tree Elements -->
           <portal-hamburger-menu
             class="portal-navigation-header-toggle"
@@ -404,34 +406,6 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   private __toggleDropdown(menuId: string): void {
     this.activeDropdown = this.activeDropdown ? undefined : menuId;
-  }
-
-  /**
-   * Override to make use of the slot in extension.
-   */
-  protected _createLogoSlotTemplate(): TemplateResult {
-    return html` <slot name="logo"></slot>`;
-  }
-
-  /**
-   * Override to make use of the slot in extension.
-   */
-  protected _createLeftSlotTemplate(): TemplateResult {
-    return html` <slot name="left"></slot>`;
-  }
-
-  /**
-   * Override to make use of the slot in extension.
-   */
-  protected _createMobileHeaderSlotTemplate(): TemplateResult {
-    return html` <slot name="mobile-header"></slot>`;
-  }
-
-  /**
-   * Override to make use of the slot in extension.
-   */
-  protected _createRightSlotTemplate(): TemplateResult {
-    return html` <slot name="right"></slot>`;
   }
 
   /**
