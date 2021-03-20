@@ -45,7 +45,8 @@
     "test:watch": "npm run test:browser:watch",
     "tsc:watch": "tsc -p tsconfig.dev.json --watch",
     "watch:analyze:custom-elements": "onchange -i '{common,components,mixins}/**/*.ts' -- npm run build:analyze:custom-elements",
-    "watch:build-css": "onchange -i '{common,components,mixins}/**/*.css' -- npm run build:css"
+    "watch:build-css": "onchange -i '{common,components,mixins}/**/*.css' -- npm run build:css",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@open-wc/scoped-elements": "^1.3.3",
@@ -90,12 +91,6 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged --allow-empty",
-      "pre-push": "npm run lint"
-    }
   },
   "lint-staged": {
     "*.{js,ts}": [
