@@ -26,7 +26,7 @@ export const Settings = () => html` <style>
       margin-left: 0;
     }
   </style>
-  <portal-navigation src="./data/data-settings.json" logoutMenuInMetaBar internalRouting currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}" class="settings">
+  <portal-navigation src="./data/data-settings.json" logoutMenuInMetaBar internalRouting mobileBreakpoint="1100" language="de" currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}" class="settings">
     <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
     <span slot="meta-left" style="font-size: 0.75rem; display: flex; align-items: center;">Meta Left slot</span>
     <span slot="mobile-header" style="font-size: 0.75rem; display: flex; align-items: center;">Mobile Header slot</span>

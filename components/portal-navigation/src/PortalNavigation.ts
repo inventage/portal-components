@@ -240,7 +240,9 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     }
 
     if (changedProperties.has('mobileBreakpoint')) {
-      window.matchMedia(`screen and (max-width: ${this.mobileBreakpoint}px)`).addEventListener('change', e => {
+      const mql = window.matchMedia(`screen and (max-width: ${this.mobileBreakpoint}px)`);
+      this.isMobileBreakpoint = mql.matches;
+      mql.addEventListener('change', e => {
         this.isMobileBreakpoint = e.matches;
       });
     }
