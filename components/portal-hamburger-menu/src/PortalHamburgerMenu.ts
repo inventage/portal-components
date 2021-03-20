@@ -1,6 +1,6 @@
 import { CSSResultArray, html, LitElement, property, TemplateResult } from 'lit-element';
 import { baseStyles } from '../../../common/baseStyles';
-import { styles as hamburgerMenuStyles } from './portalHamburgerMenuStyles';
+import { styles } from './styles-css';
 import { classMap } from 'lit-html/directives/class-map';
 import { PropertyDeclaration } from 'lit-element/lib/updating-element';
 
@@ -30,7 +30,7 @@ export class PortalHamburgerMenu extends LitElement {
   toggled = false;
 
   static get styles(): CSSResultArray {
-    return [baseStyles, hamburgerMenuStyles];
+    return [baseStyles, styles];
   }
 
   requestUpdateInternal(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
