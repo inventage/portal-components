@@ -400,7 +400,7 @@
       "items": [
         {
           "label": {
-            "de": "Settings",
+            "de": "Einstellungen",
             "en": "Settings"
           },
           "defaultItem": "profile.preferences.userSettings",
