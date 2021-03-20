@@ -172,6 +172,11 @@
           "default": "false"
         },
         {
+          "name": "mobileBreakpoint",
+          "type": "number",
+          "default": "800"
+        },
+        {
           "name": "src",
           "description": "location from where to fetch configuration data file.",
           "type": "string"
@@ -205,6 +210,12 @@
           "attribute": "logoutMenuInMetaBar",
           "type": "boolean",
           "default": "false"
+        },
+        {
+          "name": "mobileBreakpoint",
+          "attribute": "mobileBreakpoint",
+          "type": "number",
+          "default": "800"
         },
         {
           "name": "src",
@@ -265,6 +276,14 @@
         {
           "name": "left",
           "description": "The left slot"
+        },
+        {
+          "name": "meta-left",
+          "description": "The left slot inside the meta bar"
+        },
+        {
+          "name": "meta-right",
+          "description": "The right slot inside the meta bar\n\nTODO: kebap-cased attributes"
         }
       ],
       "cssProperties": [
@@ -386,7 +405,15 @@
       "cssParts": [
         {
           "name": "hamburger-menu",
-          "description": "A part representing a switch track"
+          "description": "The hamburger menu element (shown in mobile breakpoint)"
+        },
+        {
+          "name": "slot-header-mobile",
+          "description": "Slot element wrapper between the hamburger menu element and the logo slot"
+        },
+        {
+          "name": "menu-main-items",
+          "description": "Element wrapper for the main menu items (1st level)"
         }
       ]
     }

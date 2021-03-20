@@ -24,13 +24,13 @@
     "clean": "rimraf storybook-static dist",
     "copy:data": "cp -Rpf data storybook-static/",
     "format": "npm run format:eslint && npm run format:prettier",
-    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
-    "format:prettier": "prettier '**/*.{js,ts,md,css}' --write --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .ts,.html . --fix",
+    "format:prettier": "prettier '**/*.{js,ts,md,css}' --write",
     "lint": "run-p -l lint:*",
     "lint:analyze": "lit-analyzer '{common,components,mixins}/**/*.ts' --strict --rules.no-noncallable-event-binding warn",
-    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
+    "lint:eslint": "eslint --ext .ts,.html .",
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
-    "lint:prettier": "prettier '**/*.{js,ts,md,css}' --check --ignore-path .gitignore",
+    "lint:prettier": "prettier '**/*.{js,ts,md,css}' --check",
     "lint:tsc": "tsc",
     "prepublishOnly": "tsc",
     "start": "concurrently -k -n styles,tsc,storybook 'npm run watch:build-css' 'npm run tsc:watch' 'npm run storybook'",
@@ -109,7 +109,7 @@
     ],
     "*.md": [
       "prettier --write",
-      "markdownlint --ignore '**/CHANGELOG.md'"
+      "markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'"
     ]
   },
   "np": {
