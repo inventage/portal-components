@@ -766,29 +766,22 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   }
 
   /**
-   * Sets the internal configuration property to the given configuration.
-   *
-   * @param config
-   */
-  setConfiguration(config: Configuration): PortalNavigation {
-    this.configuration = config;
-    return this;
-  }
-
-  /**
-   * Returns the internal configuration property value.
+   * Returns the internal configuration property.
    */
   getConfiguration(): Configuration {
     return this.configuration;
   }
 
   /**
-   * Returns the internal activePath property value.
+   * Returns the internal activePath property.
    */
   getActivePath(): IdPath {
     return this.activePath;
   }
 
+  /**
+   * Returns the internal temporary badge values property.
+   */
   getTemporaryBadgeValues(): Map<unknown, unknown> {
     return this.temporaryBadgeValues;
   }

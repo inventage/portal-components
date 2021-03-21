@@ -236,8 +236,8 @@ export class Configuration {
     }
 
     if (keyParts.length === 2) {
-      const values = (data[keyParts[0]] as MenuItem[]).filter(object => object.id === keyParts[1]);
-      if (values.length > 0) {
+      const values = (data[keyParts[0]] as MenuItem[])?.filter(object => object.id === keyParts[1]);
+      if (values?.length > 0) {
         return values[0];
       }
     }
