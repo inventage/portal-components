@@ -283,7 +283,15 @@
         },
         {
           "name": "meta-right",
-          "description": "The right slot inside the meta bar\n\nTODO: kebap-cased attributes"
+          "description": "The right slot inside the meta bar"
+        },
+        {
+          "name": "header-mobile",
+          "description": "The slot rendered in the top bar in the mobile breakpoint"
+        },
+        {
+          "name": "tree-bottom",
+          "description": "The slot rendered at the bottom of the menu tree (mobile breakpoint)\n\nTODO: kebap-cased attributes"
         }
       ],
       "cssProperties": [

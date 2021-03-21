@@ -114,6 +114,8 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @slot left - The left slot
  * @slot meta-left - The left slot inside the meta bar
  * @slot meta-right - The right slot inside the meta bar
+ * @slot header-mobile - The slot rendered in the top bar in the mobile breakpoint
+ * @slot tree-bottom - The slot rendered at the bottom of the menu tree (mobile breakpoint)
  *
  * TODO: kebap-cased attributes
  */
