@@ -265,7 +265,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           <div class="slot-meta-right"><slot name="meta-right"></slot></div>
         </div>
       </div>
-      <header class="portal-navigation-header">
+      <header class="navigation-header">
         <div class="container-max-width inner">
           <div class="slot-logo"><slot name="logo"></slot></div>
           <div class="slot-left"><slot name="left"></slot></div>
@@ -276,7 +276,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           <div class="slot-right"><slot name="right"></slot></div>
           <!-- Hamburger Menu Tree Elements -->
           <portal-hamburger-menu
-            class="portal-navigation-header-toggle"
+            class="header-toggle"
             part="hamburger-menu"
             .toggled="${this.hamburgerMenuExpanded}"
             @state-changed="${(e: CustomEvent) => {
@@ -289,11 +289,11 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       <main class="menu-main">
         <div class="container-max-width inner">
           <div class="menu-main-items menu" part="menu-main-items">
-            <div class="portal-navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
+            <div class="navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
           </div>
           ${this._createCurrentItemsTemplate()}
           <!-- Hamburger Menu Tree Elements -->
-          ${this.hamburgerMenuExpanded ? html` <div class="portal-navigation-tree-container">${this._createTreeTemplate()}</div>` : html``}
+          ${this.hamburgerMenuExpanded ? html` <div class="tree-container">${this._createTreeTemplate()}</div>` : html``}
         </div>
       </main>
     </div>`;
@@ -466,14 +466,14 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         part="item-${ifDefined(id)}"
         class="${classMap({
           link: true,
-          'portal-navigation-tree-parent': isTreeMode,
+          'tree-parent': isTreeMode,
           [NavigationCssClasses.selected]: active,
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${(e: Event) => this._onLink(e, item)}"
         >${this._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : html``}</a
       >
-      ${isTreeMode && active && hasItems ? html` <div class="portal-navigation-tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : html``}`;
+      ${isTreeMode && active && hasItems ? html` <div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : html``}`;
   }
 
   /**
@@ -491,8 +491,8 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     const hasCurrentItems = activeParentItem && !Array.isArray(activeParentItem) && activeParentItem.items && activeParentItem.items.length > 0;
 
     if (hasCurrentItems) {
-      return html` <div class="portal-navigation-current">
-        <div class="portal-navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
+      return html` <div class="navigation-current">
+        <div class="navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
       </div>`;
     }
     return html``;
@@ -536,7 +536,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   private _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
-      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="portal-navigation-icon" />`);
+      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="navigation-icon" />`);
       if (badge) {
         result.push(html`<span part="${`badge-${id}`}" class="badge">${badge}</span>`);
       }

@@ -27,5 +27,5 @@ import { css } from 'lit-element';
 export const styles = css\`
 %s
 \`;" "$css" > "$cssfile"
-  echo ""
 done
+echo ""
