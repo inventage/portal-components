@@ -167,87 +167,104 @@
       "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
       "attributes": [
         {
-          "name": "logoutMenuInMetaBar",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "mobileBreakpoint",
-          "type": "number",
-          "default": "800"
-        },
-        {
           "name": "src",
-          "description": "location from where to fetch configuration data file.",
-          "type": "string"
+          "description": "Location from where to fetch configuration data file.",
+          "type": "string | undefined"
         },
         {
           "name": "language",
-          "description": "the current language. e.g. 'en' or 'de'.",
+          "description": "The current language. e.g. 'en' or 'de'.",
           "type": "string",
           "default": "\"en\""
         },
         {
           "name": "activeUrl",
-          "description": "you can use this to set the active path via the url of an item.",
-          "type": "string"
+          "description": "You can use this to set the active path via the url of an item.",
+          "type": "string | undefined"
         },
         {
           "name": "currentApplication",
-          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string"
+          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string | undefined"
         },
         {
           "name": "internalRouting",
-          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "description": "True if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
           "type": "boolean",
           "default": "false"
-        }
-      ],
-      "properties": [
+        },
         {
           "name": "logoutMenuInMetaBar",
-          "attribute": "logoutMenuInMetaBar",
+          "description": "Controls whether the logout menu will be displayed in the meta bar.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "logoutMenuInMobileHeaderBar",
+          "description": "Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).",
           "type": "boolean",
           "default": "false"
         },
         {
           "name": "mobileBreakpoint",
-          "attribute": "mobileBreakpoint",
+          "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
           "type": "number",
           "default": "800"
-        },
+        }
+      ],
+      "properties": [
         {
           "name": "src",
           "attribute": "src",
-          "description": "location from where to fetch configuration data file.",
-          "type": "string"
+          "description": "Location from where to fetch configuration data file.",
+          "type": "string | undefined"
         },
         {
           "name": "language",
           "attribute": "language",
-          "description": "the current language. e.g. 'en' or 'de'.",
+          "description": "The current language. e.g. 'en' or 'de'.",
           "type": "string",
           "default": "\"en\""
         },
         {
           "name": "activeUrl",
           "attribute": "activeUrl",
-          "description": "you can use this to set the active path via the url of an item.",
-          "type": "string"
+          "description": "You can use this to set the active path via the url of an item.",
+          "type": "string | undefined"
         },
         {
           "name": "currentApplication",
           "attribute": "currentApplication",
-          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string"
+          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string | undefined"
         },
         {
           "name": "internalRouting",
           "attribute": "internalRouting",
-          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "description": "True if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
           "type": "boolean",
           "default": "false"
+        },
+        {
+          "name": "logoutMenuInMetaBar",
+          "attribute": "logoutMenuInMetaBar",
+          "description": "Controls whether the logout menu will be displayed in the meta bar.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "logoutMenuInMobileHeaderBar",
+          "attribute": "logoutMenuInMobileHeaderBar",
+          "description": "Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "mobileBreakpoint",
+          "attribute": "mobileBreakpoint",
+          "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
+          "type": "number",
+          "default": "800"
         }
       ],
       "events": [

@@ -72,13 +72,6 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  *
  * @listens 'portal-navigation.setBadgeValue' - Listens to event that change the badge value of an item or menu and sets that value accordingly.
  *
- * @prop {IdPath} activePath - the current path of "active" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered "active".
- * @prop {string} src - location from where to fetch configuration data file.
- * @prop {string} language - the current language. e.g. 'en' or 'de'.
- * @prop {string} activeUrl - you can use this to set the active path via the url of an item.
- * @prop {string} currentApplication - the current application. Items change their routing behavior based on whether their application property matches this property or not.
- * @prop {boolean} internalRouting - true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.
- *
  * @cssprop {color} [--portal-navigation-color-primary=#555]
  * @cssprop {color} [--portal-navigation-color-secondary=rgb(66, 136, 245)]
  * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)]
@@ -122,27 +115,59 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * TODO: kebap-cased attributes
  */
 export class PortalNavigation extends ScopedElementsMixin(LitElement) {
+  /**
+   * Location from where to fetch configuration data file.
+   */
   @property()
   src?: string;
 
+  /**
+   * The current language. e.g. 'en' or 'de'.
+   */
   @property()
   language = 'en';
 
+  /**
+   * You can use this to set the active path via the url of an item.
+   */
   @property()
   activeUrl?: string;
 
+  /**
+   * The current application. Items change their routing behavior based on whether their application property matches this property or not.
+   */
   @property()
   currentApplication?: string;
 
+  /**
+   * True if items, by default, should route internally. Items may override this default in their own configuration. Default is false.
+   */
   @property({ type: Boolean })
   internalRouting = false;
 
+  /**
+   * Controls whether the logout menu will be displayed in the meta bar.
+   */
   @property({ type: Boolean })
   logoutMenuInMetaBar = false;
 
+  /**
+   * Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).
+   */
+  @property({ type: Boolean })
+  logoutMenuInMobileHeaderBar = false;
+
+  /**
+   * Viewport width at which navigation switches from/to the mobile breakpoint.
+   */
   @property({ type: Number })
   mobileBreakpoint = 800;
 
+  /**
+   * The current path of "active" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered "active"
+   *
+   * @private
+   */
   @internalProperty()
   private activePath = new IdPath();
 

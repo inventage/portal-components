@@ -287,9 +287,12 @@ export const styles = css`
 }
 
 .container.-mobile .header-toggle,
-.container.-mobile .tree-container,
-.container.-mobile .slot-header-mobile {
+.container.-mobile .tree-container {
   display: block;
+}
+
+.container.-mobile .slot-header-mobile {
+  display: flex;
 }
 
 .container.-mobile .slot-left,
