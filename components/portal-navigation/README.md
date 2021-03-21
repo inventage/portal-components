@@ -30,6 +30,7 @@ export const Settings = () => html` <style>
     <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
     <span slot="meta-left" style="font-size: 0.75rem; display: flex; align-items: center;">Meta Left slot</span>
     <span slot="mobile-header" style="font-size: 0.75rem; display: flex; align-items: center;">Mobile Header slot</span>
+    <span slot="tree-bottom" style="font-size: 0.75rem; display: flex; align-items: center;">Tree Bottom slot</span>
   </portal-navigation>`;
 ```
 

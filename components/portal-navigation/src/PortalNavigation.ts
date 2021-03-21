@@ -293,7 +293,12 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           </div>
           ${this._createCurrentItemsTemplate()}
           <!-- Hamburger Menu Tree Elements -->
-          ${this.hamburgerMenuExpanded ? html` <div class="tree-container">${this._createTreeTemplate()}</div>` : nothing}
+          ${this.hamburgerMenuExpanded
+            ? html` <div class="tree-container">
+                ${this._createTreeTemplate()}
+                <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
+              </div>`
+            : nothing}
         </div>
       </main>
     </div>`;
