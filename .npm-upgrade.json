@@ -1,8 +1,0 @@
-{
-  "ignore": {
-    "eslint": {
-      "versions": ">=7.0.0",
-      "reason": "Breaks other eslint dependencies, update manually once those are upgraded as well."
-    }
-  }
-}
