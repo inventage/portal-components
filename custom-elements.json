@@ -262,6 +262,10 @@
         {
           "name": "portal-navigation.configured",
           "description": "Event fired when the configuration has been successfully loaded."
+        },
+        {
+          "name": "portal-navigation.breakpointChanged",
+          "description": "Event fired when the mobile breakpoint media query state changes."
         }
       ],
       "slots": [

@@ -51,6 +51,7 @@ const NavigationEvents = {
   setLanguage: `${NavigationEventNamespace}.setLanguage`,
   setBadgeValue: `${NavigationEventNamespace}.setBadgeValue`,
   configured: `${NavigationEventNamespace}.configured`,
+  breakpointChanged: `${NavigationEventNamespace}.breakpointChanged`,
 } as const;
 
 type NavigationEvents = typeof NavigationEvents;
@@ -67,6 +68,7 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @fires 'portal-navigation.routeTo' - Event fired when an item with a url is clicked and the routing is done internally.
  * @fires 'portal-navigation.setLanguage' - Event fired when the 'lang' property changes.
  * @fires 'portal-navigation.configured' - Event fired when the configuration has been successfully loaded.
+ * @fires 'portal-navigation.breakpointChanged' - Event fired when the mobile breakpoint media query state changes.
  *
  * @listens 'portal-navigation.setBadgeValue' - Listens to event that change the badge value of an item or menu and sets that value accordingly.
  *
@@ -244,8 +246,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     if (changedProperties.has('mobileBreakpoint')) {
       const mql = window.matchMedia(`screen and (max-width: ${this.mobileBreakpoint}px)`);
       this.isMobileBreakpoint = mql.matches;
+      this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
       mql.addEventListener('change', e => {
         this.isMobileBreakpoint = e.matches;
+        this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
       });
     }
   }
