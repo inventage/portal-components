@@ -287,7 +287,11 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     }
   }
 
-  render(): TemplateResult {
+  render(): TemplateResult | Nothing {
+    if (!this.src) {
+      return nothing;
+    }
+
     return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-mobile-header-logout': this.logoutMenuInMobileHeader })}">
       <div class="meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
         <div class="container-max-width inner">
@@ -368,16 +372,15 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     }
 
     (async () => {
-      this.configuration = new Configuration();
-
       try {
+        const oldConfiguration = this.configuration;
         const response = await fetch(this.src!);
         const data = await response.json();
 
         this.configuration = new Configuration(data);
         this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
         this.__updateActivePathFromUrl();
-        this.requestUpdateInternal();
+        this.requestUpdateInternal('configuration', oldConfiguration);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.warn('An error occurred when fetching remote data…', e);
@@ -462,7 +465,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       const badge = this.getBadgeValue(menu.id!);
       const label = this.__getLabel(menu);
       return html` <span
-          part="${menuId}"
+          part="menu-${menuId}"
           class="${classMap({
             link: true,
             'dropdown-link': true,
@@ -549,7 +552,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     return html`<a
       href="${ifDefined(url)}"
-      part="${ifDefined(id)}"
+      part="item-${ifDefined(id)}"
       class="${classMap({
         link: true,
         [NavigationCssClasses.selected]: active,
