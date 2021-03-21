@@ -293,7 +293,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           </div>
           ${this._createCurrentItemsTemplate()}
           <!-- Hamburger Menu Tree Elements -->
-          ${this.hamburgerMenuExpanded ? html` <div class="tree-container">${this._createTreeTemplate()}</div>` : html``}
+          ${this.hamburgerMenuExpanded ? html` <div class="tree-container">${this._createTreeTemplate()}</div>` : nothing}
         </div>
       </main>
     </div>`;
@@ -471,31 +471,32 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${(e: Event) => this._onLink(e, item)}"
-        >${this._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : html``}</a
+        >${this._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : nothing}</a
       >
-      ${isTreeMode && active && hasItems ? html` <div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : html``}`;
+      ${isTreeMode && active && hasItems ? html` <div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : nothing}`;
   }
 
   /**
    * Creates the html template for the third row (second-level), which displays only if the active path
    * has a first-level item selection and that item has child items.
    */
-  private _createCurrentItemsTemplate(): TemplateResult {
+  private _createCurrentItemsTemplate(): TemplateResult | Nothing {
     const parentItemId = this.activePath.getFirstLevelItemId();
     if (!parentItemId) {
-      return html``;
+      return nothing;
     }
 
     const menuId = this.activePath.getMenuId();
     const activeParentItem = this.configuration.getData([`menus::${menuId}`, `items::${parentItemId}`]);
     const hasCurrentItems = activeParentItem && !Array.isArray(activeParentItem) && activeParentItem.items && activeParentItem.items.length > 0;
 
-    if (hasCurrentItems) {
-      return html` <div class="navigation-current">
-        <div class="navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
-      </div>`;
+    if (!hasCurrentItems) {
+      return nothing;
     }
-    return html``;
+
+    return html` <div class="navigation-current">
+      <div class="navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
+    </div>`;
   }
 
   /**
