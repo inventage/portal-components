@@ -155,7 +155,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).
    */
   @property({ type: Boolean })
-  logoutMenuInMobileHeaderBar = false;
+  logoutMenuInMobileHeader = false;
 
   /**
    * Viewport width at which navigation switches from/to the mobile breakpoint.
@@ -288,11 +288,11 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   }
 
   render(): TemplateResult {
-    return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint })}">
+    return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-mobile-header-logout': this.logoutMenuInMobileHeader })}">
       <div class="meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
         <div class="container-max-width inner">
           <div class="slot-meta-left"><slot name="meta-left"></slot></div>
-          ${this.logoutMenuInMetaBar ? html`<div class="menu-logout menu-logout-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          ${this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
           <div class="slot-meta-right"><slot name="meta-right"></slot></div>
         </div>
       </div>
@@ -303,7 +303,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
           <div class="menu-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
           <div class="menu-profile menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
-          ${!this.logoutMenuInMetaBar ? html`<div class="menu-logout menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          ${!this.logoutMenuInMetaBar || (this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
           <div class="slot-right"><slot name="right"></slot></div>
           <!-- Hamburger Menu Tree Elements -->
           <portal-hamburger-menu
@@ -596,11 +596,14 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   private _createTreeTemplate(): TemplateResult[] {
     const templates: TemplateResult[] = [];
 
-    PortalNavigation.menuIdsOrdered.forEach(menuId => {
+    // Remove logout menu from tree template if it should be displayed in mobile header
+    const menus = PortalNavigation.menuIdsOrdered.filter(menu => !(menu === NavigationMenus.logout && this.logoutMenuInMobileHeader));
+
+    menus.forEach(menuId => {
       const menu = this.configuration.getMenu(menuId);
       const hasItems = menu && menu.items && menu.items.length > 0;
-      if (hasItems) {
-        templates.push(...menu!.items!.map(item => this._createFirstLevelItemTemplate(item, true)));
+      if (menu && hasItems) {
+        templates.push(...menu.items!.map(item => this._createFirstLevelItemTemplate(item, true)));
       }
     });
 

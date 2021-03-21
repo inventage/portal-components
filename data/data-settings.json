@@ -387,6 +387,7 @@
             "en": "Logout"
           },
           "url": "/portal/api/logout",
+          "icon": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-logout' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.5' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath stroke='none' d='M0 0h24v24H0z' fill='none'/%3e%3cpath d='M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2' /%3e%3cpath d='M7 12h14l-3 -3m0 6l3 -3' /%3e%3c/svg%3e",
           "internalRouting": true,
           "internalRoutingApplications": [
             "ebanking"

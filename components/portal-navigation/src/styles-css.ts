@@ -298,10 +298,13 @@ export const styles = css`
 .container.-mobile .slot-left,
 .container.-mobile .menu-meta,
 .container.-mobile .menu-profile,
-.container.-mobile .menu-logout,
 .container.-mobile .slot-right,
 .container.-mobile .menu-main-items,
 .container.-mobile .navigation-current {
+  display: none;
+}
+
+.container.-mobile:not(.-mobile-header-logout) .menu-logout {
   display: none;
 }
 

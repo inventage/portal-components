@@ -25,8 +25,24 @@ export const Settings = () => html` <style>
     portal-navigation.settings::part(hamburger-menu) {
       margin-left: 0;
     }
+
+    @media screen and (max-width: 1100px) {
+      portal-navigation.settings::part(label-34) {
+        display: none;
+      }
+    }
   </style>
-  <portal-navigation src="./data/data-settings.json" logoutMenuInMetaBar internalRouting mobileBreakpoint="1100" language="de" currentApplication="ebanking" @portal-navigation.configured="${dispatchBadgeEvents}" class="settings">
+  <portal-navigation
+    src="./data/data-settings.json"
+    logoutMenuInMetaBar
+    logoutMenuInMobileHeader
+    internalRouting
+    mobileBreakpoint="1100"
+    language="de"
+    currentApplication="ebanking"
+    @portal-navigation.configured="${dispatchBadgeEvents}"
+    class="settings"
+  >
     <span slot="logo" style="font-size: 0.75rem; display: flex; align-items: center;">Logo slot</span>
     <span slot="meta-left" style="font-size: 0.75rem; display: flex; align-items: center;">Meta Left slot</span>
     <span slot="header-mobile" style="font-size: 0.75rem; display: flex; align-items: center;">Header Mobile slot</span>
