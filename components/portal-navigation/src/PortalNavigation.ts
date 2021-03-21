@@ -6,7 +6,7 @@ import { Configuration, MenuItem, MenuLabel } from './Configuration';
 import { ScopedElementsMap, ScopedElementsMixin } from '@open-wc/scoped-elements';
 import { PortalHamburgerMenu } from '../../portal-hamburger-menu';
 import { IdPath } from './IdPath';
-import { PropertyDeclaration, PropertyValues } from 'lit-element/lib/updating-element';
+import { PropertyValues } from 'lit-element/lib/updating-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { nothing } from 'lit-html';
 import { Nothing } from '../../../common/utils';
@@ -112,7 +112,7 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @slot header-mobile - The slot rendered in the top bar in the mobile breakpoint
  * @slot tree-bottom - The slot rendered at the bottom of the menu tree (mobile breakpoint)
  *
- * TODO: kebap-cased attributes
+ * TODO: kebab-cased attributes
  */
 export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   /**
@@ -277,12 +277,8 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
       });
     }
-  }
 
-  requestUpdateInternal(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
-    super.requestUpdateInternal(name, oldValue, options);
-
-    if (name === 'activeUrl' && oldValue !== this.activeUrl) {
+    if (changedProperties.has('activeUrl')) {
       this.__updateActivePathFromUrl();
     }
   }
@@ -472,7 +468,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
             [PortalNavigation.classes.selected]: this.activePath.contains(menuId),
           })}"
           @click="${() => this.__toggleDropdown(menuId)}"
-          >${this._createLinkTemplate(menuId, label, menu.icon, badge)}</span
+          >${PortalNavigation._createLinkTemplate(menuId, label, menu.icon, badge)}</span
         >
         <div class="dropdown ${classMap({ '-show': this.activeDropdown === menuId })}">${menu.items.map(item => this._createFirstLevelItemTemplate(item))}</div>`;
     }
@@ -510,7 +506,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${(e: Event) => this._onLink(e, item)}"
-        >${this._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : nothing}</a
+        >${PortalNavigation._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : nothing}</a
       >
       ${isTreeMode && active && hasItems ? html` <div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : nothing}`;
   }
@@ -559,7 +555,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       })}"
       @click="${(e: Event) => this._onLink(e, item)}"
       target="${destination === 'extern' ? '_blank' : '_self'}"
-      >${this._createLinkTemplate(id!, label, icon, badge)}</a
+      >${PortalNavigation._createLinkTemplate(id!, label, icon, badge)}</a
     >`;
   }
 
@@ -573,7 +569,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * @param {string} badge - the badge value to be displayed. If undefined, no badge will be displayed. If there is an icon,
    * the badge will be associated with the icon. Otherwise it will be associated with the label.
    */
-  private _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
+  private static _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
       result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="navigation-icon" />`);

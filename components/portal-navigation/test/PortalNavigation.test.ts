@@ -63,49 +63,55 @@ describe('<portal-navigation>', () => {
   });
 
   it('sets corresponding activePath when activeUrl is set', async () => {
-    // given
-    const el: PortalNavigation = await fixture(html` <portal-navigation></portal-navigation>`);
-    el.setConfiguration(new Configuration(configurationData));
+    const el: PortalNavigation = await fixture(html` <portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
 
-    // when
     el.activeUrl = '/some/path/item3.2';
+    await childrenRendered(el, '[part="item-item3.2"]');
 
-    // then
-    expect(el.getActivePath().getMenuId()).to.eq('menu2');
+    expect(el.getActivePath().getMenuId()).to.eq('meta');
     expect(el.getActivePath().getFirstLevelItemId()).to.eq('parent3');
     expect(el.getActivePath().getId(2)).to.eq('item3.2');
   });
 
   describe('Routing', () => {
-    it('sets activeUrl from current window location', async () => {
-      // TODO: mock window.location
-      // TOOO: Check activeUrl property…
+    it.skip('sets activeUrl from current window location', async () => {
+      // Cannot implement this yet since we cannot mock window.location in tests
     });
 
     it('doesnt route internally when default item of parent item has different application', async () => {
-      // given
-      const el: PortalNavigation = await fixture(html`<portal-navigation currentApplication="app2" internalRouting></portal-navigation>`);
-      el.setConfiguration(new Configuration(configurationData));
+      const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app2" internalRouting></portal-navigation>`);
+      await childrenRendered(el);
 
-      // when
-      const item = el.getConfiguration().getData(['menus::menu1', 'items::parent2']);
-      const internal = el.isInternalRouting(<MenuItem>item);
+      // Menu item from app1, should navigate externally
+      const menuItem = <HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]');
 
-      // then
-      expect(internal).to.equal(false);
+      // If the event does not get prevented in the component, we would navigate away from the page…
+      let externalNavigationOccurred = false;
+      menuItem.addEventListener('click', (e: Event) => {
+        e.preventDefault();
+        externalNavigationOccurred = true;
+      });
+
+      // Click menu item here
+      setTimeout(() => menuItem.click());
+      await aTimeout(1); // Needed, otherwise the click event hasn't occurred yet…
+
+      expect(externalNavigationOccurred).to.be.true;
     });
 
-    it('does route internally when default item of parent item has same application', async () => {
-      // given
-      const el: PortalNavigation = await fixture(html`<portal-navigation currentApplication="app1" internalRouting></portal-navigation>`);
-      el.setConfiguration(new Configuration(configurationData));
+    it.skip('does route internally when default item of parent item has same application', async () => {
+      const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting></portal-navigation>`);
+      await childrenRendered(el);
 
-      // when
-      const parent = el.getConfiguration().getData(['menus::menu1', 'items::parent2']);
-      const internal = el.isInternalRouting(<MenuItem>parent);
+      const item = <HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]');
+      item.addEventListener('click', (e: Event) => {
+        console.log('clicked…', e);
+      });
+      setTimeout(() => item.click());
+      await aTimeout(1);
+      const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
 
-      // then
-      expect(internal).to.equal(true);
+      expect(detail.url).to.equal('/some/path/item2.1');
     });
 
     it('does route externally when default item of parent item has other application', async () => {
@@ -139,16 +145,13 @@ describe('<portal-navigation>', () => {
       expect(el.getActivePath().getId(2)).to.equal('item3.1');
     });
 
-    it.skip('does route internally when default item of parent item has same application', async () => {
+    it('does route internally when default item of parent item has same application', async () => {
       const eventSpy = sinon.spy();
       const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting @portal-navigation.routeTo="${eventSpy as EventListener}"></portal-navigation>`);
-      // Wait until component tree renders…
-      // @see https://open-wc.org/docs/testing/helpers/#waituntil
-      await waitUntil(() => !!el.shadowRoot!.querySelector('[part="parent2"]'));
+      await childrenRendered(el);
 
       // @see https://open-wc.org/docs/testing/helpers/#testing-events
-      const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="parent2"]')).click();
-      setTimeout(clickMenuItem);
+      setTimeout(() => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]')).click());
       const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
 
       expect(eventSpy.callCount).to.equal(1);
@@ -215,18 +218,17 @@ describe('<portal-navigation>', () => {
     });
 
     it('dispatches the "routeTo" event', async () => {
-      const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app1"></portal-navigation>`);
-      await childrenRendered(el);
+      const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app2"></portal-navigation>`);
+      await childrenRendered(el, '[part="item-parent3"]');
 
       // @see https://open-wc.org/docs/testing/helpers/#testing-events
-      const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]')).click();
-      setTimeout(clickMenuItem);
+      setTimeout(() => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent3"]')).click());
       const { detail } = await oneEvent(el, 'portal-navigation.routeTo');
 
-      expect(detail.url).to.equal('/some/path/item2.2');
+      expect(detail.url).to.equal('/some/path/item3.1');
       expect(detail.label).to.deep.equal({
-        de: 'Item 2.2_de',
-        en: 'Item 2.2_en',
+        de: 'Item 3.1_de',
+        en: 'Item 3.1_en',
       });
     });
   });
