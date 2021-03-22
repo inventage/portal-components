@@ -2,86 +2,6 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "portal-card",
-      "path": "./components/portal-card/portal-card.ts",
-      "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
-      "attributes": [
-        {
-          "name": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
-          "name": "back-side",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "properties": [
-        {
-          "name": "title",
-          "attribute": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
-          "name": "backSide",
-          "attribute": "back-side",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "events": [
-        {
-          "name": "side-changed",
-          "description": "Event fired when the card changes sides."
-        }
-      ],
-      "slots": [
-        {
-          "name": "",
-          "description": "This is an unnamed slot (the default slot)"
-        }
-      ],
-      "cssProperties": [
-        {
-          "name": "--portal-card-width",
-          "description": "Width",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-height",
-          "description": "Height",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-text-color",
-          "description": "Text Color",
-          "type": "Color"
-        },
-        {
-          "name": "--portal-card-padding",
-          "description": "Padding",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-border",
-          "description": "Border",
-          "type": "String"
-        },
-        {
-          "name": "--portal-card-border-radius",
-          "description": "Border Radius",
-          "type": "String"
-        },
-        {
-          "name": "--portal-card-margin",
-          "description": "Margin",
-          "type": "Length"
-        }
-      ]
-    },
-    {
       "name": "portal-hamburger-menu",
       "path": "./components/portal-hamburger-menu/portal-hamburger-menu.ts",
       "description": "A simple hamburger menu component.",
@@ -200,7 +120,7 @@
           "default": "false"
         },
         {
-          "name": "logoutMenuInMobileHeaderBar",
+          "name": "logoutMenuInMobileHeader",
           "description": "Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).",
           "type": "boolean",
           "default": "false"
@@ -253,8 +173,8 @@
           "default": "false"
         },
         {
-          "name": "logoutMenuInMobileHeaderBar",
-          "attribute": "logoutMenuInMobileHeaderBar",
+          "name": "logoutMenuInMobileHeader",
+          "attribute": "logoutMenuInMobileHeader",
           "description": "Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).",
           "type": "boolean",
           "default": "false"
@@ -312,7 +232,7 @@
         },
         {
           "name": "tree-bottom",
-          "description": "The slot rendered at the bottom of the menu tree (mobile breakpoint)\n\nTODO: kebap-cased attributes"
+          "description": "The slot rendered at the bottom of the menu tree (mobile breakpoint)\n\nTODO: kebab-cased attributes"
         }
       ],
       "cssProperties": [
