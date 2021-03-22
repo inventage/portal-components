@@ -3,7 +3,7 @@ const { esbuildPlugin } = require('@web/dev-server-esbuild');
 module.exports = {
   nodeResolve: true,
   concurrentBrowsers: 1,
-  concurrency: 1,
+  concurrency: 3,
   coverageConfig: {
     report: true,
     reportDir: 'coverage',
