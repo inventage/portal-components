@@ -3,10 +3,8 @@ import { IdPath } from '../src/IdPath';
 
 describe('IdPath', () => {
   it('with no ids returns undefined for all queries', () => {
-    // when
     const idPath = new IdPath();
 
-    // then
     expect(idPath.ids.length).to.equal(0);
     expect(idPath.getMenuId()).to.be.undefined;
     expect(idPath.getFirstLevelItemId()).to.be.undefined;
@@ -15,10 +13,8 @@ describe('IdPath', () => {
   });
 
   it('undefined ids are ignored and filtered during construction', () => {
-    // when
     const idPath = new IdPath('menu', 'parent', undefined);
 
-    // then
     expect(idPath.ids.length).to.equal(2);
     expect(idPath.getMenuId()).to.equal('menu');
     expect(idPath.getFirstLevelItemId()).to.equal('parent');
@@ -26,10 +22,8 @@ describe('IdPath', () => {
   });
 
   it('getId returns id of proper level', () => {
-    // when
     const idPath = new IdPath('menu', 'parent', 'item');
 
-    // then
     expect(idPath.getMenuId()).to.equal('menu');
     expect(idPath.getFirstLevelItemId()).to.equal('parent');
     expect(idPath.getId(2)).to.equal('item');
@@ -37,10 +31,8 @@ describe('IdPath', () => {
   });
 
   it('contains returns true if id is in path', () => {
-    // when
     const idPath = new IdPath('menu', 'parent', 'item');
 
-    // then
     expect(idPath.contains('menu')).to.be.true;
     expect(idPath.contains('parent')).to.be.true;
     expect(idPath.contains('item')).to.be.true;
@@ -48,13 +40,9 @@ describe('IdPath', () => {
   });
 
   it('should concat additional ids and provide new id path', () => {
-    // given
     const idPath = new IdPath('menu', 'parent', 'item');
-
-    // when
     const idPath2 = idPath.concat('sub-item');
 
-    // then
     expect(idPath.getMenuId()).to.equal('menu');
     expect(idPath.getFirstLevelItemId()).to.equal('parent');
     expect(idPath.getId(2)).to.equal('item');

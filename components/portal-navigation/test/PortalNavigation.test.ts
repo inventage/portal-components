@@ -24,7 +24,9 @@ beforeEach(async () => {
 });
 
 /**
- * @see https://open-wc.org/testing/testing-helpers.html
+ * PortalNavigation web component integration tests
+ *
+ * @see https://open-wc.org/docs/testing/helpers/
  */
 describe('<portal-navigation>', () => {
   describe('Display', () => {
@@ -51,19 +53,60 @@ describe('<portal-navigation>', () => {
     });
   });
 
-  it('returns sorted array of known menu ids', () => {
-    expect(PortalNavigation.menuIdsOrdered).to.deep.equal(['main', 'settings', 'meta', 'profile', 'logout']);
-  });
+  describe('Structure', () => {
+    it('returns sorted array of known menu ids', () => {
+      expect(PortalNavigation.menuIdsOrdered).to.deep.equal(['main', 'settings', 'meta', 'profile', 'logout']);
+    });
 
-  it('sets corresponding activePath when activeUrl is set', async () => {
-    const el: PortalNavigation = await fixture(html` <portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
+    it('sets corresponding activePath when activeUrl is set', async () => {
+      const el: PortalNavigation = await fixture(html` <portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
 
-    el.activeUrl = '/some/path/item3.2';
-    await childrenRendered(el, '[part="item-item3.2"]');
+      el.activeUrl = '/some/path/item3.2';
+      await childrenRendered(el, '[part="item-item3.2"]');
 
-    expect(el.getActivePath().getMenuId()).to.eq('meta');
-    expect(el.getActivePath().getFirstLevelItemId()).to.eq('parent3');
-    expect(el.getActivePath().getId(2)).to.eq('item3.2');
+      expect(el.getActivePath().getMenuId()).to.eq('meta');
+      expect(el.getActivePath().getFirstLevelItemId()).to.eq('parent3');
+      expect(el.getActivePath().getId(2)).to.eq('item3.2');
+    });
+
+    it('each item has a `part` attribute corresponding to its id', async () => {
+      const el: PortalNavigation = await fixture(html` <portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app1"></portal-navigation>`);
+      await childrenRendered(el);
+
+      // Set parent2 as "active" item (should default to its child…)
+      const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]')!).click();
+      setTimeout(clickMenuItem);
+      await aTimeout(10); // Not needed, only here so the TS compiler does not complain about an unused import…
+
+      // Assets part attributes
+      expect(el.shadowRoot!.querySelector('[part="item-parent1"]'), 'part="item-parent1" should be present').not.to.equal(null);
+      expect(el.shadowRoot!.querySelector('[part="item-parent2"]'), 'part="item-parent2" should be present').not.to.equal(null);
+      expect(el.shadowRoot!.querySelector('[part="item-item2.1"]'), 'part="item-item2.1" should be present').not.to.equal(null);
+      expect(el.shadowRoot!.querySelector('[part="item-item2.2"]'), 'part="item-item2.2" should be present').not.to.equal(null);
+    });
+
+    it('sets badge for a given menu item', async () => {
+      const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
+      const el: PortalNavigation = await fixture(
+        html` <portal-navigation
+          src="${TEST_DATA_JSON_PATH}"
+          @portal-navigation.configured="${() => {
+            document.dispatchEvent(
+              new CustomEvent(PortalNavigation.events.setBadgeValue, {
+                detail: {
+                  id: 'parent2',
+                  value: badgeLabel,
+                },
+              }),
+            );
+          }}"
+        ></portal-navigation>`,
+      );
+      await childrenRendered(el);
+
+      expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
+      expect(el.shadowRoot!.querySelector('[part="badge-parent2"]')).not.to.be.null;
+    });
   });
 
   describe('Routing', () => {
@@ -149,26 +192,6 @@ describe('<portal-navigation>', () => {
       expect(externalNavigationOccurred).to.be.true;
     });
 
-    // it('does route externally when item overrides globally set internalRouting=true with false, and does not call e.preventDefault()', async () => {
-    //   // given
-    //   const el: PortalNavigation = await fixture(html`<portal-navigation currentApplication="app2" internalRouting></portal-navigation>`);
-    //   el.setConfiguration(new Configuration(configurationData));
-    //
-    //   const e = new MockEvent();
-    //
-    //   // when
-    //   const parent = <MenuItem>el.getConfiguration().getData(['menus::menu2', 'items::parent3']);
-    //   const item = <MenuItem>el.getConfiguration().getData(['menus::menu2', 'items::parent3', 'items::item3.2']);
-    //   el._onLink(<Event>(e as unknown), item);
-    //
-    //   // then
-    //   expect(parent).not.to.be.undefined;
-    //   expect(item).not.to.be.undefined;
-    //   expect(parent.id).to.equal('parent3');
-    //   expect(item.id).to.equal('item3.2');
-    //   expect(e.count).to.equal(0);
-    // });
-
     it('does ignore default item when destination is "extern" on parent item clicks, and does call e.preventDefault()', async () => {
       const eventSpy = sinon.spy();
       const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" internalRouting @portal-navigation.routeTo="${eventSpy as EventListener}"></portal-navigation>`);
@@ -199,64 +222,27 @@ describe('<portal-navigation>', () => {
     });
   });
 
-  it('dispatches the "configured" event', async () => {
-    const eventSpy = sinon.spy();
-    const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" @portal-navigation.configured="${eventSpy as EventListener}"></portal-navigation>`);
-    await oneEvent(el, 'portal-navigation.configured');
-    expect(eventSpy.callCount).to.equal(1);
-  });
+  describe('Events', () => {
+    it('dispatches the "configured" event', async () => {
+      const eventSpy = sinon.spy();
+      const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" @portal-navigation.configured="${eventSpy as EventListener}"></portal-navigation>`);
+      await oneEvent(el, 'portal-navigation.configured');
+      expect(eventSpy.callCount).to.equal(1);
+    });
 
-  it('each item has a `part` attribute corresponding to its id', async () => {
-    const el: PortalNavigation = await fixture(html` <portal-navigation src="${TEST_DATA_JSON_PATH}" internalrouting currentapplication="app1"></portal-navigation>`);
-    await childrenRendered(el);
+    it('dispatches the "setLanguage" event', async () => {
+      const eventSpy = sinon.spy();
+      const el: PortalNavigation = await fixture(html` <portal-navigation language="de" @portal-navigation.setLanguage="${eventSpy as EventListener}"></portal-navigation>`);
 
-    // Set parent2 as "active" item (should default to its child…)
-    const clickMenuItem = () => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]')!).click();
-    setTimeout(clickMenuItem);
-    await aTimeout(10); // Not needed, only here so the TS compiler does not complain about an unused import…
+      // Should trow an event initially…
+      expect(eventSpy.callCount).to.equal(1);
 
-    // Assets part attributes
-    expect(el.shadowRoot!.querySelector('[part="item-parent1"]'), 'part="item-parent1" should be present').not.to.equal(null);
-    expect(el.shadowRoot!.querySelector('[part="item-parent2"]'), 'part="item-parent2" should be present').not.to.equal(null);
-    expect(el.shadowRoot!.querySelector('[part="item-item2.1"]'), 'part="item-item2.1" should be present').not.to.equal(null);
-    expect(el.shadowRoot!.querySelector('[part="item-item2.2"]'), 'part="item-item2.2" should be present').not.to.equal(null);
-  });
+      el.language = 'en';
+      const { detail } = await oneEvent(el, 'portal-navigation.setLanguage');
 
-  it('sets badge for a given menu item', async () => {
-    const badgeLabel: MenuLabel = { en: 'new', de: 'neu' };
-    const el: PortalNavigation = await fixture(
-      html` <portal-navigation
-        src="${TEST_DATA_JSON_PATH}"
-        @portal-navigation.configured="${() => {
-          document.dispatchEvent(
-            new CustomEvent(PortalNavigation.events.setBadgeValue, {
-              detail: {
-                id: 'parent2',
-                value: badgeLabel,
-              },
-            }),
-          );
-        }}"
-      ></portal-navigation>`,
-    );
-    await childrenRendered(el);
-
-    expect(el.getTemporaryBadgeValues().get('parent2')).equals(badgeLabel);
-    expect(el.shadowRoot!.querySelector('[part="badge-parent2"]')).not.to.equal(null);
-  });
-
-  it('dispatches the "setLanguage" event', async () => {
-    const eventSpy = sinon.spy();
-    const el: PortalNavigation = await fixture(html` <portal-navigation language="de" @portal-navigation.setLanguage="${eventSpy as EventListener}"></portal-navigation>`);
-
-    // Should trow an event initially…
-    expect(eventSpy.callCount).to.equal(1);
-
-    el.language = 'en';
-    const { detail } = await oneEvent(el, 'portal-navigation.setLanguage');
-
-    // After changing the language again, the callCount should be increased once more…
-    expect(eventSpy.callCount).to.equal(2);
-    expect(detail).to.equal('en');
+      // After changing the language again, the callCount should be increased once more…
+      expect(eventSpy.callCount).to.equal(2);
+      expect(detail).to.equal('en');
+    });
   });
 });
