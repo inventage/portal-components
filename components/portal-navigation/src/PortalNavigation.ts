@@ -52,6 +52,7 @@ const NavigationEvents = {
   setBadgeValue: `${NavigationEventNamespace}.setBadgeValue`,
   configured: `${NavigationEventNamespace}.configured`,
   breakpointChanged: `${NavigationEventNamespace}.breakpointChanged`,
+  firstUpdated: 'firstUpdated',
 } as const;
 
 type NavigationEvents = typeof NavigationEvents;
@@ -259,6 +260,13 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     document.removeEventListener('click', this.__globalClickListener);
 
     super.disconnectedCallback && super.disconnectedCallback();
+  }
+
+  firstUpdated(): void {
+    /**
+     * Throw event when the component is rendered for the first time
+     */
+    this.dispatchEvent(new CustomEvent(PortalNavigation.events.firstUpdated, { detail: this }));
   }
 
   updated(changedProperties: PropertyValues): void {
