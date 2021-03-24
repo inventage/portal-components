@@ -24,6 +24,7 @@ export const styles = css`
 .container-max-width {
   max-width: var(--portal-navigation-max-width, 1200px);
   margin: 0 auto;
+  padding: 0 var(--portal-navigation-outer-margin, var(--portal-navigation-horizontal-base, 1rem));
 }
 
 /**
@@ -264,10 +265,6 @@ export const styles = css`
 .container.-mobile {
   display: flex;
   flex-direction: column;
-}
-
-.container.-mobile .link {
-  color: var(--portal-navigation-color-link-breakpoint, var(--portal-navigation-color-link));
 }
 
 .container.-mobile .navigation-header {

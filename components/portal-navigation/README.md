@@ -50,6 +50,12 @@ export const Settings = () => html` <style>
   </portal-navigation>`;
 ```
 
+### Empty
+
+```js preview-story
+export const Empty = () => html` <portal-navigation></portal-navigation>`;
+```
+
 ## API
 
 <sb-props of="portal-navigation"></sb-props>

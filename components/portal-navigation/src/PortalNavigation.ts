@@ -296,11 +296,18 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       return nothing;
     }
 
+    const menuMeta = this._createMenuTemplate(PortalNavigation.menuIds.meta);
+    const menuProfile = this._createMenuTemplate(PortalNavigation.menuIds.profile);
+    const menuLogout = this._createMenuTemplate(PortalNavigation.menuIds.logout);
+    const menuMain = this._createMenuTemplate(PortalNavigation.menuIds.main);
+    const menuSettings = this._createMenuTemplate(PortalNavigation.menuIds.settings);
+    const currentItems = this._createCurrentItemsTemplate();
+
     return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-mobile-header-logout': this.logoutMenuInMobileHeader })}">
       <div class="meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
         <div class="container-max-width inner">
           <div class="slot-meta-left"><slot name="meta-left"></slot></div>
-          ${this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          ${menuLogout !== nothing && this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${menuLogout}</div>` : nothing}
           <div class="slot-meta-right"><slot name="meta-right"></slot></div>
         </div>
       </div>
@@ -309,37 +316,44 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           <div class="slot-logo"><slot name="logo"></slot></div>
           <div class="slot-left"><slot name="left"></slot></div>
           <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
-          <div class="menu-meta menu">${this._createMenuTemplate(PortalNavigation.menuIds.meta)}</div>
-          <div class="menu-profile menu">${this._createMenuTemplate(PortalNavigation.menuIds.profile)}</div>
-          ${!this.logoutMenuInMetaBar || (this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu">${this._createMenuTemplate(PortalNavigation.menuIds.logout)}</div>` : nothing}
+          ${menuMeta === nothing ? html`<div class="menu-meta menu">${menuMeta}</div>` : nothing} ${menuMeta !== nothing ? html`<div class="menu-profile menu">${menuProfile}</div>` : nothing}
+          ${(menuLogout !== nothing && !this.logoutMenuInMetaBar) || (this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
           <div class="slot-right"><slot name="right"></slot></div>
-          <!-- Hamburger Menu Tree Elements -->
-          <portal-hamburger-menu
-            class="header-toggle"
-            part="hamburger-menu"
-            .toggled="${this.hamburgerMenuExpanded}"
-            @state-changed="${(e: CustomEvent) => {
-              this.hamburgerMenuExpanded = e.detail;
-            }}"
-          ></portal-hamburger-menu>
+          ${this.isMobileBreakpoint
+            ? html`<!-- Hamburger Menu Tree Elements -->
+                <portal-hamburger-menu
+                  class="header-toggle"
+                  part="hamburger-menu"
+                  .toggled="${this.hamburgerMenuExpanded}"
+                  @state-changed="${(e: CustomEvent) => {
+                    this.hamburgerMenuExpanded = e.detail;
+                  }}"
+                ></portal-hamburger-menu>`
+            : nothing}
         </div>
       </header>
 
-      <main class="menu-main">
-        <div class="container-max-width inner">
-          <div class="menu-main-items menu" part="menu-main-items">
-            <div class="navigation-content">${this._createMenuTemplate(PortalNavigation.menuIds.main)} ${this._createMenuTemplate(PortalNavigation.menuIds.settings)}</div>
-          </div>
-          ${this._createCurrentItemsTemplate()}
-          <!-- Hamburger Menu Tree Elements -->
-          ${this.hamburgerMenuExpanded
-            ? html` <div class="tree-container">
-                ${this._createTreeTemplate()}
-                <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
-              </div>`
-            : nothing}
-        </div>
-      </main>
+      ${menuMain !== nothing || menuSettings !== nothing
+        ? html`<main class="menu-main">
+            <div class="container-max-width inner">
+              <div class="menu-main-items menu" part="menu-main-items">
+                <div class="navigation-content">${menuMain}${menuSettings}</div>
+              </div>
+            </div>
+            <!-- Hamburger Menu Tree Elements -->
+            ${this.hamburgerMenuExpanded
+              ? html` <div class="tree-container">
+                  ${this._createTreeTemplate()}
+                  <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
+                </div>`
+              : nothing}
+          </main>`
+        : nothing}
+      ${currentItems !== nothing
+        ? html`<div class="menu-current">
+            <div class="container-max-width inner">${currentItems}</div>
+          </div>`
+        : nothing}
     </div>`;
   }
 
