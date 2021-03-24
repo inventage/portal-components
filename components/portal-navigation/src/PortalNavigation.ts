@@ -622,8 +622,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     menus.forEach(menuId => {
       const menu = this.configuration.getMenu(menuId);
-      const hasItems = menu && menu.items && menu.items.length > 0;
-      if (menu && hasItems) {
+      if (menu) {
         templates.push(...menu.items!.map(item => this._createFirstLevelItemTemplate(item, true)));
       }
     });
