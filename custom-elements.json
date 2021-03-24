@@ -87,25 +87,10 @@
       "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
       "attributes": [
         {
-          "name": "src",
-          "description": "Location from where to fetch configuration data file.",
-          "type": "string | undefined"
-        },
-        {
           "name": "language",
           "description": "The current language. e.g. 'en' or 'de'.",
           "type": "string",
           "default": "\"en\""
-        },
-        {
-          "name": "activeUrl",
-          "description": "You can use this to set the active path via the url of an item.",
-          "type": "string | undefined"
-        },
-        {
-          "name": "currentApplication",
-          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string | undefined"
         },
         {
           "name": "internalRouting",
@@ -130,33 +115,30 @@
           "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
           "type": "number",
           "default": "800"
+        },
+        {
+          "name": "src",
+          "description": "Location from where to fetch configuration data file.",
+          "type": "string"
+        },
+        {
+          "name": "activeUrl",
+          "description": "You can use this to set the active path via the url of an item.",
+          "type": "string"
+        },
+        {
+          "name": "currentApplication",
+          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string"
         }
       ],
       "properties": [
-        {
-          "name": "src",
-          "attribute": "src",
-          "description": "Location from where to fetch configuration data file.",
-          "type": "string | undefined"
-        },
         {
           "name": "language",
           "attribute": "language",
           "description": "The current language. e.g. 'en' or 'de'.",
           "type": "string",
           "default": "\"en\""
-        },
-        {
-          "name": "activeUrl",
-          "attribute": "activeUrl",
-          "description": "You can use this to set the active path via the url of an item.",
-          "type": "string | undefined"
-        },
-        {
-          "name": "currentApplication",
-          "attribute": "currentApplication",
-          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
-          "type": "string | undefined"
         },
         {
           "name": "internalRouting",
@@ -185,6 +167,24 @@
           "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
           "type": "number",
           "default": "800"
+        },
+        {
+          "name": "src",
+          "attribute": "src",
+          "description": "Location from where to fetch configuration data file.",
+          "type": "string"
+        },
+        {
+          "name": "activeUrl",
+          "attribute": "activeUrl",
+          "description": "You can use this to set the active path via the url of an item.",
+          "type": "string"
+        },
+        {
+          "name": "currentApplication",
+          "attribute": "currentApplication",
+          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "type": "string"
         }
       ],
       "events": [
@@ -347,11 +347,24 @@
           "default": "\"1200px\""
         },
         {
+          "name": "--portal-navigation-main-justify-content",
+          "default": "\"flex-end\""
+        },
+        {
+          "name": "--portal-navigation-current-justify-content",
+          "description": "Bla bla…",
+          "default": "\"flex-end\""
+        },
+        {
           "name": "--portal-navigation-font-family",
           "default": "\"sans-serif\""
         }
       ],
       "cssParts": [
+        {
+          "name": "container",
+          "description": "The top-level, container element wrapping everything inside the host element"
+        },
         {
           "name": "hamburger-menu",
           "description": "The hamburger menu element (shown in mobile breakpoint)"

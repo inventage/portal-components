@@ -9,7 +9,7 @@ module.exports = {
     reportDir: 'coverage',
     threshold: {
       statements: 90,
-      branches: 60,
+      branches: 50,
       functions: 80,
       lines: 90,
     },

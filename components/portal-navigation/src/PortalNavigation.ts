@@ -73,34 +73,37 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  *
  * @listens 'portal-navigation.setBadgeValue' - Listens to event that change the badge value of an item or menu and sets that value accordingly.
  *
- * @cssprop {color} [--portal-navigation-color-primary=#555]
- * @cssprop {color} [--portal-navigation-color-secondary=rgb(66, 136, 245)]
- * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)]
- * @cssprop {color} [--portal-navigation-color-link-breakpoint=var(--portal-navigation-color-primary)]
- * @cssprop {color} [--portal-navigation-color-link-dropdown=var(--portal-navigation-color-primary)]
- * @cssprop {color} [--portal-navigation-color-link-current=var(--portal-navigation-color-link)]
- * @cssprop {color} [--portal-navigation-color-selected=var(--portal-navigation-color-secondary)]
- * @cssprop {color} [--portal-navigation-color-hover=var(--portal-navigation-color-secondary)]
- * @cssprop {color} [--portal-navigation-color-hover-dropdown=var(--portal-navigation-color-hover)]
- * @cssprop {color} [--portal-navigation-color-hover-current=var(--portal-navigation-color-hover)]
- * @cssprop {color} [--portal-navigation-color-badge=white]
- * @cssprop {color} [--portal-navigation-color-badge-background=var(--portal-navigation-color-secondary)]
- * @cssprop {color} [--portal-navigation-color-dropdown-background=white]
- * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)]
- * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)]
- * @cssprop {color} [--portal-navigation-color-meta-bar-background=rgba(66, 135, 245, 0.2)]
+ * @cssprop {color} [--portal-navigation-color-primary=#555] TODO
+ * @cssprop {color} [--portal-navigation-color-secondary=rgb(66, 136, 245)] TODO
+ * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)] TODO
+ * @cssprop {color} [--portal-navigation-color-link-breakpoint=var(--portal-navigation-color-primary)] TODO
+ * @cssprop {color} [--portal-navigation-color-link-dropdown=var(--portal-navigation-color-primary)] TODO
+ * @cssprop {color} [--portal-navigation-color-link-current=var(--portal-navigation-color-link)] TODO
+ * @cssprop {color} [--portal-navigation-color-selected=var(--portal-navigation-color-secondary)] TODO
+ * @cssprop {color} [--portal-navigation-color-hover=var(--portal-navigation-color-secondary)] TODO
+ * @cssprop {color} [--portal-navigation-color-hover-dropdown=var(--portal-navigation-color-hover)] TODO
+ * @cssprop {color} [--portal-navigation-color-hover-current=var(--portal-navigation-color-hover)] TODO
+ * @cssprop {color} [--portal-navigation-color-badge=white] TODO
+ * @cssprop {color} [--portal-navigation-color-badge-background=var(--portal-navigation-color-secondary)] TODO
+ * @cssprop {color} [--portal-navigation-color-dropdown-background=white] TODO
+ * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)] TODO
+ * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)] TODO
+ * @cssprop {color} [--portal-navigation-color-meta-bar-background=rgba(66, 135, 245, 0.2)] TODO
  *
- * @cssprop {length} [--portal-navigation-font-size=1.25rem]
- * @cssprop {length} [--portal-navigation-font-size-badge=1rem]
- * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem]
+ * @cssprop {length} [--portal-navigation-font-size=1.25rem] TODO
+ * @cssprop {length} [--portal-navigation-font-size-badge=1rem] TODO
+ * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem] TODO
  *
- * @cssprop {length} [--portal-navigation-horizontal-base=1rem]
- * @cssprop {length} [--portal-navigation-vertical-base=0.5rem]
+ * @cssprop {length} [--portal-navigation-horizontal-base=1rem] TODO
+ * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
  *
- * @cssprop {length} [--portal-navigation-max-width=1200px]
+ * @cssprop {length} [--portal-navigation-max-width=1200px] TODO
  *
- * @cssprop [--portal-navigation-font-family=sans-serif]
+ * @cssprop [--portal-navigation-main-justify-content=flex-end] TODO
+ * @cssprop [--portal-navigation-current-justify-content=flex-end] TODO
+ * @cssprop [--portal-navigation-font-family=sans-serif] TODO
  *
+ * @csspart container - The top-level, container element wrapping everything inside the host element
  * @csspart hamburger-menu - The hamburger menu element (shown in mobile breakpoint)
  * @csspart slot-header-mobile - Slot element wrapper between the hamburger menu element and the logo slot
  * @csspart menu-main-items - Element wrapper for the main menu items (1st level)
@@ -112,6 +115,12 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @slot meta-right - The right slot inside the meta bar
  * @slot header-mobile - The slot rendered in the top bar in the mobile breakpoint
  * @slot tree-bottom - The slot rendered at the bottom of the menu tree (mobile breakpoint)
+ *
+ * IMPORTANT NOTE: Leave these here in order for storybook to work. Description is further down where properties are defined.
+ *
+ * @prop {string} src
+ * @prop {string} activeUrl
+ * @prop {string} currentApplication
  *
  * TODO: kebab-cased attributes
  */
@@ -136,6 +145,8 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   /**
    * The current application. Items change their routing behavior based on whether their application property matches this property or not.
+   *
+   * @property {string}
    */
   @property()
   currentApplication?: string;
@@ -303,26 +314,29 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     const menuSettings = this._createMenuTemplate(PortalNavigation.menuIds.settings);
     const currentItems = this._createCurrentItemsTemplate();
 
-    return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-mobile-header-logout': this.logoutMenuInMobileHeader })}">
-      <div class="meta-bar ${classMap({ hidden: !this.hamburgerMenuExpanded })}">
-        <div class="container-max-width inner">
-          <div class="slot-meta-left"><slot name="meta-left"></slot></div>
-          ${menuLogout !== nothing && this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${menuLogout}</div>` : nothing}
-          <div class="slot-meta-right"><slot name="meta-right"></slot></div>
-        </div>
-      </div>
+    return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-open': this.hamburgerMenuExpanded })}" part="container">
+      ${!this.isMobileBreakpoint || this.hamburgerMenuExpanded
+        ? html`<div class="meta-bar">
+            <div class="container-max-width inner">
+              <div class="slot-meta-left"><slot name="meta-left"></slot></div>
+              ${menuLogout !== nothing && this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${menuLogout}</div>` : nothing}
+              <div class="slot-meta-right"><slot name="meta-right"></slot></div>
+            </div>
+          </div>`
+        : nothing}
+
       <header class="navigation-header">
         <div class="container-max-width inner">
           <div class="slot-logo"><slot name="logo"></slot></div>
           <div class="slot-left"><slot name="left"></slot></div>
           <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
-          ${menuMeta === nothing ? html`<div class="menu-meta menu">${menuMeta}</div>` : nothing} ${menuMeta !== nothing ? html`<div class="menu-profile menu">${menuProfile}</div>` : nothing}
-          ${(menuLogout !== nothing && !this.logoutMenuInMetaBar) || (this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
+          ${!this.isMobileBreakpoint && menuMeta !== nothing ? html`<div class="menu-meta menu">${menuMeta}</div>` : nothing}
+          ${!this.isMobileBreakpoint && menuProfile !== nothing ? html`<div class="menu-profile menu">${menuProfile}</div>` : nothing}
+          ${(menuLogout !== nothing && !this.logoutMenuInMetaBar) || (this.isMobileBreakpoint && !this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
           <div class="slot-right"><slot name="right"></slot></div>
           ${this.isMobileBreakpoint
             ? html`<!-- Hamburger Menu Tree Elements -->
                 <portal-hamburger-menu
-                  class="header-toggle"
                   part="hamburger-menu"
                   .toggled="${this.hamburgerMenuExpanded}"
                   @state-changed="${(e: CustomEvent) => {
@@ -333,25 +347,27 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         </div>
       </header>
 
-      ${menuMain !== nothing || menuSettings !== nothing
-        ? html`<main class="menu-main">
-            <div class="container-max-width inner">
-              <div class="menu-main-items menu" part="menu-main-items">
-                <div class="navigation-content">${menuMain}${menuSettings}</div>
+      <main class="main">
+        ${!this.isMobileBreakpoint && (menuMain !== nothing || menuSettings !== nothing)
+          ? html`<div class="container-max-width inner">
+              ${menuMain !== nothing ? html`<div class="menu-main menu" part="menu-main">${menuMain}</div>` : nothing}
+              ${menuSettings !== nothing ? html`<div class="menu-settings menu" part="menu-settings">${menuSettings}</div>` : nothing}
               </div>
-            </div>
-            <!-- Hamburger Menu Tree Elements -->
-            ${this.hamburgerMenuExpanded
-              ? html` <div class="tree-container">
-                  ${this._createTreeTemplate()}
-                  <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
-                </div>`
-              : nothing}
-          </main>`
-        : nothing}
-      ${currentItems !== nothing
-        ? html`<div class="menu-current">
-            <div class="container-max-width inner">${currentItems}</div>
+            </div>`
+          : nothing}
+
+        <!-- Hamburger Menu Tree Elements -->
+        ${this.hamburgerMenuExpanded
+          ? html` <div class="tree-container">
+              ${this._createTreeTemplate()}
+              <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
+            </div>`
+          : nothing}
+      </main>
+
+      ${!this.isMobileBreakpoint && currentItems !== nothing
+        ? html`<div class="current">
+            <div class="container-max-width inner"><div class="menu-current menu" part="menu-current">${currentItems}</div></div>
           </div>`
         : nothing}
     </div>`;
@@ -486,6 +502,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           part="menu-${menuId}"
           class="${classMap({
             link: true,
+            'menu-link': true,
             'dropdown-link': true,
             [PortalNavigation.classes.selected]: this.activePath.contains(menuId),
           })}"
@@ -523,6 +540,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         part="item-${ifDefined(id)}"
         class="${classMap({
           link: true,
+          'menu-link': true,
           'tree-parent': isTreeMode,
           [NavigationCssClasses.selected]: active,
         })}"
@@ -551,9 +569,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       return nothing;
     }
 
-    return html` <div class="navigation-current">
-      <div class="navigation-content" part="menu-main-current">${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}</div>
-    </div>`;
+    return html`${(activeParentItem as MenuItem).items!.map(item => this._createSecondLevelItemTemplate(item))}`;
   }
 
   /**
@@ -573,6 +589,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       part="item-${ifDefined(id)}"
       class="${classMap({
         link: true,
+        'menu-link': true,
         [NavigationCssClasses.selected]: active,
       })}"
       @click="${(e: Event) => this._onLink(e, item)}"
@@ -594,7 +611,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   private static _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
-      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="navigation-icon" />`);
+      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="icon" />`);
       if (badge) {
         result.push(html`<span part="${`badge-${id}`}" class="badge">${badge}</span>`);
       }
@@ -614,7 +631,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    * Creates the html template for tree mode (hamburger menu).
    * You may override this to customize the order and elements of the tree structure for the hamburger menu.
    */
-  private _createTreeTemplate(): TemplateResult[] {
+  private _createTreeTemplate(): TemplateResult[] | Nothing {
     const templates: TemplateResult[] = [];
 
     // Remove logout menu from tree template if it should be displayed in mobile header
@@ -626,6 +643,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         templates.push(...menu.items!.map(item => this._createFirstLevelItemTemplate(item, true)));
       }
     });
+
+    if (templates.length < 1) {
+      return nothing;
+    }
 
     return templates;
   }

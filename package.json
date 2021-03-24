@@ -33,7 +33,7 @@
     "lint:prettier": "prettier '**/*.{js,ts,md,css}' --check",
     "lint:tsc": "tsc",
     "prepublishOnly": "tsc",
-    "start": "concurrently -k -n styles,tsc,storybook 'npm run watch:build-css' 'npm run tsc:watch' 'npm run storybook'",
+    "start": "concurrently -k -n styles,wca,tsc,storybook 'npm run watch:build-css' 'npm run watch:analyze:custom-elements' 'npm run tsc:watch' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
     "storybook": "start-storybook",
     "storybook:build": "build-storybook",
@@ -44,7 +44,7 @@
     "test:browser:watch": "wtr '{common,components,mixins}/**/*/test/**/*.test.ts' --watch",
     "test:watch": "npm run test:browser:watch",
     "tsc:watch": "tsc -p tsconfig.dev.json --watch",
-    "watch:analyze:custom-elements": "onchange -i '{common,components,mixins}/**/*.ts' -- npm run build:analyze:custom-elements",
+    "watch:analyze:custom-elements": "onchange -i '{dist}/**/*.js' -- npm run build:analyze:custom-elements",
     "watch:build-css": "onchange -i '{common,components,mixins}/**/*.css' -- npm run build:css",
     "postinstall": "husky install"
   },
