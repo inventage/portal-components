@@ -107,11 +107,11 @@ export const styles = css`
 }
 
 .menu-link.-selected {
-  color: var(--portal-navigation-color-selected, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
+  color: var(--portal-navigation-color-selected, var(--portal-navigation-color-secondary, rgb(10, 81, 194)));
 }
 
 .menu-link:hover {
-  color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
+  color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(10, 81, 194)));
 }
 
 .menu-link > .icon + .label,
@@ -125,7 +125,7 @@ export const styles = css`
 }
 
 .menu-link > .badge:not(:empty) {
-  background-color: var(--portal-navigation-color-badge-background, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
+  background-color: var(--portal-navigation-color-badge-background, var(--portal-navigation-color-secondary, rgb(10, 81, 194)));
   border-radius: 1em;
   font-size: var(--portal-navigation-font-size-badge, 1rem);
   padding: 2px 8px 0 8px;

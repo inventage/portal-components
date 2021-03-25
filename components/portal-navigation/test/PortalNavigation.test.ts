@@ -8,15 +8,21 @@ import { MenuLabel } from '../src/Configuration';
 
 const TEST_DATA_JSON_PATH = '/components/portal-navigation/test/test-data.json';
 
+type WaitUntilOptions = {
+  interval?: number;
+  timeout?: number;
+};
+
 /**
  * Helper function that waits until the portal navigation children have been rendered.
  *
  * @param el
  * @param selector
+ * @param options
  * @see https://open-wc.org/docs/testing/helpers/#waituntil
  */
-const childrenRendered = async (el: HTMLElement, selector = '[part="item-parent2"]') => {
-  await waitUntil(() => !!el.shadowRoot?.querySelector(selector), 'Element did not render children');
+const childrenRendered = async (el: HTMLElement, selector = '[part="item-parent2"]', options?: WaitUntilOptions) => {
+  await waitUntil(() => !!el.shadowRoot?.querySelector(selector), 'Element did not render children', options);
 };
 
 beforeEach(async () => {
@@ -46,9 +52,33 @@ describe('<portal-navigation>', () => {
       expect(el).not.to.be.displayed;
     });
 
-    it('passes the a11y audit', async () => {
-      const el: PortalNavigation = await fixture(html` <portal-navigation src="${TEST_DATA_JSON_PATH}"></portal-navigation>`);
-      // await navigationRendered(el);
+    it.only('passes the a11y audit', async () => {
+      const el: PortalNavigation = await fixture(
+        html` <portal-navigation
+          src="${TEST_DATA_JSON_PATH}"
+          @portal-navigation.configured="${() => {
+            document.dispatchEvent(
+              new CustomEvent(PortalNavigation.events.setBadgeValue, {
+                detail: {
+                  id: 'meta',
+                  value: 9,
+                },
+              }),
+            );
+
+            document.dispatchEvent(
+              new CustomEvent(PortalNavigation.events.setBadgeValue, {
+                detail: {
+                  id: 'parent2',
+                  value: { en: 'new', de: 'neu' },
+                },
+              }),
+            );
+          }}"
+        ></portal-navigation>`,
+      );
+
+      await childrenRendered(el);
       await expect(el).to.be.accessible();
     });
   });

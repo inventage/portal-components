@@ -74,7 +74,7 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @listens 'portal-navigation.setBadgeValue' - Listens to event that change the badge value of an item or menu and sets that value accordingly.
  *
  * @cssprop {color} [--portal-navigation-color-primary=#555] TODO
- * @cssprop {color} [--portal-navigation-color-secondary=rgb(66, 136, 245)] TODO
+ * @cssprop {color} [--portal-navigation-color-secondary=rgb(10, 81, 194)] TODO
  * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)] TODO
  * @cssprop {color} [--portal-navigation-color-link-breakpoint=var(--portal-navigation-color-primary)] TODO
  * @cssprop {color} [--portal-navigation-color-link-dropdown=var(--portal-navigation-color-primary)] TODO
