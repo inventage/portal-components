@@ -104,6 +104,7 @@ export const styles = css`
   align-items: center;
   color: var(--portal-navigation-color-link, var(--portal-navigation-color-primary));
   padding: var(--portal-navigation-menu-item-padding-y, 0.5rem) var(--portal-navigation-menu-item-padding-x, 0);
+  white-space: var(--portal-navigation-menu-item-white-space, nowrap);
 }
 
 .menu-link.-selected {
@@ -262,7 +263,7 @@ export const styles = css`
   margin: 0 0 0 auto;
 }
 
-portal-hamburger-menu {
+.hamburger-menu {
   margin-left: auto;
   display: flex;
 }
@@ -318,7 +319,7 @@ portal-hamburger-menu {
 /*  width: 100%;*/
 /*}*/
 
-.container.-mobile portal-hamburger-menu {
+.container.-mobile .hamburger-menu {
   margin-right: calc(-1 * var(--hamburger-padding-x, 3px));
 }
 

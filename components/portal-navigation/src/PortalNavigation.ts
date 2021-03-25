@@ -102,6 +102,7 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
  * @cssprop {length} [--portal-navigation-menu-item-padding-x=0] TODO
  * @cssprop {length} [--portal-navigation-menu-item-padding-y=0.5rem] TODO
+ *
  * @cssprop {length} [--portal-navigation-dropdown-item-padding-x=0.5rem] TODO
  * @cssprop {length} [--portal-navigation-dropdown-item-padding-y=1rem] TODO
  * @cssprop {length} [--portal-navigation-tree-parent-padding-x=var(--portal-navigation-horizontal-base)] TODO
@@ -115,11 +116,24 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop [--portal-navigation-main-justify-content=flex-end] TODO
  * @cssprop [--portal-navigation-current-justify-content=flex-end] TODO
  * @cssprop [--portal-navigation-font-family=sans-serif] TODO
+ * @cssprop [--portal-navigation-menu-item-white-space=nowrap] TODO
  *
  * @csspart container - The top-level, container element wrapping everything inside the host element
  * @csspart hamburger-menu - The hamburger menu element (shown in mobile breakpoint)
  * @csspart slot-header-mobile - Slot element wrapper between the hamburger menu element and the logo slot
+ * @csspart slot-meta-left - Slot element wrapper for the left part of the meta bar
+ * @csspart slot-meta-right - Slot element wrapper for the right part of the meta bar
+ * @csspart slot-header-mobile - Slot element wrapper between the hamburger menu element and the logo slot
+ * @csspart slot-logo - Slot element wrapper for the logo slot
+ * @csspart slot-left - Slot element wrapper for the left slot
+ * @csspart slot-right - Slot element wrapper for the right slot
  * @csspart menu-main-items - Element wrapper for the main menu items (1st level)
+ * @csspart meta-bar - TODO
+ * @csspart navigation-header - TODO
+ * @csspart main - TODO
+ * @csspart current - TODO
+ * @csspart tree-container - TODO
+ * @csspart navigation-header-container - TODO
  *
  * @slot logo - The slot for the logo
  * @slot right - The right slot
@@ -189,6 +203,15 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   mobileBreakpoint = 800;
 
   /**
+   * Whether the navigation is in mobile breakpoint. This property is being reflected back to its attribute.
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+  })
+  isMobileBreakpoint = false;
+
+  /**
    * The current path of "active" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered "active"
    *
    * @private
@@ -201,9 +224,6 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   @internalProperty()
   private activeDropdown?: string;
-
-  @internalProperty()
-  private isMobileBreakpoint = false;
 
   private temporaryBadgeValues = new Map();
 
@@ -329,27 +349,28 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-open': this.hamburgerMenuExpanded })}" part="container">
       ${!this.isMobileBreakpoint || this.hamburgerMenuExpanded
-        ? html`<div class="meta-bar">
+        ? html`<div class="meta-bar" part="meta-bar">
             <div class="container-max-width inner">
-              <div class="slot-meta-left"><slot name="meta-left"></slot></div>
+              <div class="slot-meta-left" part="slot-meta-left"><slot name="meta-left"></slot></div>
               ${menuLogout !== nothing && this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${menuLogout}</div>` : nothing}
-              <div class="slot-meta-right"><slot name="meta-right"></slot></div>
+              <div class="slot-meta-right" part="slot-meta-right"><slot name="meta-right"></slot></div>
             </div>
           </div>`
         : nothing}
 
-      <header class="navigation-header">
-        <div class="container-max-width inner">
-          <div class="slot-logo"><slot name="logo"></slot></div>
-          <div class="slot-left"><slot name="left"></slot></div>
+      <header class="navigation-header" part="navigation-header">
+        <div class="container-max-width inner" part="navigation-header-container">
+          <div class="slot-logo" part="slot-logo"><slot name="logo"></slot></div>
+          <div class="slot-left" part="slot-left"><slot name="left"></slot></div>
           <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
           ${!this.isMobileBreakpoint && menuMeta !== nothing ? html`<div class="menu-meta menu">${menuMeta}</div>` : nothing}
           ${!this.isMobileBreakpoint && menuProfile !== nothing ? html`<div class="menu-profile menu">${menuProfile}</div>` : nothing}
           ${menuLogout !== nothing && ((this.isMobileBreakpoint && this.logoutMenuInMobileHeader) || (!this.isMobileBreakpoint && !this.logoutMenuInMetaBar)) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
-          <div class="slot-right"><slot name="right"></slot></div>
+          <div class="slot-right" part="slot-right"><slot name="right"></slot></div>
           ${this.isMobileBreakpoint
             ? html`<!-- Hamburger Menu Tree Elements -->
                 <portal-hamburger-menu
+                  class="hamburger-menu"
                   part="hamburger-menu"
                   .toggled="${this.hamburgerMenuExpanded}"
                   @state-changed="${(e: CustomEvent) => {
@@ -360,7 +381,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         </div>
       </header>
 
-      <main class="main">
+      <main class="main" part="main">
         ${!this.isMobileBreakpoint && (menuMain !== nothing || menuSettings !== nothing)
           ? html`<div class="container-max-width inner">
               ${menuMain !== nothing ? html`<div class="menu-main menu" part="menu-main">${menuMain}</div>` : nothing}
@@ -371,7 +392,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
         <!-- Hamburger Menu Tree Elements -->
         ${this.hamburgerMenuExpanded
-          ? html` <div class="tree-container">
+          ? html` <div class="tree-container" part="tree-container">
               ${this._createTreeTemplate()}
               <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
             </div>`
@@ -379,7 +400,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       </main>
 
       ${!this.isMobileBreakpoint && currentItems !== nothing
-        ? html`<div class="current">
+        ? html`<div class="current" part="current">
             <div class="container-max-width inner"><div class="menu-current menu" part="menu-current">${currentItems}</div></div>
           </div>`
         : nothing}

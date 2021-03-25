@@ -117,6 +117,12 @@
           "default": "800"
         },
         {
+          "name": "isMobileBreakpoint",
+          "description": "Whether the navigation is in mobile breakpoint. This property is being reflected back to its attribute.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
           "name": "src",
           "description": "Location from where to fetch configuration data file.",
           "type": "string"
@@ -167,6 +173,13 @@
           "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
           "type": "number",
           "default": "800"
+        },
+        {
+          "name": "isMobileBreakpoint",
+          "attribute": "isMobileBreakpoint",
+          "description": "Whether the navigation is in mobile breakpoint. This property is being reflected back to its attribute.",
+          "type": "boolean",
+          "default": "false"
         },
         {
           "name": "src",
@@ -246,7 +259,7 @@
           "name": "--portal-navigation-color-secondary",
           "description": "TODO",
           "type": "color",
-          "default": "\"rgb(66, 136, 245)\""
+          "default": "\"rgb(10, 81, 194)\""
         },
         {
           "name": "--portal-navigation-color-link",
@@ -333,6 +346,16 @@
           "default": "\"rgba(66, 135, 245, 0.2)\""
         },
         {
+          "name": "--portal-navigation-tree-parent-border-top",
+          "description": "TODO",
+          "default": "\"none\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-border-bottom",
+          "description": "TODO",
+          "default": "\"solid 1px var(--portal-navigation-color-border, rgba(44, 62, 80, 0.1))\""
+        },
+        {
           "name": "--portal-navigation-font-size",
           "description": "TODO",
           "type": "length",
@@ -361,6 +384,60 @@
           "description": "TODO",
           "type": "length",
           "default": "\"0.5rem\""
+        },
+        {
+          "name": "--portal-navigation-menu-item-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "0"
+        },
+        {
+          "name": "--portal-navigation-menu-item-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"0.5rem\""
+        },
+        {
+          "name": "--portal-navigation-dropdown-item-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"0.5rem\""
+        },
+        {
+          "name": "--portal-navigation-dropdown-item-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-horizontal-base)\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-menu-item-padding-y)\""
+        },
+        {
+          "name": "--portal-navigation-tree-items-margin-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-vertical-base)\""
+        },
+        {
+          "name": "--portal-navigation-tree-items-link-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-horizontal-base)\""
+        },
+        {
+          "name": "--portal-navigation-tree-items-link-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-menu-item-padding-y)\""
         },
         {
           "name": "--portal-navigation-max-width",
@@ -396,6 +473,14 @@
         {
           "name": "slot-header-mobile",
           "description": "Slot element wrapper between the hamburger menu element and the logo slot"
+        },
+        {
+          "name": "slot-meta-left",
+          "description": "Slot element wrapper for the left part of the meta bar"
+        },
+        {
+          "name": "slot-meta-right",
+          "description": "Slot element wrapper for the right part of the meta bar"
         },
         {
           "name": "menu-main-items",
