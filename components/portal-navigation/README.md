@@ -64,7 +64,7 @@ export const Empty = () => html` <portal-navigation></portal-navigation>`;
 ### Test
 
 ```js preview-story
-export const Test = () => html` <portal-navigation src="./data/test-data.json"></portal-navigation>`;
+export const Test = () => html` <portal-navigation src="./data/test-data.json" @portal-navigation.configured="${dispatchBadgeEventsTest}"></portal-navigation>`;
 ```
 
 ## API
@@ -116,6 +116,26 @@ const dispatchBadgeEvents = () => {
       detail: {
         url: '/ebanking/update-notification-preferences',
         value: 34,
+      },
+    }),
+  );
+};
+
+const dispatchBadgeEventsTest = () => {
+  document.dispatchEvent(
+    new CustomEvent(PortalNavigation.events.setBadgeValue, {
+      detail: {
+        id: 'meta',
+        value: 9,
+      },
+    }),
+  );
+
+  document.dispatchEvent(
+    new CustomEvent(PortalNavigation.events.setBadgeValue, {
+      detail: {
+        id: 'parent2',
+        value: { en: 'new', de: 'neu' },
       },
     }),
   );
