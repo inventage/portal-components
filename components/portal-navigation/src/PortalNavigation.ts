@@ -345,7 +345,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
           ${!this.isMobileBreakpoint && menuMeta !== nothing ? html`<div class="menu-meta menu">${menuMeta}</div>` : nothing}
           ${!this.isMobileBreakpoint && menuProfile !== nothing ? html`<div class="menu-profile menu">${menuProfile}</div>` : nothing}
-          ${(menuLogout !== nothing && !this.logoutMenuInMetaBar) || (this.isMobileBreakpoint && !this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
+          ${menuLogout !== nothing && ((this.isMobileBreakpoint && this.logoutMenuInMobileHeader) || (!this.isMobileBreakpoint && !this.logoutMenuInMetaBar)) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
           <div class="slot-right"><slot name="right"></slot></div>
           ${this.isMobileBreakpoint
             ? html`<!-- Hamburger Menu Tree Elements -->
