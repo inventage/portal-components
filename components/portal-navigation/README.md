@@ -18,6 +18,11 @@ export const Basic = () => html` <portal-navigation src="./data/data.json" inter
 
 ```js preview-story
 export const Settings = () => html` <style>
+    portal-navigation {
+      --portal-navigation-main-justify-content: flex-start;
+      --portal-navigation-current-justify-content: flex-start;
+    }
+
     portal-navigation.settings::part(slot-header-mobile) {
       margin-left: auto;
     }

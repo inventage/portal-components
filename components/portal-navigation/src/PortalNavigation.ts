@@ -58,7 +58,7 @@ const NavigationEvents = {
 type NavigationEvents = typeof NavigationEvents;
 
 const NavigationCssClasses = {
-  selected: 'selected',
+  selected: '-selected',
 } as const;
 
 type NavigationCssClasses = typeof NavigationCssClasses;
@@ -90,12 +90,25 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)] TODO
  * @cssprop {color} [--portal-navigation-color-meta-bar-background=rgba(66, 135, 245, 0.2)] TODO
  *
+ * @cssprop [--portal-navigation-tree-parent-border-top=none] TODO
+ * @cssprop [--portal-navigation-tree-parent-border-bottom=solid 1px var(--portal-navigation-color-border, rgba(44, 62, 80, 0.1))] TODO
+ *
  * @cssprop {length} [--portal-navigation-font-size=1.25rem] TODO
  * @cssprop {length} [--portal-navigation-font-size-badge=1rem] TODO
  * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem] TODO
  *
  * @cssprop {length} [--portal-navigation-horizontal-base=1rem] TODO
  * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
+ * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
+ * @cssprop {length} [--portal-navigation-menu-item-padding-x=0] TODO
+ * @cssprop {length} [--portal-navigation-menu-item-padding-y=0.5rem] TODO
+ * @cssprop {length} [--portal-navigation-dropdown-item-padding-x=0.5rem] TODO
+ * @cssprop {length} [--portal-navigation-dropdown-item-padding-y=1rem] TODO
+ * @cssprop {length} [--portal-navigation-tree-parent-padding-x=var(--portal-navigation-horizontal-base)] TODO
+ * @cssprop {length} [--portal-navigation-tree-parent-padding-y=var(--portal-navigation-menu-item-padding-y)] TODO
+ * @cssprop {length} [--portal-navigation-tree-items-margin-y=var(--portal-navigation-vertical-base)] TODO
+ * @cssprop {length} [--portal-navigation-tree-items-link-padding-x=var(--portal-navigation-horizontal-base)] TODO
+ * @cssprop {length} [--portal-navigation-tree-items-link-padding-y=var(--portal-navigation-menu-item-padding-y)] TODO
  *
  * @cssprop {length} [--portal-navigation-max-width=1200px] TODO
  *
@@ -546,7 +559,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         })}"
         target="${destination === 'extern' && !hasItems ? '_blank' : '_self'}"
         @click="${(e: Event) => this._onLink(e, item)}"
-        >${PortalNavigation._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="button"></span>` : nothing}</a
+        >${PortalNavigation._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="tree-parent-indicator indicator" part="tree-parent-indicator"></span>` : nothing}</a
       >
       ${isTreeMode && active && hasItems ? html` <div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : nothing}`;
   }

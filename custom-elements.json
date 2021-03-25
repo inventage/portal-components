@@ -232,131 +232,155 @@
         },
         {
           "name": "tree-bottom",
-          "description": "The slot rendered at the bottom of the menu tree (mobile breakpoint)\n\nTODO: kebab-cased attributes"
+          "description": "The slot rendered at the bottom of the menu tree (mobile breakpoint)\n\nIMPORTANT NOTE: Leave these here in order for storybook to work. Description is further down where properties are defined."
         }
       ],
       "cssProperties": [
         {
           "name": "--portal-navigation-color-primary",
+          "description": "TODO",
           "type": "color",
           "default": "\"#555\""
         },
         {
           "name": "--portal-navigation-color-secondary",
+          "description": "TODO",
           "type": "color",
           "default": "\"rgb(66, 136, 245)\""
         },
         {
           "name": "--portal-navigation-color-link",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-primary)\""
         },
         {
           "name": "--portal-navigation-color-link-breakpoint",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-primary)\""
         },
         {
           "name": "--portal-navigation-color-link-dropdown",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-primary)\""
         },
         {
           "name": "--portal-navigation-color-link-current",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-link)\""
         },
         {
           "name": "--portal-navigation-color-selected",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
           "name": "--portal-navigation-color-hover",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
           "name": "--portal-navigation-color-hover-dropdown",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-hover)\""
         },
         {
           "name": "--portal-navigation-color-hover-current",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-hover)\""
         },
         {
           "name": "--portal-navigation-color-badge",
+          "description": "TODO",
           "type": "color",
           "default": "\"white\""
         },
         {
           "name": "--portal-navigation-color-badge-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
           "name": "--portal-navigation-color-dropdown-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"white\""
         },
         {
           "name": "--portal-navigation-color-border",
+          "description": "TODO",
           "type": "color",
           "default": "\"rgba(44, 62, 80, 0.1)\""
         },
         {
           "name": "--portal-navigation-color-header-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"rgba(66, 135, 245, 0.1)\""
         },
         {
           "name": "--portal-navigation-color-meta-bar-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"rgba(66, 135, 245, 0.2)\""
         },
         {
           "name": "--portal-navigation-font-size",
+          "description": "TODO",
           "type": "length",
           "default": "\"1.25rem\""
         },
         {
           "name": "--portal-navigation-font-size-badge",
+          "description": "TODO",
           "type": "length",
           "default": "\"1rem\""
         },
         {
           "name": "--portal-navigation-font-size-tree-second-level",
+          "description": "TODO",
           "type": "length",
           "default": "\"1rem\""
         },
         {
           "name": "--portal-navigation-horizontal-base",
+          "description": "TODO",
           "type": "length",
           "default": "\"1rem\""
         },
         {
           "name": "--portal-navigation-vertical-base",
+          "description": "TODO",
           "type": "length",
           "default": "\"0.5rem\""
         },
         {
           "name": "--portal-navigation-max-width",
+          "description": "TODO",
           "type": "length",
           "default": "\"1200px\""
         },
         {
           "name": "--portal-navigation-main-justify-content",
+          "description": "TODO",
           "default": "\"flex-end\""
         },
         {
           "name": "--portal-navigation-current-justify-content",
-          "description": "Bla bla…",
+          "description": "TODO",
           "default": "\"flex-end\""
         },
         {
           "name": "--portal-navigation-font-family",
+          "description": "TODO",
           "default": "\"sans-serif\""
         }
       ],
