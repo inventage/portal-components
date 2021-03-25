@@ -106,13 +106,14 @@
   color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(66, 136, 245)));
 }
 
-.menu-link > .icon {
-  margin-right: 0.25rem;
+.menu-link > .icon + .label,
+.menu-link > .icon + .badge:not(:empty) + .label {
+  margin-left: 0.25rem;
 }
 
 .menu-link > .icon + .badge:not(:empty) {
-  transform: translate(-1rem, 0.35rem);
-  margin-right: -0.5rem;
+  transform: translate(-0.75rem, 0.35rem);
+  margin-right: -0.75rem;
 }
 
 .menu-link > .badge:not(:empty) {
