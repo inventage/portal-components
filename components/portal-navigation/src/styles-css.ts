@@ -263,6 +263,7 @@ export const styles = css`
 
 portal-hamburger-menu {
   margin-left: auto;
+  display: flex;
 }
 
 /**
