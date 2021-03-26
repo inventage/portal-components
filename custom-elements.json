@@ -459,6 +459,11 @@
           "name": "--portal-navigation-font-family",
           "description": "TODO",
           "default": "\"sans-serif\""
+        },
+        {
+          "name": "--portal-navigation-menu-item-white-space",
+          "description": "TODO",
+          "default": "\"nowrap\""
         }
       ],
       "cssParts": [
@@ -483,8 +488,44 @@
           "description": "Slot element wrapper for the right part of the meta bar"
         },
         {
+          "name": "slot-logo",
+          "description": "Slot element wrapper for the logo slot"
+        },
+        {
+          "name": "slot-left",
+          "description": "Slot element wrapper for the left slot"
+        },
+        {
+          "name": "slot-right",
+          "description": "Slot element wrapper for the right slot"
+        },
+        {
           "name": "menu-main-items",
           "description": "Element wrapper for the main menu items (1st level)"
+        },
+        {
+          "name": "meta-bar",
+          "description": "TODO"
+        },
+        {
+          "name": "navigation-header",
+          "description": "TODO"
+        },
+        {
+          "name": "main",
+          "description": "TODO"
+        },
+        {
+          "name": "current",
+          "description": "TODO"
+        },
+        {
+          "name": "tree-container",
+          "description": "TODO"
+        },
+        {
+          "name": "navigation-header-container",
+          "description": "TODO"
         }
       ]
     }
