@@ -102,6 +102,8 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
  * @cssprop {length} [--portal-navigation-menu-item-padding-x=0] TODO
  * @cssprop {length} [--portal-navigation-menu-item-padding-y=0.5rem] TODO
+ * @cssprop {length} [--portal-navigation-menu-item-icon-label-spacing=0.25rem] TODO
+ * @cssprop {length} [--portal-navigation-menu-item-spacing=var(--portal-navigation-horizontal-base)] TODO
  *
  * @cssprop {length} [--portal-navigation-dropdown-item-padding-x=0.5rem] TODO
  * @cssprop {length} [--portal-navigation-dropdown-item-padding-y=1rem] TODO

@@ -398,6 +398,18 @@
           "default": "\"0.5rem\""
         },
         {
+          "name": "--portal-navigation-menu-item-icon-label-spacing",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"0.25rem\""
+        },
+        {
+          "name": "--portal-navigation-menu-item-spacing",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-horizontal-base)\""
+        },
+        {
           "name": "--portal-navigation-dropdown-item-padding-x",
           "description": "TODO",
           "type": "length",
