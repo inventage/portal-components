@@ -640,6 +640,8 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
             url: refItem!.url,
             label: refItem!.label,
           },
+          bubbles: true,
+          composed: true,
         }),
       );
     }
