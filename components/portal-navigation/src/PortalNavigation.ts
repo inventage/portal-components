@@ -391,7 +391,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           : nothing}
 
         <!-- Hamburger Menu Tree Elements -->
-        ${this.hamburgerMenuExpanded
+        ${this.isMobileBreakpoint && this.hamburgerMenuExpanded
           ? html` <div class="tree-container" part="tree-container">
               ${this._createTreeTemplate()}
               <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
