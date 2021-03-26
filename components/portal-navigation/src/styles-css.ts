@@ -13,8 +13,8 @@ export const styles = css`
 }
 
 :host *,
-:host *:before,
-:host *:after {
+:host *::before,
+:host *::after {
   box-sizing: inherit;
 }
 
@@ -91,7 +91,7 @@ export const styles = css`
 }
 
 .menu > .link:not(:last-of-type) {
-  margin-right: var(--portal-navigation-horizontal-base, 1rem);
+  margin-right: var(--portal-navigation-menu-item-spacing, var(--portal-navigation-horizontal-base, 1rem));
 }
 
 /**
@@ -115,9 +115,14 @@ export const styles = css`
   color: var(--portal-navigation-color-hover, var(--portal-navigation-color-secondary, rgb(10, 81, 194)));
 }
 
+.menu-link > .icon {
+  max-width: 1em;
+  max-height: 1em;
+}
+
 .menu-link > .icon + .label,
 .menu-link > .icon + .badge:not(:empty) + .label {
-  margin-left: 0.25rem;
+  margin-left: var(--portal-navigation-menu-item-icon-label-spacing, 0.25rem);
 }
 
 .menu-link > .icon + .badge:not(:empty) {
