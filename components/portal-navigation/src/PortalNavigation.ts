@@ -536,6 +536,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       const label = this.__getLabel(menu);
       return html` <span
           part="menu-${menuId}"
+          id="menu-${menuId}"
           class="${classMap({
             link: true,
             'menu-link': true,
@@ -574,6 +575,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     return html` <a
         href="${ifDefined(url)}"
         part="item-${ifDefined(id)}"
+        id="item-${ifDefined(id)}"
         class="${classMap({
           link: true,
           'menu-link': true,
@@ -623,6 +625,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     return html`<a
       href="${ifDefined(url)}"
       part="item-${ifDefined(id)}"
+      id="item-${ifDefined(id)}"
       class="${classMap({
         link: true,
         'menu-link': true,
@@ -647,16 +650,16 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   private static _createLinkTemplate(id: string, label?: string, icon?: string, badge?: string): TemplateResult[] {
     const result = [];
     if (icon) {
-      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" class="icon" />`);
+      result.push(html`<img src="${icon}" alt="" part="${`icon-${id}`}" id="${`icon-${id}`}" class="icon" />`);
       if (badge) {
-        result.push(html`<span part="${`badge-${id}`}" class="badge">${badge}</span>`);
+        result.push(html`<span part="${`badge-${id}`}" id="${`badge-${id}`}" class="badge">${badge}</span>`);
       }
     }
 
     if (label) {
-      result.push(html`<span part="${`label-${id}`}" class="label">${label}</span>`);
+      result.push(html`<span part="${`label-${id}`}" id="${`label-${id}`}" class="label">${label}</span>`);
       if (!icon && badge) {
-        result.push(html`<span part="${`badge-${id}`}" class="badge">${badge}</span>`);
+        result.push(html`<span part="${`badge-${id}`}" id='${`badge-${id}`}"' class="badge">${badge}</span>`);
       }
     }
 
