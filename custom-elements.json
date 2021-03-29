@@ -2,86 +2,6 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "portal-card",
-      "path": "./components/portal-card/portal-card.ts",
-      "description": "A test component to display what a component can consist of, how it is documented and how to properly test it.\n\nUseful links:",
-      "attributes": [
-        {
-          "name": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
-          "name": "back-side",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "properties": [
-        {
-          "name": "title",
-          "attribute": "title",
-          "type": "string",
-          "default": "\"I am a glorious title\""
-        },
-        {
-          "name": "backSide",
-          "attribute": "back-side",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "events": [
-        {
-          "name": "side-changed",
-          "description": "Event fired when the card changes sides."
-        }
-      ],
-      "slots": [
-        {
-          "name": "",
-          "description": "This is an unnamed slot (the default slot)"
-        }
-      ],
-      "cssProperties": [
-        {
-          "name": "--portal-card-width",
-          "description": "Width",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-height",
-          "description": "Height",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-text-color",
-          "description": "Text Color",
-          "type": "Color"
-        },
-        {
-          "name": "--portal-card-padding",
-          "description": "Padding",
-          "type": "Length"
-        },
-        {
-          "name": "--portal-card-border",
-          "description": "Border",
-          "type": "String"
-        },
-        {
-          "name": "--portal-card-border-radius",
-          "description": "Border Radius",
-          "type": "String"
-        },
-        {
-          "name": "--portal-card-margin",
-          "description": "Margin",
-          "type": "Length"
-        }
-      ]
-    },
-    {
       "name": "portal-hamburger-menu",
       "path": "./components/portal-hamburger-menu/portal-hamburger-menu.ts",
       "description": "A simple hamburger menu component.",
@@ -167,65 +87,117 @@
       "description": "A component implementing an opinionated (but generic and hence configurable) navigation pattern.",
       "attributes": [
         {
-          "name": "src",
-          "description": "location from where to fetch configuration data file.",
-          "type": "string"
-        },
-        {
           "name": "language",
-          "description": "the current language. e.g. 'en' or 'de'.",
+          "description": "The current language. e.g. 'en' or 'de'.",
           "type": "string",
           "default": "\"en\""
         },
         {
+          "name": "internalRouting",
+          "description": "True if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "logoutMenuInMetaBar",
+          "description": "Controls whether the logout menu will be displayed in the meta bar.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "logoutMenuInMobileHeader",
+          "description": "Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "mobileBreakpoint",
+          "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
+          "type": "number",
+          "default": "800"
+        },
+        {
+          "name": "isMobileBreakpoint",
+          "description": "Whether the navigation is in mobile breakpoint. This property is being reflected back to its attribute.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "src",
+          "description": "Location from where to fetch configuration data file.",
+          "type": "string"
+        },
+        {
           "name": "activeUrl",
-          "description": "you can use this to set the active path via the url of an item.",
+          "description": "You can use this to set the active path via the url of an item.",
           "type": "string"
         },
         {
           "name": "currentApplication",
-          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
           "type": "string"
-        },
-        {
-          "name": "internalRouting",
-          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
-          "type": "boolean",
-          "default": "false"
         }
       ],
       "properties": [
         {
-          "name": "src",
-          "attribute": "src",
-          "description": "location from where to fetch configuration data file.",
-          "type": "string"
-        },
-        {
           "name": "language",
           "attribute": "language",
-          "description": "the current language. e.g. 'en' or 'de'.",
+          "description": "The current language. e.g. 'en' or 'de'.",
           "type": "string",
           "default": "\"en\""
         },
         {
+          "name": "internalRouting",
+          "attribute": "internalRouting",
+          "description": "True if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "logoutMenuInMetaBar",
+          "attribute": "logoutMenuInMetaBar",
+          "description": "Controls whether the logout menu will be displayed in the meta bar.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "logoutMenuInMobileHeader",
+          "attribute": "logoutMenuInMobileHeader",
+          "description": "Controls whether the logout menu will be displayed in the mobile header bar (in mobile breakpoint).",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "mobileBreakpoint",
+          "attribute": "mobileBreakpoint",
+          "description": "Viewport width at which navigation switches from/to the mobile breakpoint.",
+          "type": "number",
+          "default": "800"
+        },
+        {
+          "name": "isMobileBreakpoint",
+          "attribute": "isMobileBreakpoint",
+          "description": "Whether the navigation is in mobile breakpoint. This property is being reflected back to its attribute.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "src",
+          "attribute": "src",
+          "description": "Location from where to fetch configuration data file.",
+          "type": "string"
+        },
+        {
           "name": "activeUrl",
           "attribute": "activeUrl",
-          "description": "you can use this to set the active path via the url of an item.",
+          "description": "You can use this to set the active path via the url of an item.",
           "type": "string"
         },
         {
           "name": "currentApplication",
           "attribute": "currentApplication",
-          "description": "the current application. Items change their routing behavior based on whether their application property matches this property or not.",
+          "description": "The current application. Items change their routing behavior based on whether their application property matches this property or not.",
           "type": "string"
-        },
-        {
-          "name": "internalRouting",
-          "attribute": "internalRouting",
-          "description": "true if items, by default, should route internally. Items may override this default in their own configuration. Default is false.",
-          "type": "boolean",
-          "default": "false"
         }
       ],
       "events": [
@@ -240,6 +212,10 @@
         {
           "name": "portal-navigation.configured",
           "description": "Event fired when the configuration has been successfully loaded."
+        },
+        {
+          "name": "portal-navigation.breakpointChanged",
+          "description": "Event fired when the mobile breakpoint media query state changes."
         }
       ],
       "slots": [
@@ -254,112 +230,314 @@
         {
           "name": "left",
           "description": "The left slot"
+        },
+        {
+          "name": "meta-left",
+          "description": "The left slot inside the meta bar"
+        },
+        {
+          "name": "meta-right",
+          "description": "The right slot inside the meta bar"
+        },
+        {
+          "name": "header-mobile",
+          "description": "The slot rendered in the top bar in the mobile breakpoint"
+        },
+        {
+          "name": "tree-bottom",
+          "description": "The slot rendered at the bottom of the menu tree (mobile breakpoint)\n\nIMPORTANT NOTE: Leave these here in order for storybook to work. Description is further down where properties are defined."
         }
       ],
       "cssProperties": [
         {
           "name": "--portal-navigation-color-primary",
+          "description": "TODO",
           "type": "color",
           "default": "\"#555\""
         },
         {
           "name": "--portal-navigation-color-secondary",
+          "description": "TODO",
           "type": "color",
-          "default": "\"rgb(66, 136, 245)\""
+          "default": "\"rgb(10, 81, 194)\""
         },
         {
           "name": "--portal-navigation-color-link",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-primary)\""
         },
         {
           "name": "--portal-navigation-color-link-breakpoint",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-primary)\""
         },
         {
           "name": "--portal-navigation-color-link-dropdown",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-primary)\""
         },
         {
           "name": "--portal-navigation-color-link-current",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-link)\""
         },
         {
           "name": "--portal-navigation-color-selected",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
           "name": "--portal-navigation-color-hover",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
           "name": "--portal-navigation-color-hover-dropdown",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-hover)\""
         },
         {
           "name": "--portal-navigation-color-hover-current",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-hover)\""
         },
         {
           "name": "--portal-navigation-color-badge",
+          "description": "TODO",
           "type": "color",
           "default": "\"white\""
         },
         {
           "name": "--portal-navigation-color-badge-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"var(--portal-navigation-color-secondary)\""
         },
         {
           "name": "--portal-navigation-color-dropdown-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"white\""
         },
         {
           "name": "--portal-navigation-color-border",
+          "description": "TODO",
           "type": "color",
           "default": "\"rgba(44, 62, 80, 0.1)\""
         },
         {
           "name": "--portal-navigation-color-header-background",
+          "description": "TODO",
           "type": "color",
           "default": "\"rgba(66, 135, 245, 0.1)\""
         },
         {
+          "name": "--portal-navigation-color-meta-bar-background",
+          "description": "TODO",
+          "type": "color",
+          "default": "\"rgba(66, 135, 245, 0.2)\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-border-top",
+          "description": "TODO",
+          "default": "\"none\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-border-bottom",
+          "description": "TODO",
+          "default": "\"solid 1px var(--portal-navigation-color-border, rgba(44, 62, 80, 0.1))\""
+        },
+        {
           "name": "--portal-navigation-font-size",
+          "description": "TODO",
           "type": "length",
           "default": "\"1.25rem\""
         },
         {
           "name": "--portal-navigation-font-size-badge",
+          "description": "TODO",
           "type": "length",
           "default": "\"1rem\""
         },
         {
           "name": "--portal-navigation-font-size-tree-second-level",
+          "description": "TODO",
           "type": "length",
           "default": "\"1rem\""
         },
         {
           "name": "--portal-navigation-horizontal-base",
+          "description": "TODO",
           "type": "length",
           "default": "\"1rem\""
         },
         {
           "name": "--portal-navigation-vertical-base",
+          "description": "TODO",
           "type": "length",
           "default": "\"0.5rem\""
         },
         {
+          "name": "--portal-navigation-menu-item-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "0"
+        },
+        {
+          "name": "--portal-navigation-menu-item-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"0.5rem\""
+        },
+        {
+          "name": "--portal-navigation-menu-item-icon-label-spacing",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"0.25rem\""
+        },
+        {
+          "name": "--portal-navigation-menu-item-spacing",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-horizontal-base)\""
+        },
+        {
+          "name": "--portal-navigation-dropdown-item-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"0.5rem\""
+        },
+        {
+          "name": "--portal-navigation-dropdown-item-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"1rem\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-horizontal-base)\""
+        },
+        {
+          "name": "--portal-navigation-tree-parent-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-menu-item-padding-y)\""
+        },
+        {
+          "name": "--portal-navigation-tree-items-margin-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-vertical-base)\""
+        },
+        {
+          "name": "--portal-navigation-tree-items-link-padding-x",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-horizontal-base)\""
+        },
+        {
+          "name": "--portal-navigation-tree-items-link-padding-y",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"var(--portal-navigation-menu-item-padding-y)\""
+        },
+        {
+          "name": "--portal-navigation-max-width",
+          "description": "TODO",
+          "type": "length",
+          "default": "\"1200px\""
+        },
+        {
+          "name": "--portal-navigation-main-justify-content",
+          "description": "TODO",
+          "default": "\"flex-end\""
+        },
+        {
+          "name": "--portal-navigation-current-justify-content",
+          "description": "TODO",
+          "default": "\"flex-end\""
+        },
+        {
           "name": "--portal-navigation-font-family",
+          "description": "TODO",
           "default": "\"sans-serif\""
+        },
+        {
+          "name": "--portal-navigation-menu-item-white-space",
+          "description": "TODO",
+          "default": "\"nowrap\""
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "container",
+          "description": "The top-level, container element wrapping everything inside the host element"
+        },
+        {
+          "name": "hamburger-menu",
+          "description": "The hamburger menu element (shown in mobile breakpoint)"
+        },
+        {
+          "name": "slot-header-mobile",
+          "description": "Slot element wrapper between the hamburger menu element and the logo slot"
+        },
+        {
+          "name": "slot-meta-left",
+          "description": "Slot element wrapper for the left part of the meta bar"
+        },
+        {
+          "name": "slot-meta-right",
+          "description": "Slot element wrapper for the right part of the meta bar"
+        },
+        {
+          "name": "slot-logo",
+          "description": "Slot element wrapper for the logo slot"
+        },
+        {
+          "name": "slot-left",
+          "description": "Slot element wrapper for the left slot"
+        },
+        {
+          "name": "slot-right",
+          "description": "Slot element wrapper for the right slot"
+        },
+        {
+          "name": "menu-main-items",
+          "description": "Element wrapper for the main menu items (1st level)"
+        },
+        {
+          "name": "meta-bar",
+          "description": "TODO"
+        },
+        {
+          "name": "navigation-header",
+          "description": "TODO"
+        },
+        {
+          "name": "main",
+          "description": "TODO"
+        },
+        {
+          "name": "current",
+          "description": "TODO"
+        },
+        {
+          "name": "tree-container",
+          "description": "TODO"
+        },
+        {
+          "name": "navigation-header-container",
+          "description": "TODO"
         }
       ]
     }
