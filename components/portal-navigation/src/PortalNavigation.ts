@@ -659,7 +659,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     if (label) {
       result.push(html`<span part="${`label-${id}`}" id="${`label-${id}`}" class="label">${label}</span>`);
       if (!icon && badge) {
-        result.push(html`<span part="${`badge-${id}`}" id='${`badge-${id}`}"' class="badge">${badge}</span>`);
+        result.push(html`<span part="${`badge-${id}`}" id="${`badge-${id}`}" class="badge">${badge}</span>`);
       }
     }
 
