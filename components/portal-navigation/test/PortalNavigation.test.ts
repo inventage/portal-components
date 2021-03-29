@@ -145,6 +145,8 @@ describe('<portal-navigation>', () => {
     });
 
     it('does route externally when default item of parent item has other application', async () => {
+      // const eventSpy = sinon.spy();
+      // const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app2" internalRouting @portal-navigation.routeTo="${eventSpy as EventListener}"></portal-navigation>`);
       const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app2" internalRouting></portal-navigation>`);
       await childrenRendered(el);
 
@@ -167,6 +169,7 @@ describe('<portal-navigation>', () => {
       // noinspection JSUnusedAssignment
       // expect(clickEvent!.defaultPrevented).to.be.false;
       expect(externalNavigationOccurred).to.be.true;
+      // expect(eventSpy.callCount).to.equal(0);
     });
 
     it('does route internally when default item of parent item has same application', async () => {

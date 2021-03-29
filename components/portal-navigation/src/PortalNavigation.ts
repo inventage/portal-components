@@ -719,9 +719,9 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     // if the default item is external we don't want to honor this flag when clicking on a parent item
     if (internalRouting || this.__getDefaultItemOf(item)!.destination === 'extern') {
       e.preventDefault();
+      this.__internalLinkSelected(item.id);
+      return;
     }
-
-    this.__internalLinkSelected(item.id);
 
     return;
   }
