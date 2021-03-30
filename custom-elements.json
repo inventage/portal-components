@@ -123,6 +123,12 @@
           "default": "false"
         },
         {
+          "name": "hamburgerMenuExpanded",
+          "description": "Whether the hamburger menu is expanded. This property is being reflected back to its attribute.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
           "name": "src",
           "description": "Location from where to fetch configuration data file.",
           "type": "string"
@@ -178,6 +184,13 @@
           "name": "isMobileBreakpoint",
           "attribute": "isMobileBreakpoint",
           "description": "Whether the navigation is in mobile breakpoint. This property is being reflected back to its attribute.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "hamburgerMenuExpanded",
+          "attribute": "hamburgerMenuExpanded",
+          "description": "Whether the hamburger menu is expanded. This property is being reflected back to its attribute.",
           "type": "boolean",
           "default": "false"
         },
