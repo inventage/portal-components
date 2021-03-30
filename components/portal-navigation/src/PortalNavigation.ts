@@ -53,6 +53,7 @@ const NavigationEvents = {
   configured: `${NavigationEventNamespace}.configured`,
   breakpointChanged: `${NavigationEventNamespace}.breakpointChanged`,
   firstUpdated: 'firstUpdated',
+  hamburgerMenuExpanded: 'hamburgerMenuExpanded',
 } as const;
 
 type NavigationEvents = typeof NavigationEvents;
@@ -214,15 +215,21 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
   isMobileBreakpoint = false;
 
   /**
+   * Whether the hamburger menu is expanded. This property is being reflected back to its attribute.
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+  })
+  hamburgerMenuExpanded = false;
+
+  /**
    * The current path of "active" items. e.g. if an item in level 2 is clicked it's parent item and the corresponding menu would be considered "active"
    *
    * @private
    */
   @internalProperty()
   private activePath = new IdPath();
-
-  @internalProperty()
-  private hamburgerMenuExpanded = false;
 
   @internalProperty()
   private activeDropdown?: string;
@@ -313,6 +320,15 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
      * Throw event when the component is rendered for the first time
      */
     this.dispatchEvent(new CustomEvent(PortalNavigation.events.firstUpdated, { detail: this }));
+
+    // Listen for mobile breakpoint changes
+    const mql = window.matchMedia(`screen and (max-width: ${this.mobileBreakpoint}px)`);
+    this.isMobileBreakpoint = mql.matches;
+    this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
+    mql.addEventListener('change', e => {
+      this.isMobileBreakpoint = e.matches;
+      this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
+    });
   }
 
   updated(changedProperties: PropertyValues): void {
@@ -322,18 +338,12 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       this.dispatchEvent(new CustomEvent(PortalNavigation.events.setLanguage, { detail: this.language, bubbles: true }));
     }
 
-    if (changedProperties.has('mobileBreakpoint')) {
-      const mql = window.matchMedia(`screen and (max-width: ${this.mobileBreakpoint}px)`);
-      this.isMobileBreakpoint = mql.matches;
-      this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
-      mql.addEventListener('change', e => {
-        this.isMobileBreakpoint = e.matches;
-        this.dispatchEvent(new CustomEvent(PortalNavigation.events.breakpointChanged, { detail: this.isMobileBreakpoint }));
-      });
-    }
-
     if (changedProperties.has('activeUrl')) {
       this.__updateActivePathFromUrl();
+    }
+
+    if (changedProperties.has('hamburgerMenuExpanded')) {
+      this.dispatchEvent(new CustomEvent(PortalNavigation.events.hamburgerMenuExpanded, { detail: this.hamburgerMenuExpanded, bubbles: true }));
     }
   }
 
