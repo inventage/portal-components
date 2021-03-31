@@ -69,6 +69,10 @@ export const styles = css`
   background: var(--portal-navigation-color-main-background, var(--portal-navigation-color-header-background, rgba(66, 135, 245, 0.1)));
 }
 
+.main:empty {
+  display: none;
+}
+
 .main > .inner {
   display: flex;
   justify-content: var(--portal-navigation-main-justify-content, flex-end);

@@ -358,8 +358,9 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     const menuMain = this._createMenuTemplate(PortalNavigation.menuIds.main);
     const menuSettings = this._createMenuTemplate(PortalNavigation.menuIds.settings);
     const currentItems = this._createCurrentItemsTemplate();
+    const mainMenusEmpty = menuMain === nothing && menuSettings === nothing;
 
-    return html` <div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-open': this.hamburgerMenuExpanded })}" part="container">
+    return html`<div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-open': this.hamburgerMenuExpanded, '-empty': mainMenusEmpty })}" part="container">
       ${!this.isMobileBreakpoint || this.hamburgerMenuExpanded
         ? html`<div class="meta-bar" part="meta-bar">
             <div class="container-max-width inner">
@@ -380,37 +381,36 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           ${menuLogout !== nothing && ((this.isMobileBreakpoint && this.logoutMenuInMobileHeader) || (!this.isMobileBreakpoint && !this.logoutMenuInMetaBar)) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
           <div class="slot-right" part="slot-right"><slot name="right"></slot></div>
           ${this.isMobileBreakpoint
-            ? html`<!-- Hamburger Menu Tree Elements -->
-                <portal-hamburger-menu
-                  class="hamburger-menu"
-                  part="hamburger-menu"
-                  .toggled="${this.hamburgerMenuExpanded}"
-                  @state-changed="${(e: CustomEvent) => {
-                    this.hamburgerMenuExpanded = e.detail;
-                  }}"
-                ></portal-hamburger-menu>`
+            ? html`<portal-hamburger-menu
+                class="hamburger-menu"
+                part="hamburger-menu"
+                .toggled="${this.hamburgerMenuExpanded}"
+                @state-changed="${(e: CustomEvent) => {
+                  this.hamburgerMenuExpanded = e.detail;
+                }}"
+              ></portal-hamburger-menu>`
             : nothing}
         </div>
       </header>
 
-      <main class="main" part="main">
-        ${!this.isMobileBreakpoint && (menuMain !== nothing || menuSettings !== nothing)
-          ? html`<div class="container-max-width inner">
+      ${mainMenusEmpty
+        ? nothing
+        : html`<main class="main" part="main">
+            ${!this.isMobileBreakpoint && (menuMain !== nothing || menuSettings !== nothing)
+              ? html`<div class="container-max-width inner">
               ${menuMain !== nothing ? html`<div class="menu-main menu" part="menu-main">${menuMain}</div>` : nothing}
               ${menuSettings !== nothing ? html`<div class="menu-settings menu" part="menu-settings">${menuSettings}</div>` : nothing}
               </div>
             </div>`
-          : nothing}
-
-        <!-- Hamburger Menu Tree Elements -->
-        ${this.isMobileBreakpoint && this.hamburgerMenuExpanded
-          ? html` <div class="tree-container" part="tree-container">
-              ${this._createTreeTemplate()}
-              <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
-            </div>`
-          : nothing}
-      </main>
-
+              : nothing}
+            ${this.isMobileBreakpoint && this.hamburgerMenuExpanded
+              ? html`<!-- Hamburger Menu Tree Elements -->
+                  <div class="tree-container" part="tree-container">
+                    ${this._createTreeTemplate()}
+                    <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
+                  </div>`
+              : nothing}
+          </main>`}
       ${!this.isMobileBreakpoint && currentItems !== nothing
         ? html`<div class="current" part="current">
             <div class="container-max-width inner"><div class="menu-current menu" part="menu-current">${currentItems}</div></div>
@@ -544,7 +544,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     if (menu && menu.dropdown) {
       const badge = this.getBadgeValue(menu.id!);
       const label = this.__getLabel(menu);
-      return html` <span
+      return html`<span
           part="menu-${menuId}"
           id="menu-${menuId}"
           class="${classMap({
@@ -582,7 +582,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     const { url, destination } = refItem;
 
-    return html` <a
+    return html`<a
         href="${ifDefined(url)}"
         part="item-${ifDefined(id)}"
         id="item-${ifDefined(id)}"
@@ -596,7 +596,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
         @click="${(e: Event) => this._onLink(e, item)}"
         >${PortalNavigation._createLinkTemplate(id!, label, icon, badge)}${isTreeMode && hasItems ? html`<span class="tree-parent-indicator indicator" part="tree-parent-indicator"></span>` : nothing}</a
       >
-      ${isTreeMode && active && hasItems ? html` <div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : nothing}`;
+      ${isTreeMode && active && hasItems ? html`<div class="tree-items">${item.items!.map(childItem => this._createSecondLevelItemTemplate(childItem))}</div>` : nothing}`;
   }
 
   /**
