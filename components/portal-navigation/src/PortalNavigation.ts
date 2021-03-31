@@ -292,8 +292,9 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
       this.__fetchRemoteData();
     }
 
+    // Parse URL when connected, only if activeUrl has not been set
     const parsedUrl = new URL(window.location.href);
-    if (parsedUrl && parsedUrl.pathname && parsedUrl.pathname !== '/') {
+    if (!this.activeUrl && parsedUrl && parsedUrl.pathname && parsedUrl.pathname !== '/') {
       const { pathname } = parsedUrl;
       this.activeUrl = pathname;
     }
