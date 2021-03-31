@@ -454,14 +454,13 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     (async () => {
       try {
-        const oldConfiguration = this.configuration;
         const response = await fetch(this.src!);
         const data = await response.json();
 
         this.configuration = new Configuration(data);
         this.dispatchEvent(new CustomEvent(PortalNavigation.events.configured, { detail: this.configuration }));
         this.__updateActivePathFromUrl();
-        this.requestUpdateInternal('configuration', oldConfiguration);
+        this.requestUpdateInternal();
       } catch (e) {
         // eslint-disable-next-line no-console
         console.warn('An error occurred when fetching remote data…', e);
@@ -787,9 +786,16 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
     let refItem = selectedItem;
     let dispatchEvent = true;
+    let closeHamburgerExpanded = true;
     if (hasItems) {
       refItem = this.__getDefaultItemOf(selectedItem!);
       dispatchEvent = !!refItem && refItem.destination !== 'extern';
+
+      // Expanded hamburger should be closed only when the clicked item does not have an internal default item
+      // This ensures that accordions in mobile breakpoint can be expanded. The routeTo event will still be thrown
+      // so applications might already load the requested route in the background.
+      closeHamburgerExpanded = !dispatchEvent;
+
       this.activePath = objectPath.toIdPath().concat(dispatchEvent ? refItem!.id : undefined);
     } else {
       this.activePath = objectPath.toIdPath();
@@ -806,6 +812,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
           composed: true,
         }),
       );
+
+      if (this.hamburgerMenuExpanded && closeHamburgerExpanded) {
+        this.hamburgerMenuExpanded = false;
+      }
     }
   }
 
