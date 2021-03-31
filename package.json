@@ -32,6 +32,7 @@
     "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
     "lint:prettier": "prettier '**/*.{js,ts,md,css}' --check",
     "lint:tsc": "tsc",
+    "prepare": "husky install",
     "prepublishOnly": "tsc",
     "start": "concurrently -k -n styles,wca,tsc,storybook 'npm run watch:build-css' 'npm run watch:analyze:custom-elements' 'npm run tsc:watch' 'npm run storybook'",
     "start:build": "npm run build && npm run storybook:build:start",
@@ -45,8 +46,7 @@
     "test:watch": "npm run test:browser:watch",
     "tsc:watch": "tsc -p tsconfig.dev.json --watch",
     "watch:analyze:custom-elements": "onchange -i '{dist}/**/*.js' -- npm run build:analyze:custom-elements",
-    "watch:build-css": "onchange -i '{common,components,mixins}/**/*.css' -- npm run build:css",
-    "prepare": "husky install"
+    "watch:build-css": "onchange -i '{common,components,mixins}/**/*.css' -- npm run build:css"
   },
   "dependencies": {
     "@open-wc/scoped-elements": "^1.3.3",
@@ -57,17 +57,17 @@
     "@lion/helpers": "^0.7.0",
     "@open-wc/demoing-storybook": "^2.4.7",
     "@open-wc/testing": "^2.5.32",
-    "@storybook/addon-a11y": "^6.1.21",
-    "@storybook/addon-actions": "^6.1.21",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
+    "@storybook/addon-a11y": "^6.2.1",
+    "@storybook/addon-actions": "^6.2.1",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "@web/dev-server-esbuild": "^0.2.11",
     "@web/test-runner": "^0.12.17",
     "@web/test-runner-commands": "^0.4.1",
     "@web/test-runner-playwright": "^0.8.4",
     "concurrently": "^6.0.0",
     "es-dev-server": "^2.1.0",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-lit": "^1.3.0",
@@ -81,7 +81,8 @@
     "prettier": "^2.2.1",
     "sinon": "^9.2.4",
     "typescript": "^4.2.3",
-    "web-component-analyzer": "^1.1.6"
+    "web-component-analyzer": "^1.1.6",
+    "y18n": ">=4.0.1"
   },
   "keywords": [
     "lit-element",
