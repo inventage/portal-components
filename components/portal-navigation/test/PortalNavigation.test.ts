@@ -196,6 +196,38 @@ describe('<portal-navigation>', () => {
       expect(el.getActivePath().getId(2)).to.equal('item2.2');
     });
 
+    it.only('does not close an expanded mobile menu when the parent item with a default item has been clicked', async () => {
+      const eventSpy = sinon.spy();
+      const el: PortalNavigation = await fixture(
+        html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting mobileBreakpoint="1500" hamburgerMenuExpanded @hamburgerMenuExpanded="${eventSpy as EventListener}"></portal-navigation>`,
+      );
+      await childrenRendered(el);
+
+      expect(el.hamburgerMenuExpanded).to.be.true;
+
+      setTimeout(() => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]')).click());
+
+      expect(eventSpy.callCount).to.equal(1);
+      expect(el.hamburgerMenuExpanded).to.be.true;
+    });
+
+    it.only('does close an expanded mobile menu when a non-parent item has been clicked', async () => {
+      const eventSpy = sinon.spy();
+      const el: PortalNavigation = await fixture(
+        html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting mobileBreakpoint="1500" hamburgerMenuExpanded @hamburgerMenuExpanded="${eventSpy as EventListener}"></portal-navigation>`,
+      );
+      await childrenRendered(el);
+
+      expect(el.hamburgerMenuExpanded).to.be.true;
+
+      setTimeout(() => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-parent2"]')).click()); // Open accordion first
+      setTimeout(() => (<HTMLAnchorElement>el.shadowRoot!.querySelector('[part="item-item2.2"]')).click()); // Click a child
+      await aTimeout(1);
+
+      expect(eventSpy.callCount).to.equal(2);
+      expect(el.hamburgerMenuExpanded).to.be.false;
+    });
+
     it('does route externally when item overrides globally set internalRouting=true with false.', async () => {
       const el: PortalNavigation = await fixture(html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app2" internalRouting></portal-navigation>`);
       await childrenRendered(el);
