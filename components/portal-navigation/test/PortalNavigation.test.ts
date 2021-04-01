@@ -52,7 +52,7 @@ describe('<portal-navigation>', () => {
       expect(el).not.to.be.displayed;
     });
 
-    it.only('passes the a11y audit', async () => {
+    it('passes the a11y audit', async () => {
       const el: PortalNavigation = await fixture(
         html` <portal-navigation
           src="${TEST_DATA_JSON_PATH}"
@@ -196,7 +196,7 @@ describe('<portal-navigation>', () => {
       expect(el.getActivePath().getId(2)).to.equal('item2.2');
     });
 
-    it.only('does not close an expanded mobile menu when the parent item with a default item has been clicked', async () => {
+    it('does not close an expanded mobile menu when the parent item with a default item has been clicked', async () => {
       const eventSpy = sinon.spy();
       const el: PortalNavigation = await fixture(
         html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting mobileBreakpoint="1500" hamburgerMenuExpanded @hamburgerMenuExpanded="${eventSpy as EventListener}"></portal-navigation>`,
@@ -211,7 +211,7 @@ describe('<portal-navigation>', () => {
       expect(el.hamburgerMenuExpanded).to.be.true;
     });
 
-    it.only('does close an expanded mobile menu when a non-parent item has been clicked', async () => {
+    it('does close an expanded mobile menu when a non-parent item has been clicked', async () => {
       const eventSpy = sinon.spy();
       const el: PortalNavigation = await fixture(
         html`<portal-navigation src="${TEST_DATA_JSON_PATH}" currentApplication="app1" internalRouting mobileBreakpoint="1500" hamburgerMenuExpanded @hamburgerMenuExpanded="${eventSpy as EventListener}"></portal-navigation>`,
