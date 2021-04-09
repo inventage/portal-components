@@ -292,18 +292,6 @@ export const styles = css`
   flex-direction: column;
 }
 
-.container.-mobile .navigation-header {
-  order: 1;
-}
-
-.container.-mobile .meta-bar {
-  order: 2;
-}
-
-.container.-mobile .main {
-  order: 3;
-}
-
 .container.-mobile .header-toggle,
 .container.-mobile .tree-container {
   display: block;

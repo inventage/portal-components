@@ -362,15 +362,7 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     const mainMenusEmpty = menuMain === nothing && menuSettings === nothing;
 
     return html`<div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-open': this.hamburgerMenuExpanded, '-empty': mainMenusEmpty })}" part="container">
-      ${!this.isMobileBreakpoint || this.hamburgerMenuExpanded
-        ? html`<div class="meta-bar" part="meta-bar">
-            <div class="container-max-width inner">
-              <div class="slot-meta-left" part="slot-meta-left"><slot name="meta-left"></slot></div>
-              ${menuLogout !== nothing && this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${menuLogout}</div>` : nothing}
-              <div class="slot-meta-right" part="slot-meta-right"><slot name="meta-right"></slot></div>
-            </div>
-          </div>`
-        : nothing}
+      ${!this.isMobileBreakpoint ? this.renderMetaBar(menuLogout) : nothing}
 
       <header class="navigation-header" part="navigation-header">
         <div class="container-max-width inner" part="navigation-header-container">
@@ -405,7 +397,9 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
             </div>`
               : nothing}
             ${this.isMobileBreakpoint && this.hamburgerMenuExpanded
-              ? html`<!-- Hamburger Menu Tree Elements -->
+              ? html` <!-- Meta bar -->
+                  ${this.renderMetaBar(menuLogout)}
+                  <!-- Hamburger Menu Tree Elements -->
                   <div class="tree-container" part="tree-container">
                     ${this._createTreeTemplate()}
                     <div class="slot-tree-bottom"><slot name="tree-bottom"></slot></div>
@@ -527,6 +521,25 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
 
   private __toggleDropdown(menuId: string): void {
     this.activeDropdown = this.activeDropdown ? undefined : menuId;
+  }
+
+  /**
+   * Renders the meta bar along with the logout menu, if given.
+   *
+   * We need a separate method for this, since the meta bar is rendered inside a different container
+   * in mobile breakpoint (to make the entire container scrollable, if need be).
+   *
+   * @param menuLogout
+   * @private
+   */
+  private renderMetaBar(menuLogout: TemplateResult | Nothing = nothing) {
+    return html`<div class="meta-bar" part="meta-bar">
+      <div class="container-max-width inner">
+        <div class="slot-meta-left" part="slot-meta-left"><slot name="meta-left"></slot></div>
+        ${menuLogout !== nothing && this.logoutMenuInMetaBar && !(this.isMobileBreakpoint && this.logoutMenuInMobileHeader) ? html`<div class="menu-logout menu-logout-meta menu">${menuLogout}</div>` : nothing}
+        <div class="slot-meta-right" part="slot-meta-right"><slot name="meta-right"></slot></div>
+      </div>
+    </div>`;
   }
 
   /**
