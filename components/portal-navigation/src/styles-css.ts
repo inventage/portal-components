@@ -62,6 +62,11 @@ export const styles = css`
   display: flex;
 }
 
+/* Menu spacing in navigation header */
+.navigation-header-inner > .item:not(.-last) {
+  margin-right: var(--portal-navigation-header-menu-spacing, 2rem);
+}
+
 /**
  * Main menu wrapper
  */
@@ -154,11 +159,6 @@ export const styles = css`
 
 .menu-logout-meta {
   margin: 0 0 0 auto;
-}
-
-.menu-meta,
-.menu-profile {
-  margin-right: 2rem;
 }
 
 .menu-current > .link:not(.-selected) {

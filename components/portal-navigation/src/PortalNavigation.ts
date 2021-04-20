@@ -1,5 +1,5 @@
 import { CSSResultArray, html, internalProperty, LitElement, property, TemplateResult } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
+import { ClassInfo, classMap } from 'lit-html/directives/class-map';
 import { baseStyles } from '../../../common/baseStyles';
 import { styles } from './styles-css';
 import { Configuration, MenuItem, MenuLabel } from './Configuration';
@@ -105,6 +105,7 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @cssprop {length} [--portal-navigation-menu-item-padding-y=0.5rem] TODO
  * @cssprop {length} [--portal-navigation-menu-item-icon-label-spacing=0.25rem] TODO
  * @cssprop {length} [--portal-navigation-menu-item-spacing=var(--portal-navigation-horizontal-base)] TODO
+ * @cssprop {length} [--portal-navigation-header-menu-spacing=2rem] Spacing of menus (meta, profile, logout) in the navigation header.
  *
  * @cssprop {length} [--portal-navigation-dropdown-item-padding-x=0.5rem] TODO
  * @cssprop {length} [--portal-navigation-dropdown-item-padding-y=1rem] TODO
@@ -361,17 +362,28 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
     const currentItems = this._createCurrentItemsTemplate();
     const mainMenusEmpty = menuMain === nothing && menuSettings === nothing;
 
+    /**
+     * The list of header menus, filtered by whether they actually render a menu (whether a menu has items or not)
+     * so we can iterate over it and add additional classes for styling.
+     */
+    const headerMenus = [
+      (classInfo: ClassInfo = {}) => (!this.isMobileBreakpoint && menuMeta !== nothing ? html`<div class="menu-meta menu ${classMap(classInfo)}">${menuMeta}</div>` : nothing),
+      (classInfo: ClassInfo = {}) => (!this.isMobileBreakpoint && menuProfile !== nothing ? html`<div class="menu-profile menu ${classMap(classInfo)}">${menuProfile}</div>` : nothing),
+      (classInfo: ClassInfo = {}) =>
+        menuLogout !== nothing && ((this.isMobileBreakpoint && this.logoutMenuInMobileHeader) || (!this.isMobileBreakpoint && !this.logoutMenuInMetaBar))
+          ? html`<div class="menu-logout menu ${classMap(classInfo)}">${menuLogout}</div>`
+          : nothing,
+    ].filter(menuTemplate => menuTemplate() !== nothing);
+
     return html`<div class="container ${classMap({ '-mobile': this.isMobileBreakpoint, '-open': this.hamburgerMenuExpanded, '-empty': mainMenusEmpty })}" part="container">
       ${!this.isMobileBreakpoint ? this.renderMetaBar(menuLogout) : nothing}
 
       <header class="navigation-header" part="navigation-header">
-        <div class="container-max-width inner" part="navigation-header-container">
+        <div class="container-max-width inner navigation-header-inner" part="navigation-header-container">
           <div class="slot-logo" part="slot-logo"><slot name="logo"></slot></div>
           <div class="slot-left" part="slot-left"><slot name="left"></slot></div>
           <div class="slot-header-mobile" part="slot-header-mobile"><slot name="header-mobile"></slot></div>
-          ${!this.isMobileBreakpoint && menuMeta !== nothing ? html`<div class="menu-meta menu">${menuMeta}</div>` : nothing}
-          ${!this.isMobileBreakpoint && menuProfile !== nothing ? html`<div class="menu-profile menu">${menuProfile}</div>` : nothing}
-          ${menuLogout !== nothing && ((this.isMobileBreakpoint && this.logoutMenuInMobileHeader) || (!this.isMobileBreakpoint && !this.logoutMenuInMetaBar)) ? html`<div class="menu-logout menu">${menuLogout}</div>` : nothing}
+          ${headerMenus.map((menuTemplate, index) => menuTemplate({ item: true, '-first': index === 0, '-last': index === headerMenus.length - 1 }))}
           <div class="slot-right" part="slot-right"><slot name="right"></slot></div>
           ${this.isMobileBreakpoint
             ? html`<portal-hamburger-menu

@@ -423,6 +423,12 @@
           "default": "\"var(--portal-navigation-horizontal-base)\""
         },
         {
+          "name": "--portal-navigation-header-menu-spacing",
+          "description": "Spacing of menus (meta, profile, logout) in the navigation header.",
+          "type": "length",
+          "default": "\"2rem\""
+        },
+        {
           "name": "--portal-navigation-dropdown-item-padding-x",
           "description": "TODO",
           "type": "length",
