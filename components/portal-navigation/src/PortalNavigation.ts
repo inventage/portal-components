@@ -74,53 +74,53 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  *
  * @listens 'portal-navigation.setBadgeValue' - Listens to event that change the badge value of an item or menu and sets that value accordingly.
  *
- * @cssprop {color} [--portal-navigation-color-primary=#555] TODO
- * @cssprop {color} [--portal-navigation-color-secondary=rgb(10, 81, 194)] TODO
- * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)] TODO
- * @cssprop {color} [--portal-navigation-color-link-breakpoint=var(--portal-navigation-color-primary)] TODO
- * @cssprop {color} [--portal-navigation-color-link-dropdown=var(--portal-navigation-color-primary)] TODO
- * @cssprop {color} [--portal-navigation-color-link-current=var(--portal-navigation-color-link)] TODO
- * @cssprop {color} [--portal-navigation-color-selected=var(--portal-navigation-color-secondary)] TODO
- * @cssprop {color} [--portal-navigation-color-hover=var(--portal-navigation-color-secondary)] TODO
- * @cssprop {color} [--portal-navigation-color-hover-dropdown=var(--portal-navigation-color-hover)] TODO
- * @cssprop {color} [--portal-navigation-color-hover-current=var(--portal-navigation-color-hover)] TODO
- * @cssprop {color} [--portal-navigation-color-badge=white] TODO
- * @cssprop {color} [--portal-navigation-color-badge-background=var(--portal-navigation-color-secondary)] TODO
- * @cssprop {color} [--portal-navigation-color-dropdown-background=white] TODO
- * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)] TODO
- * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)] TODO
- * @cssprop {color} [--portal-navigation-color-meta-bar-background=rgba(66, 135, 245, 0.2)] TODO
+ * @cssprop {color} [--portal-navigation-color-primary=#555] Primary color used for text elements
+ * @cssprop {color} [--portal-navigation-color-secondary=rgb(10, 81, 194)] Secondary color used for highlights
+ * @cssprop {color} [--portal-navigation-color-link=var(--portal-navigation-color-primary)] Color used for links
+ * @cssprop {color} [--portal-navigation-color-link-breakpoint=var(--portal-navigation-color-primary)] Color used for links in mobile breakpoint
+ * @cssprop {color} [--portal-navigation-color-link-dropdown=var(--portal-navigation-color-primary)] Color used for links in dropdowns
+ * @cssprop {color} [--portal-navigation-color-link-current=var(--portal-navigation-color-link)] Color used for links in current items
+ * @cssprop {color} [--portal-navigation-color-selected=var(--portal-navigation-color-secondary)] Color used for selected elements
+ * @cssprop {color} [--portal-navigation-color-hover=var(--portal-navigation-color-secondary)] Hover color
+ * @cssprop {color} [--portal-navigation-color-hover-dropdown=var(--portal-navigation-color-hover)] Hover color in dropdowns
+ * @cssprop {color} [--portal-navigation-color-hover-current=var(--portal-navigation-color-hover)] Hover color for current elements
+ * @cssprop {color} [--portal-navigation-color-badge=white] Badge color
+ * @cssprop {color} [--portal-navigation-color-badge-background=var(--portal-navigation-color-secondary)] Badge background color
+ * @cssprop {color} [--portal-navigation-color-dropdown-background=white] Dropdown background color
+ * @cssprop {color} [--portal-navigation-color-border=rgba(44, 62, 80, 0.1)] Default border color
+ * @cssprop {color} [--portal-navigation-color-header-background=rgba(66, 135, 245, 0.1)] Header element background color
+ * @cssprop {color} [--portal-navigation-color-meta-bar-background=rgba(66, 135, 245, 0.2)] Meta bar element background color
  *
- * @cssprop [--portal-navigation-tree-parent-border-top=none] TODO
- * @cssprop [--portal-navigation-tree-parent-border-bottom=solid 1px var(--portal-navigation-color-border, rgba(44, 62, 80, 0.1))] TODO
+ * @cssprop [--portal-navigation-tree-parent-border-top=none] Tree item parent border top
+ * @cssprop [--portal-navigation-tree-parent-border-bottom=solid 1px var(--portal-navigation-color-border, rgba(44, 62, 80, 0.1))] Tree item parent border bottom
  *
- * @cssprop {length} [--portal-navigation-font-size=1.25rem] TODO
- * @cssprop {length} [--portal-navigation-font-size-badge=1rem] TODO
- * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem] TODO
+ * @cssprop {length} [--portal-navigation-font-size=1.25rem] Default font size
+ * @cssprop {length} [--portal-navigation-font-size-badge=1rem] Font size for badges
+ * @cssprop {length} [--portal-navigation-font-size-tree-second-level=1rem] Font size for tree 2nd level items (mobile breakpoint)
+ * @cssprop [--portal-navigation-font-family=sans-serif] Default font family
  *
- * @cssprop {length} [--portal-navigation-horizontal-base=1rem] TODO
- * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
- * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] TODO
- * @cssprop {length} [--portal-navigation-menu-item-padding-x=0] TODO
- * @cssprop {length} [--portal-navigation-menu-item-padding-y=0.5rem] TODO
- * @cssprop {length} [--portal-navigation-menu-item-icon-label-spacing=0.25rem] TODO
- * @cssprop {length} [--portal-navigation-menu-item-spacing=var(--portal-navigation-horizontal-base)] TODO
+ * @cssprop {length} [--portal-navigation-horizontal-base=1rem] Horizontal base unit
+ * @cssprop {length} [--portal-navigation-vertical-base=0.5rem] Vertical base unit
+ * @cssprop {length} [--portal-navigation-menu-item-padding-x=0] Menu item horizontal padding
+ * @cssprop {length} [--portal-navigation-menu-item-padding-y=0.5rem] Menu item vertical padding
+ * @cssprop {length} [--portal-navigation-menu-item-icon-label-spacing=0.25rem] Menu item spacing between the icon and label
+ * @cssprop {length} [--portal-navigation-menu-item-spacing=var(--portal-navigation-horizontal-base)] Spacing between menu items
  * @cssprop {length} [--portal-navigation-header-menu-spacing=2rem] Spacing of menus (meta, profile, logout) in the navigation header.
  *
- * @cssprop {length} [--portal-navigation-dropdown-item-padding-x=0.5rem] TODO
- * @cssprop {length} [--portal-navigation-dropdown-item-padding-y=1rem] TODO
- * @cssprop {length} [--portal-navigation-tree-parent-padding-x=var(--portal-navigation-horizontal-base)] TODO
- * @cssprop {length} [--portal-navigation-tree-parent-padding-y=var(--portal-navigation-menu-item-padding-y)] TODO
- * @cssprop {length} [--portal-navigation-tree-items-margin-y=var(--portal-navigation-vertical-base)] TODO
- * @cssprop {length} [--portal-navigation-tree-items-link-padding-x=var(--portal-navigation-horizontal-base)] TODO
- * @cssprop {length} [--portal-navigation-tree-items-link-padding-y=var(--portal-navigation-menu-item-padding-y)] TODO
+ * @cssprop {length} [--portal-navigation-dropdown-item-padding-x=0.5rem] Dropdown item horizontal padding
+ * @cssprop {length} [--portal-navigation-dropdown-item-padding-y=1rem] Dropdown item vertical padding
+ * @cssprop {length} [--portal-navigation-tree-parent-padding-x=var(--portal-navigation-horizontal-base)] Horizontal padding of parent items in the tree (mobile breakpoint)
+ * @cssprop {length} [--portal-navigation-tree-parent-padding-y=var(--portal-navigation-menu-item-padding-y)] Vertical padding of parent items in the tree (mobile breakpoint)
+ * @cssprop {length} [--portal-navigation-tree-items-margin-y=var(--portal-navigation-vertical-base)] Vertical margin of parent items in the tree (mobile breakpoint)
+ * @cssprop {length} [--portal-navigation-tree-items-link-padding-x=var(--portal-navigation-horizontal-base)] Horizontal padding of links in parent items in the tree (mobile breakpoint)
+ * @cssprop {length} [--portal-navigation-tree-items-link-padding-y=var(--portal-navigation-menu-item-padding-y)] Vertical padding of links in parent items in the tree (mobile breakpoint)
  *
- * @cssprop {length} [--portal-navigation-max-width=1200px] TODO
+ * @cssprop {length} [--portal-navigation-max-width=1200px] Maximum (container) width of the navigation
  *
- * @cssprop [--portal-navigation-main-justify-content=flex-end] TODO
- * @cssprop [--portal-navigation-current-justify-content=flex-end] TODO
- * @cssprop [--portal-navigation-font-family=sans-serif] TODO
- * @cssprop [--portal-navigation-menu-item-white-space=nowrap] TODO
+ * @cssprop [--portal-navigation-main-justify-content=flex-end] Horizontal centering of the items in the main menu (container)
+ * @cssprop [--portal-navigation-current-justify-content=flex-end] Horizontal centering of the items in the current menu (container)
+
+ * @cssprop [--portal-navigation-menu-item-white-space=nowrap] Menu item white space wrap
  *
  * @csspart container - The top-level, container element wrapping everything inside the host element
  * @csspart hamburger-menu - The hamburger menu element (shown in mobile breakpoint)
@@ -132,12 +132,12 @@ type NavigationCssClasses = typeof NavigationCssClasses;
  * @csspart slot-left - Slot element wrapper for the left slot
  * @csspart slot-right - Slot element wrapper for the right slot
  * @csspart menu-main-items - Element wrapper for the main menu items (1st level)
- * @csspart meta-bar - TODO
- * @csspart navigation-header - TODO
- * @csspart main - TODO
- * @csspart current - TODO
- * @csspart tree-container - TODO
- * @csspart navigation-header-container - TODO
+ * @csspart meta-bar - Element wrapper for the meta bar
+ * @csspart navigation-header - Element wrapper for the navigation header
+ * @csspart main - Element wrapper for the main navigation area / container
+ * @csspart current - Element wrapper for the current items (2nd level) container
+ * @csspart tree-container - Element wrapper for the tree items container (mobile breakpoint)
+ * @csspart navigation-header-container - Element for the navigation header in mobile breakpoint
  *
  * @slot logo - The slot for the logo
  * @slot right - The right slot
