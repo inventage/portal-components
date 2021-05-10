@@ -1,4 +1,4 @@
-import { CSSResultArray, html, internalProperty, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, html, state, LitElement, property, TemplateResult } from 'lit-element';
 import { ClassInfo, classMap } from 'lit-html/directives/class-map';
 import { baseStyles } from '../../../common/baseStyles';
 import { styles } from './styles-css';
@@ -229,10 +229,10 @@ export class PortalNavigation extends ScopedElementsMixin(LitElement) {
    *
    * @private
    */
-  @internalProperty()
+  @state()
   private activePath = new IdPath();
 
-  @internalProperty()
+  @state()
   private activeDropdown?: string;
 
   private temporaryBadgeValues = new Map();
