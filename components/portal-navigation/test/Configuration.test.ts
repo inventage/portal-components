@@ -59,7 +59,7 @@ describe('Configuration', () => {
 
   it('should not generate ids on invalid data', () => {
     [undefined, null, 0].forEach(configData => {
-      const configuration = new Configuration((configData as unknown) as ConfigurationData);
+      const configuration = new Configuration(configData as unknown as ConfigurationData);
 
       expect(configuration.getMenu('menu1')).to.be.undefined;
       expect(configuration.getMenu('menu2')).to.be.undefined;

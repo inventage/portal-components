@@ -1,4 +1,4 @@
-import { internalProperty } from 'lit-element';
+import { state } from 'lit-element';
 import { delay } from '../common/utils';
 
 declare type PendingStateEventData = {
@@ -44,13 +44,13 @@ export interface CustomElement extends HTMLElement {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default <C extends Constructor<CustomElement>>(base: C, promiseDelay = 0) => {
   class PendingContainerMixin extends base {
-    @internalProperty()
+    @state()
     _hasPendingChildren = false;
 
-    @internalProperty()
+    @state()
     pendingCount = 0;
 
-    @internalProperty()
+    @state()
     resolvedCount = 0;
 
     get progress() {
