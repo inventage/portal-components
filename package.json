@@ -29,7 +29,7 @@
     "lint": "run-p -l lint:*",
     "lint:analyze": "lit-analyzer '{common,components,mixins}/**/*.ts' --strict --rules.no-noncallable-event-binding warn",
     "lint:eslint": "eslint --ext .ts,.html .",
-    "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
+    "lint:markdownlint": "git ls-files '*.md' | xargs markdownlint --ignore 'README.md' --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'",
     "lint:prettier": "prettier '**/*.{js,ts,md,css}' --check",
     "lint:tsc": "tsc",
     "prepare": "is-ci || husky install",
@@ -102,7 +102,7 @@
     ],
     "*.md": [
       "prettier --write",
-      "markdownlint --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'"
+      "markdownlint --ignore 'README.md' --ignore '**/CHANGELOG.md' --ignore '**/*.stories.md'"
     ]
   },
   "np": {

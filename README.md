@@ -1,3 +1,7 @@
+# Deprecated!
+
+Package no longer supported, it has been replaced by individual packages in [https://github.com/inventage/web-components](https://github.com/inventage/web-components)
+
 # Portal Components
 
 A collection of webcomponents for enterprise portals.
